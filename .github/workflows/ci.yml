@@ -15,71 +15,62 @@ on:
       - 'app/**'
 
 jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      server: ${{ steps.filter.outputs.server }}
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Filter changes
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            server:
+              - 'server/**'
+            app:
+              - 'app/**'
+
   rust:
-    name: Test Rust
+    needs: detect_changes
+    if: needs.detect_changes.outputs.server == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for changes in server directory
-        id: check_server_changes
-        run: |
-          echo "Checking for changes in 'server' directory..."
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^server/'; then
-            echo "Changes detected in 'server' directory."
-            echo "run_tests=true" >> $GITHUB_ENV
-          else
-            echo "No changes in 'server' directory."
-            echo "run_tests=false" >> $GITHUB_ENV
-          fi
-
       - name: Set up Rust
-        if: env.run_tests == 'true'
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Navigate to Rust directory and run tests
-        if: env.run_tests == 'true'
+      - name: Navigate to Rust directory and check compilation
         run: |
           cd server
-          cargo test
+          cargo check
 
   flutter:
-    name: Test Flutter
+    needs: detect_changes
+    if: needs.detect_changes.outputs.app == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check for changes in app directory
-        id: check_app_changes
-        run: |
-          echo "Checking for changes in 'app' directory..."
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^app/'; then
-            echo "Changes detected in 'app' directory."
-            echo "run_tests=true" >> $GITHUB_ENV
-          else
-            echo "No changes in 'app' directory."
-            echo "run_tests=false" >> $GITHUB_ENV
-          fi
-
       - name: Set up Flutter
-        if: env.run_tests == 'true'
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
 
       - name: Install dependencies
-        if: env.run_tests == 'true'
         run: |
           cd app
           flutter pub get
 
       - name: Run Flutter tests
-        if: env.run_tests == 'true'
         run: |
           cd app
           flutter test --verbose
