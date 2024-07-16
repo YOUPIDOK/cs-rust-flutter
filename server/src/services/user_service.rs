@@ -39,7 +39,7 @@ pub async fn find_user_with_keycloak_id(
             match KeycloakAdminToken::acquire(&url, &user, &password, &client).await {
                 Ok(admin_token) => {
                     let keycloak = KeycloakAdmin::new(&url, admin_token, client);
-                    let realm = std::env::var("KEYCLOAK_REALM").unwrap_or_else(|_| "rusty_notes".into());
+                    let realm = std::env::var("KEYCLOAK_REALM").unwrap_or_else(|_| "iw_cs".into());
 
                     let user_info = keycloak.realm_users_with_user_id_get(&realm, &keycloak_id.to_string(), None).await;
 

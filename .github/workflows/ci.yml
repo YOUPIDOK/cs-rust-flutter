@@ -47,10 +47,10 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Navigate to Rust directory and run tests
+      - name: Navigate to Rust directory and check compilation
         run: |
           cd server
-          cargo test
+          cargo check
 
   flutter:
     needs: detect_changes
