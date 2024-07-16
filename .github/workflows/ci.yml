@@ -27,11 +27,16 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
+      - name: Determine base commit
+        id: base_commit
+        run: echo "::set-output name=commit::$(git rev-parse origin/main)"
+
       - name: Check for changes in server directory
         id: check_server_changes
         run: |
           echo "Checking for changes in 'server' directory..."
-          if git diff --name-only origin/main...HEAD | grep '^server/'; then
+          BASE_COMMIT=${{ steps.base_commit.outputs.commit }}
+          if git diff --name-only $BASE_COMMIT HEAD | grep '^server/'; then
             echo "Changes detected in 'server' directory."
             echo "run_tests=true" >> $GITHUB_ENV
           else
@@ -64,11 +69,16 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
+      - name: Determine base commit
+        id: base_commit
+        run: echo "::set-output name=commit::$(git rev-parse origin/main)"
+
       - name: Check for changes in app directory
         id: check_app_changes
         run: |
           echo "Checking for changes in 'app' directory..."
-          if git diff --name-only origin/main...HEAD | grep '^app/'; then
+          BASE_COMMIT=${{ steps.base_commit.outputs.commit }}
+          if git diff --name-only $BASE_COMMIT HEAD | grep '^app/'; then
             echo "Changes detected in 'app' directory."
             echo "run_tests=true" >> $GITHUB_ENV
           else
