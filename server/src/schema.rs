@@ -1,6 +1,13 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
+    companies (id) {
+        id -> Uuid,
+        name -> Varchar,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Uuid,
         firstname -> Varchar,
@@ -11,3 +18,8 @@ diesel::table! {
         updated_at -> Timestamp,
     }
 }
+
+diesel::allow_tables_to_appear_in_same_query!(
+    companies,
+    users,
+);
