@@ -1,0 +1,76 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - 'app/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+      - 'app/**'
+
+jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    outputs:
+      server: ${{ steps.filter.outputs.server }}
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Filter changes
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            server:
+              - 'server/**'
+            app:
+              - 'app/**'
+
+  rust:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.server == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Navigate to Rust directory and check compilation
+        run: |
+          cd server
+          cargo check
+
+  flutter:
+    needs: detect_changes
+    if: needs.detect_changes.outputs.app == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.2'
+
+      - name: Install dependencies
+        run: |
+          cd app
+          flutter pub get
+
+      - name: Run Flutter tests
+        run: |
+          cd app
+          flutter test --verbose
