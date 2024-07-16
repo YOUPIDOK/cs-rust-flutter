@@ -14,6 +14,9 @@ cp .env.dist .env
 **Config server/.env**
 ```shell
 cp server/.env.dist .server/env
+**Config app/config.json**
+```shell
+cp app/config.json.dist app/config.json
 ```
 **Up containers**
 ```shell
