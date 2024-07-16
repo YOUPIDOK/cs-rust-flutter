@@ -20,6 +20,6 @@ cp server/.env.dist .server/env
 docker compose up -d
 ```
 ## Ci/CD
-on push/pull request event on main :
+On push/pull request event on main :
 - Test rust build
 - Test flutter build
