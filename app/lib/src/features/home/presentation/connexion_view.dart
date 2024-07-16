@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/src/features/authentication/data/auth_repository.dart';
 
 class ConnexionView extends StatefulWidget {
   const ConnexionView({super.key});
@@ -11,6 +12,7 @@ class _ConnexionViewState extends State<ConnexionView> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -105,7 +107,7 @@ class _ConnexionViewState extends State<ConnexionView> {
                                     ),
                                   ),
                                   child: const Text('Connexion'),
-                                  onPressed: () {},
+                                  onPressed: (){}
                                 ),
                               ],
                             )
