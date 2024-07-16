@@ -7,16 +7,18 @@ on:
     paths:
       - 'server/**'
       - 'app/**'
+      - 'keycloak/**'
   pull_request:
     branches:
       - main
     paths:
       - 'server/**'
       - 'app/**'
+      - 'keycloak/**'
 
 jobs:
   rust:
-    if: contains(github.event.pull_request.head.repo.full_name, 'server')
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, 'server/') || github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'server/')
     name: Test Rust
     runs-on: ubuntu-latest
     steps:
@@ -35,7 +37,7 @@ jobs:
           cargo test
 
   flutter:
-    if: contains(github.event.pull_request.head.repo.full_name, 'app')
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, 'app/') || github.event_name == 'pull_request' && contains(github.event.pull_request.head.ref, 'app/')
     name: Test Flutter
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +47,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 'latest'
+          flutter-version: '3.22.2'
 
       - name: Install dependencies
         run: |
@@ -56,3 +58,5 @@ jobs:
         run: |
           cd app
           flutter test --verbose
+
+  
