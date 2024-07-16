@@ -9,7 +9,7 @@ VALUES (
         'Ville de Lyon'
     ),
     (
-        'Gare 2thello Lyon PartDieu'
+        'Gare 2thello Lyon Partdieu'
     ),
     (
         'Aeroport Roissy Charles de Gaules'
