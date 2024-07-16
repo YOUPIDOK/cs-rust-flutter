@@ -74,7 +74,20 @@ class _ConnexionViewState extends State<ConnexionView> {
                               ),
                             ),
                             const SizedBox(
-                              height: 30,
+                              height: 5,
+                            ),
+                            Container(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Je n\'ai pas de compte',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      decoration: TextDecoration.underline,
+                                      decorationColor: Colors.white),
+                                ),
+                              ),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
