@@ -1,0 +1,26 @@
+{
+  "realm" : "iw_cs_dev",
+  "users" : [ {
+    "id" : "8f43ba80-e1c9-4380-82dc-dbb4eaeeee75",
+    "username" : "nathan.poncet.pro@gmail.com",
+    "firstName" : "Nathan",
+    "lastName" : "Poncet",
+    "email" : "nathan.poncet.pro@gmail.com",
+    "emailVerified" : false,
+    "createdTimestamp" : 1721131037606,
+    "enabled" : true,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "e68975b0-e737-4ec2-aaa1-3fc9ac330b28",
+      "type" : "password",
+      "createdDate" : 1721132340298,
+      "secretData" : "{\"value\":\"i4Wu/5yx//+PpcAgD9kZIxuG6aYCH+O17959bVlUoB8iCAhxtrheCYAflnoe1JfPIwodchjRMa0sAkQdk04r1A==\",\"salt\":\"E/bdltGo8ogrVnM33LdjCQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-iw_cs_dev" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ]
+}
