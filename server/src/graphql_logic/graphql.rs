@@ -33,7 +33,8 @@ pub struct Query;
 impl Query {
     // Note, that the field name will be automatically converted to the
     // `camelCased` variant, just as GraphQL conventions imply.
-    fn api_version() -> &'static str {
+    fn api_version(context: &GraphQLContext) -> &'static str {
+        context.keycloak_auth();
         "1.0"
     }
 
@@ -43,7 +44,7 @@ impl Query {
         let res = user_service::find_user(conn, user_id);
         graphql_translate(res)
     }
-    
+
     pub async fn find_user_with_keycloak_id(context: &GraphQLContext, keycloak_id: Uuid) -> FieldResult<Option<User>> {
         let conn = &mut context.pool.get()?;
         let res = user_service::find_user_with_keycloak_id(conn, keycloak_id).await;
