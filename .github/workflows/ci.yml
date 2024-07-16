@@ -37,13 +37,14 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
-
-      - name: Navigate to Flutter directory
-        run: cd app
+          flutter-version: 'latest'
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          cd app
+          flutter pub get
 
       - name: Run Flutter tests
-        run: flutter test
+        run: |
+          cd app
+          flutter test
