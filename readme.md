@@ -23,3 +23,8 @@ docker compose up -d
 On push/pull request event on main :
 - Test rust build
 - Test flutter build
+
+# Export Realm
+```shell
+/opt/keycloak/bin/kc.sh export --realm iw_cs_dev --dir /opt/keycloak/data/import
+```
