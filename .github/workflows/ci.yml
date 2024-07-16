@@ -4,32 +4,43 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'server/**'
+      - 'app/**'
   pull_request:
     branches:
       - main
+    paths:
+      - 'server/**'
+      - 'app/**'
 
 jobs:
   rust:
+    if: contains(github.event.pull_request.head.repo.full_name, 'server')
     name: Test Rust
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Install Rust
+      - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+          override: true
 
-      - name: Run Rust tests
-        run: cargo test
+      - name: Navigate to Rust directory and run tests
+        run: |
+          cd server
+          cargo test
 
   flutter:
+    if: contains(github.event.pull_request.head.repo.full_name, 'app')
     name: Test Flutter
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -37,7 +48,11 @@ jobs:
           flutter-version: 'latest'
 
       - name: Install dependencies
-        run: flutter pub get
+        run: |
+          cd app
+          flutter pub get
 
       - name: Run Flutter tests
-        run: flutter test
+        run: |
+          cd app
+          flutter test --verbose
