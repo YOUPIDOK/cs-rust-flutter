@@ -26,7 +26,7 @@ jobs:
         id: check_server_changes
         run: |
           echo "Checking for changes in 'server' directory..."
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^server/'; then
+          if git diff --name-only HEAD^ HEAD | grep '^server/'; then
             echo "Changes detected in 'server' directory."
             echo "run_tests=true" >> $GITHUB_ENV
           else
@@ -58,7 +58,7 @@ jobs:
         id: check_app_changes
         run: |
           echo "Checking for changes in 'app' directory..."
-          if git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^app/'; then
+          if git diff --name-only HEAD^ HEAD | grep '^app/'; then
             echo "Changes detected in 'app' directory."
             echo "run_tests=true" >> $GITHUB_ENV
           else
