@@ -1,0 +1,616 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+"""Exposes a URL that specifies the behavior of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behavior of this scalar."""
+  url: String!
+) on SCALAR
+
+type AuthMutationsGroup {
+  """Confirm a user's phone number with the provided token"""
+  confirmPhone(token: String!): User!
+
+  """Delete the logged in user"""
+  delete: User
+
+  """Set the push notification token for the logged in user"""
+  notificationToken(pushToken: String!): String!
+
+  """Sign in or sign up a user using OAuth"""
+  oauth(provider: Provider!, token: String!): AuthResult!
+
+  """Update a user's profile"""
+  profile(email: String, enableNotifications: Boolean, firstName: String, language: String, lastName: String, phoneCountryCode: String, phoneNumber: String): User
+
+  """Ask for a reset password link for the given email"""
+  resetPassword(email: String!): String!
+
+  """Send confirmation for email"""
+  sendEmailConfirmation: String!
+
+  """Send confirmation for phone"""
+  sendPhoneConfirmation: String!
+
+  """Sign in a user"""
+  signIn(email: String!, password: String!): AuthResult!
+
+  """Create a user account"""
+  signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthResult!
+}
+
+type AuthQueriesGroup {
+  """Fetch logged in user's profile"""
+  profile: User
+}
+
+type AuthResult {
+  token: String!
+  user: User!
+}
+
+enum Condition {
+  NEW
+  OLD
+  OLD_REFURBISHED
+  TO_BE_DEMOLISHED
+  TO_REHABILITATE
+}
+
+type ContactResult {
+  e164PhoneNumber: String!
+  email: String!
+  needToValidatePhoneNumber: Boolean!
+}
+
+type Criteria {
+  bedroomsMax: Int
+  bedroomsMin: Int
+  category: [PropertyCategory]
+  condition: [Condition]
+  dpeList: [Dpe]
+  dpeMax: Int
+  dpeMin: Int
+  floorMax: Int
+  floorMin: Int
+  geoDistance: Int
+  geoPoint: Point
+  geoPolygons: [Polygon]
+  gesList: [Ges]
+  gesMax: Int
+  gesMin: Int
+  priceMax: Int
+  priceMin: Int
+  priceOnDemand: Boolean
+  priceTolerance: Float
+  program: String
+  roomsMax: Int
+  roomsMin: Int
+  surfaceMax: Int
+  surfaceMin: Int
+  tags: [Tag]
+  transaction: [PropertyTransaction]
+}
+
+enum Currency {
+  CHF
+  EUR
+  GBP
+  USD
+}
+
+enum Dpe {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  UNKNOWN
+}
+
+enum Frequency {
+  DAILY
+  REALTIME
+  WEEKLY
+}
+
+type GeolocationQueriesGroup {
+  """Autocomplete places based on a query parameter"""
+  places(
+    """Language for the results, default FR"""
+    language: Language
+    query: String!
+  ): [Place]
+}
+
+enum Ges {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  UNKNOWN
+}
+
+input InputCriteria {
+  bedroomsMax: Int
+  bedroomsMin: Int
+  category: [PropertyCategory]
+  condition: [Condition]
+  dpeList: [Dpe]
+  dpeMax: Int
+  dpeMin: Int
+  floorMax: Int
+  floorMin: Int
+  geoDistance: Int
+  geoPoint: InputPoint
+  geoPolygons: [InputPolygon]
+  gesList: [Ges]
+  gesMax: Int
+  gesMin: Int
+  priceMax: Int
+  priceMin: Int
+  priceOnDemand: Boolean
+  priceTolerance: Float
+  program: String
+  roomsMax: Int
+  roomsMin: Int
+  surfaceMax: Int
+  surfaceMin: Int
+  tags: [Tag]
+  transaction: [PropertyTransaction]
+}
+
+input InputPoint {
+  lat: Float!
+  long: Float!
+}
+
+input InputPolygon {
+  shapes: [InputShape]
+}
+
+input InputSellingProperty {
+  address: String!
+  category: PropertyCategory!
+  notes: String
+  point: InputPoint!
+  rooms: Float!
+  surface: Float!
+}
+
+input InputShape {
+  points: [InputPoint]
+}
+
+enum Language {
+  DE
+  EN
+  ES
+  FR
+  IT
+  NL
+  PT
+}
+
+type Message {
+  content: String!
+  id: ID!
+  insertedAt: NaiveDateTime!
+  nickname: String!
+}
+
+"""
+The `Naive DateTime` scalar type represents a naive date and time without
+timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+string.
+"""
+scalar NaiveDateTime
+
+type Picture {
+  index: Int
+  mobile: String
+  web: String
+}
+
+type Place {
+  lat: Float!
+  long: Float!
+  place: String!
+  text: String!
+}
+
+type Point {
+  lat: Float!
+  long: Float!
+}
+
+type Polygon {
+  shapes: [Shape]
+}
+
+type ProgramQueries {
+  """Autocomplete program name"""
+  list(program: String): [Programs]
+}
+
+type Programs {
+  city: String
+  country: String
+  geo: Point
+  name: String
+  promoter: String
+  state: String
+  street: String
+  zip: String
+}
+
+type PropertiesQueriesGroup {
+  """Count properties returned by the given criteria"""
+  count(criteria: InputCriteria): Int
+
+  """Get a property by id with the agency name"""
+  one(id: ID!): PropertyWithAgency
+
+  """Get random properties"""
+  random(limit: Int): [Property]
+
+  """List properties returned by the given criteria"""
+  search(criteria: InputCriteria, limit: Int, offset: Int): [Property]
+}
+
+type Property {
+  address: String!
+  bedrooms: Int
+  category: PropertyCategory!
+  city: String
+  condition: Condition
+  country: String
+  currency: Currency!
+  deliveryQuarter: Int
+  deliveryYear: Int
+  description: String!
+  downloads: [String!]
+  dpe: Int
+  email: String
+  equipements: [String!]
+  floor: Int
+  geo: Point
+  ges: Int
+  id: ID!
+  insertedAt: NaiveDateTime!
+  landline: String
+  laws: [String!]
+  mobile: String
+  pictures: [Picture!]!
+  price: Int
+  program: String
+  rooms: Float
+  state: String
+  street: String
+  surface: Float
+  tags: [Tag]
+  title: String!
+  transaction: PropertyTransaction!
+  unavailable: Boolean!
+  updatedAt: NaiveDateTime!
+  verified: Boolean!
+  zip: String
+}
+
+enum PropertyCategory {
+  FLAT
+  HOUSE
+}
+
+enum PropertyTransaction {
+  RENT
+  SALE
+}
+
+type PropertyWithAgency {
+  address: String!
+  agencyName: String!
+  bedrooms: Int
+  category: PropertyCategory!
+  city: String
+  condition: Condition
+  country: String
+  currency: Currency!
+  deliveryQuarter: Int
+  deliveryYear: Int
+  description: String!
+  downloads: [String!]
+  dpe: Int
+  email: String
+  equipements: [String!]
+  floor: Int
+  geo: Point
+  ges: Int
+  id: ID!
+  insertedAt: NaiveDateTime!
+  landline: String
+  laws: [String!]
+  mobile: String
+  pictures: [Picture!]!
+  price: Int
+  program: String
+  rooms: Float
+  state: String
+  street: String
+  surface: Float
+  tags: [Tag]
+  title: String!
+  transaction: PropertyTransaction!
+  unavailable: Boolean!
+  updatedAt: NaiveDateTime!
+  verified: Boolean!
+  zip: String
+}
+
+enum Provider {
+  APPLE
+  GOOGLE
+}
+
+input QuestionContactInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  message: String!
+}
+
+enum Role {
+  GROUP_ADMIN
+  SUPER_ADMIN
+  USER
+}
+
+type RootMutationType {
+  """Mutations for auth"""
+  auth: AuthMutationsGroup!
+
+  """Mutations for searches"""
+  searches: SearchesMutationsMethods!
+
+  """Mutations for sellings"""
+  sellings: SellingsMutationsMethods!
+
+  """Mutations for socials"""
+  socials: SocialsMutationsGroup!
+
+  """Mutations for the website"""
+  web: WebMutationsMethods!
+}
+
+type RootQueryType {
+  """Queries for auth"""
+  auth: AuthQueriesGroup!
+
+  """Queries for geolocation"""
+  geolocation: GeolocationQueriesGroup!
+  programs: ProgramQueries!
+
+  """Queries for properties"""
+  properties: PropertiesQueriesGroup!
+
+  """Queries for searches"""
+  searches: SearchesQueriesMethods!
+
+  """Queries for socials"""
+  socials: SocialsQueriesGroup!
+
+  """Queries for the website"""
+  web: WebQueriesMethods!
+}
+
+type Search {
+  center: Point!
+  count: Int!
+  criteria: Criteria
+  enabled: Boolean!
+  frequency: Frequency!
+  id: ID!
+  zoom: Float!
+}
+
+type SearchesMutationsMethods {
+  """Create a search"""
+  create(center: InputPoint!, criteria: InputCriteria!, enabled: Boolean, frequency: Frequency, zoom: Float!): Search
+
+  """Delete a search"""
+  delete(id: ID!): Search
+
+  """Update a search"""
+  update(center: InputPoint, criteria: InputCriteria, enabled: Boolean, frequency: Frequency, id: ID!, zoom: Float): Search
+}
+
+type SearchesQueriesMethods {
+  """List search"""
+  list: [Search]
+}
+
+type SellingLead {
+  id: ID
+}
+
+type SellingsMutationsMethods {
+  """Create a selling lead"""
+  create(lead: InputSellingProperty!): SellingLead
+}
+
+type Shape {
+  points: [Point]
+}
+
+type Social {
+  group: String
+  id: ID!
+  messages: [Message]
+  property: Property!
+  type: SocialType!
+  user: User!
+}
+
+type SocialsMutationsGroup {
+  """Delete a given social"""
+  delete(id: ID!): Social
+
+  """Delete socials belonging to a group"""
+  deleteWithGroup(group: String!): Int
+
+  """Dislike a property"""
+  dislike(propertyId: ID!): Social
+
+  """Favorite a property"""
+  favorite(group: String!, propertyId: ID!): Social
+
+  """Like a property"""
+  like(group: String!, propertyId: ID!): Social
+
+  """Delete a given number of dislikes from the loggedin user"""
+  reset(nb: Int!): Boolean
+}
+
+type SocialsQueriesGroup {
+  """Get socials for a user"""
+  list(types: [SocialType]): [Social]
+
+  """Get socials groups for a user"""
+  listGroups: [String]
+}
+
+enum SocialType {
+  DISLIKE
+  FAVORITE
+  LIKE
+}
+
+enum Tag {
+  AMENITIES
+  BALCONY
+  BATH
+  BEACH
+  CALM
+  CARPOOLING
+  CELLAR
+  CLASSIC
+  COUNTRY
+  ECO_DISTRICT
+  FIREPLACE
+  FLOOR_CARPETED
+  FLOOR_CEMENTED
+  FLOOR_LAMINATE
+  FLOOR_PARQUET
+  FLOOR_TILED
+  GARAGE
+  GARDEN
+  GAS_BOILER
+  GOLF
+  GRANARY
+  HEALTH_FACILITIES
+  INSULATING_GLASS
+  JACUZZI
+  LAKE
+  LAUNDRY
+  LIFT
+  MODERN
+  MOUNTAIN
+  NATURE
+  OPEN_KITCHEN
+  PARK
+  PARKING
+  PLAN
+  PUBLIC_TRANSPORT
+  ROAD_CONNECTIVITY
+  RUSTIC
+  SCHOOLS
+  SEA
+  SHOWER
+  SHUTTERS_ELECTRIC
+  SHUTTERS_MECHANICAL
+  SKI
+  SWIMMINGPOOL
+  TERRACE
+  URBAN
+  VERANDA
+  VIEW
+  WOOD_STOVE
+}
+
+type User {
+  email: String!
+  emailConfirmed: Boolean!
+  enableNotifications: Boolean!
+  firstName: String!
+  id: ID!
+  language: String!
+  lastName: String!
+  phoneConfirmed: Boolean!
+  phoneCountryCode: String
+  phoneNumber: String
+  role: Role!
+}
+
+input VisitContactInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  message: String
+
+  """2 letters country code (e.g. CH)"""
+  phoneCountryCode: String!
+  phoneNumber: String!
+  propertyId: ID!
+}
+
+type WebMutationsMethods {
+  """Confirm a phone number with received token from SMS"""
+  confirmPhone(
+    """e164 formated phone number (eg. +41765556677)"""
+    e164PhoneNumber: String!
+
+    """4 digits token from SMS"""
+    smsToken: String!
+  ): Boolean!
+
+  """Create a contact in case of interest for the newsletteter"""
+  contactForNewsletter(email: String!): Boolean!
+
+  """Create a contact in case of question about Bazzile"""
+  contactForQuestion(contact: QuestionContactInput!, subscribeToNewsletter: Boolean): Boolean!
+
+  """Create a contact in case of interest for a visit"""
+  contactForVisit(contact: VisitContactInput!, subscribeToNewsletter: Boolean): ContactResult!
+}
+
+type WebQueriesMethods {
+  """Autocomplete places based on a query parameter"""
+  places(
+    """Language for the results, default FR"""
+    language: Language
+    query: String!
+  ): [Place]
+
+  """Count total properties not marked as to be deleted"""
+  propertiesAllCount: Int
+
+  """Count properties returned by the given criteria"""
+  propertiesCount(criteria: InputCriteria): Int
+
+  """Get random properties with optional limit"""
+  propertiesRandom(limit: Int): [Property]
+
+  """List properties returned by the given criteria"""
+  propertiesSearch(criteria: InputCriteria, limit: Int, offset: Int): [Property]
+
+  """Get a property by id"""
+  propertyById(id: ID!): Property
+}
+
