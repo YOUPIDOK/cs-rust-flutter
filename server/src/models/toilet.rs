@@ -19,3 +19,9 @@ pub struct Toilet {
     pub long: f64,
     pub companies_id: Uuid,
 }
+
+#[derive(Debug, GraphQLObject)]
+pub struct ToiletWithDistance {
+    pub toilet: Toilet,
+    pub distance: f64,
+}

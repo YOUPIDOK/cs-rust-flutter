@@ -1,7 +1,7 @@
 use super::context::GraphQLContext;
 use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::user_service;
-use crate::models::toilet::Toilet;
+use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
 use juniper::{graphql_value, FieldError};
 use juniper::{EmptySubscription, FieldResult, GraphQLEnum, GraphQLObject, RootNode};
@@ -58,23 +58,25 @@ impl Query {
     // TOILET
 
      /// ### Example de requête GraphQL
+    /// La distance retournée est en **Km**
     ///
     /// ```graphql
     /// {
-    ///     getToilet(id: "<UUID>") {
-    ///     id,
-    ///     lat,
-    ///     long,
-    ///     name,
-    ///     companiesId,
-    ///     isMaintenance
-    ///   }
+    ///        getToilet(id: "some-uuid", lat: 48.8566, long: 2.3522) {
+    ///            toilet {
+    ///            id
+    ///            name
+    ///            lat
+    ///            long
+    ///            }
+    ///            distance
+    ///        }
     /// }
     /// ```
-    pub fn get_toilet(context: &GraphQLContext, id: Uuid) -> FieldResult<Option<Toilet>> {
+    pub fn get_toilet(context: &GraphQLContext, id: Uuid, lat: f64, long: f64) -> FieldResult<ToiletWithDistance> {
         let conn = &mut context.pool.get()?;
-        let res = toilet_service::get_toilet(conn, id);
-        graphql_translate(res)
+        let (toilet, distance) = toilet_service::get_toilet(conn, id, lat, long)?;
+        Ok(ToiletWithDistance { toilet, distance })
     }
 
     /// ### Example de requête GraphQL

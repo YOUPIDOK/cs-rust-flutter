@@ -4,9 +4,11 @@ use diesel::result::QueryResult;
 use crate::models::toilet::Toilet;
 use uuid::Uuid;
 
-pub fn get_toilet(conn: &mut PgConnection, _id: Uuid) -> QueryResult<Option<Toilet>> {
+pub fn get_toilet(conn: &mut PgConnection, id: Uuid, lat_test: f64, long_test: f64) -> QueryResult<(Toilet, f64)> {
     use crate::schema::toilets::dsl::*;
-    toilets.filter(id.eq(id)).first(conn).optional()
+    let toilet = toilets.filter(id.eq(id)).first::<Toilet>(conn)?;
+    let distance = haversine_distance(lat_test, long_test, toilet.lat, toilet.long);
+    Ok((toilet, distance))
 }
 
 pub fn get_toilets(conn: &mut PgConnection) -> QueryResult<Vec<Toilet>> {
