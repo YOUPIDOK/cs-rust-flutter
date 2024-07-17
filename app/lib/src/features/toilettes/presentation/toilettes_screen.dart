@@ -1,18 +1,14 @@
+import 'package:app/src/common_widgets/utils/async/async_value_widget.dart';
 import 'package:app/src/features/toilettes/data/toilettes_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ToilettesScreen extends ConsumerStatefulWidget {
+class ToilettesScreen extends ConsumerWidget {
   const ToilettesScreen({super.key});
 
   @override
-  ConsumerState<ToilettesScreen> createState() => _ToilettesScreenState();
-}
-
-class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
-  @override
-  Widget build(BuildContext context) {
-    final allToilettes = ref.watch(allToiletteProvider).value;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final toilettesFuture = ref.watch(toilettesFutureProvider);
 
     return Scaffold(
       body: Container(
@@ -35,10 +31,21 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
                   ),
                 ),
                 Expanded(
-                    child: ListView.builder(
-                  itemCount: allToilettes!.length,
-                  itemBuilder: (context, index) {
-                    return Text(allToilettes![index].name);
+                    child: AsyncValueWidget(
+                  value: toilettesFuture,
+                  data: (res) {
+                    final toilettes = res.data?.getToiletProche;
+                    print(res);
+                    if (toilettes != null) {
+                      return ListView.builder(
+                        itemCount: toilettes.length,
+                        itemBuilder: (context, index) {
+                          return Text(toilettes[index].name);
+                        },
+                      );
+                    } else {
+                      return const SizedBox();
+                    }
                   },
                 ))
               ],

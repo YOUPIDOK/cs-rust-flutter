@@ -1,62 +1,45 @@
+import 'package:app/src/api/graphql/graphql_client.dart';
+import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.data.gql.dart';
+import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.req.gql.dart';
+import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.var.gql.dart';
+import 'package:ferry/ferry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 part 'toilettes_repository.g.dart';
 
-class ToiletteRepository {
+class ToilettesRepository {
+  ToilettesRepository(this.ref);
+  final Ref ref;
+
   final String host =
       '192.168.1.120:8000'; // Note: No http:// prefix for Uri.http
 
   bool isLoading = false;
 
-  ToiletteRepository();
+  Future<OperationResponse<GAllToilettesData, GAllToilettesVars>>
+      fetchToilettes() {
+    final client = ref.read(graphqlClientProvider);
+    final req = GAllToilettesReq(
+      (b) => b
+        ..vars.lat = 6.0
+        ..vars.long = 6.0
+        ..vars.radiusKm = 500,
+    );
 
-  Future<List<dynamic>> fetchToilette() async {
-    try {
-      isLoading = true;
-      final Uri uri = Uri.http(host, '/graphql');
-      final response = await http.post(
-        uri,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'query': '''
-          {
-            getToilets {
-              id,
-              lat,
-              long,
-              name,
-              companiesId,
-              isMaintenance
-            }
-          }
-          '''
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-
-        return data['data']['getToilets'] as List<dynamic> ?? [];
-      } else {
-        return [];
-      }
-    } catch (e) {
-      rethrow;
-    } finally {
-      isLoading = false;
-    }
+    return client.request(req).firstWhere(
+        (element) => !element.loading || element.graphqlErrors != null);
   }
-
-
-
-
 }
 
 @riverpod
-Future<List<dynamic>> allToilette(AllToiletteRef ref) async {
-  ToiletteRepository toiletteRepository = ToiletteRepository();
-  return await toiletteRepository.fetchToilette();
+ToilettesRepository toilettesRepository(ToilettesRepositoryRef ref) {
+  return ToilettesRepository(ref);
+}
+
+@riverpod
+Future<OperationResponse<GAllToilettesData, GAllToilettesVars>> toilettesFuture(
+    ToilettesFutureRef ref) {
+  final toilettesRepository = ref.watch(toilettesRepositoryProvider);
+  return toilettesRepository.fetchToilettes();
 }
