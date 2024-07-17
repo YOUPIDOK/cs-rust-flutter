@@ -8,7 +8,7 @@ CREATE TABLE toilets (
     lat DOUBLE PRECISION NOT NULL,
     long DOUBLE PRECISION NOT NULL,
     companies_id UUID NOT NULL,
-    CONSTRAINT fk_companies FOREIGN KEY (companies_id) REFERENCES companies(id) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT fk_toilets_companies FOREIGN KEY (companies_id) REFERENCES companies(id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
 -- Populate the toilets table with initial data

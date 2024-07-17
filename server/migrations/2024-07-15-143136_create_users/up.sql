@@ -9,11 +9,12 @@ CREATE TABLE users (
     lastname VARCHAR NOT NULL,
     country VARCHAR(50) NOT NULL,
     address VARCHAR NOT NULL,
+    town VARCHAR NOT NULL,
     postal_code VARCHAR(10) NOT NULL,
     mobile_number VARCHAR(20) NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    authorized_data_sell BOOLEAN NOT NULL DEFAULT FALSE
+    authorize_data_sell BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 SELECT diesel_manage_updated_at('users');
