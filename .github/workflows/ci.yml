@@ -43,7 +43,7 @@ jobs:
         with:
           toolchain: stable
           override: true
-      
+
       - name: Cache Cargo registry
         uses: actions/cache@v3
         with:
@@ -60,6 +60,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-git-
 
+      - name: Navigate to Rust directory and check compilation
+        run: cargo check
+
       - name: Cache Cargo build
         uses: actions/cache@v3
         with:
@@ -68,8 +71,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-build-
 
-      - name: Navigate to Rust directory and check compilation
-        run: cargo check
+      - name: List Cargo files for debugging
+        run: |
+          echo "Listing .cargo directory"
+          ls -la ~/.cargo
+          echo "Listing target directory"
+          ls -la target
 
       - name: Navigate to Rust directory and test compilation
         run: cargo test
