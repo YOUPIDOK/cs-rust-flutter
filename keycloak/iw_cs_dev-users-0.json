@@ -1,6 +1,38 @@
 {
   "realm" : "iw_cs_dev",
   "users" : [ {
+    "id" : "5d3c38fc-572e-455e-88c8-a82cc60f6f58",
+    "username" : "leo.stevenot@gmail.com",
+    "firstName" : "test",
+    "lastName" : "test",
+    "email" : "leo.stevenot@gmail.com",
+    "emailVerified" : false,
+    "attributes" : {
+      "country" : [ "gvbhnj" ],
+      "address" : [ "ugbhjn" ],
+      "authorize_data_sell" : [ "hbjn,k" ],
+      "gender" : [ "Men" ],
+      "last_name" : [ "fescdqxxw" ],
+      "postal_code" : [ "hbjbn," ],
+      "mobile_number" : [ "0380046153302" ],
+      "first_name" : [ "yvgbhjn" ]
+    },
+    "createdTimestamp" : 1721139915159,
+    "enabled" : true,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "0aba3079-e53e-417a-97ff-c18f8037c94b",
+      "type" : "password",
+      "createdDate" : 1721139915596,
+      "secretData" : "{\"value\":\"q2nraCPxA3poeTOIhLfDsCps8mR+3lyBqQ3dDN7Z2y4PwiiS8NWsoaDu2ibAZu8gLxG0Fx0FjVWSXPjUuM2t5A==\",\"salt\":\"z1C+gu3ugifYd/Z4zowUvw==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-iw_cs_dev" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
     "id" : "8f43ba80-e1c9-4380-82dc-dbb4eaeeee75",
     "username" : "nathan.poncet.pro@gmail.com",
     "firstName" : "Nathan",
@@ -15,6 +47,30 @@
       "type" : "password",
       "createdDate" : 1721132340298,
       "secretData" : "{\"value\":\"i4Wu/5yx//+PpcAgD9kZIxuG6aYCH+O17959bVlUoB8iCAhxtrheCYAflnoe1JfPIwodchjRMa0sAkQdk04r1A==\",\"salt\":\"E/bdltGo8ogrVnM33LdjCQ==\",\"additionalParameters\":{}}",
+      "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "default-roles-iw_cs_dev" ],
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "8bcbebc1-e600-44d4-8d9b-e36f1bcb8ffb",
+    "username" : "test@gmail.com",
+    "email" : "test@gmail.com",
+    "emailVerified" : false,
+    "attributes" : {
+      "last_name" : [ "test@gmail.com" ],
+      "first_name" : [ "test@gmail.com" ]
+    },
+    "createdTimestamp" : 1721204967963,
+    "enabled" : true,
+    "totp" : false,
+    "credentials" : [ {
+      "id" : "28f623c8-f956-4d03-a731-b6a0e895c15b",
+      "type" : "password",
+      "createdDate" : 1721204968346,
+      "secretData" : "{\"value\":\"7XF1F2o3hqACY5pb7OkLeqfpPJbwcheyHwbFdT7rwHH3hMFUvdEXvLjVxAsNw/7wSa6Fw3MpGGXPb0zeBOtc0g==\",\"salt\":\"QM1JTKwjiEOLJIbvuhgO8g==\",\"additionalParameters\":{}}",
       "credentialData" : "{\"hashIterations\":210000,\"algorithm\":\"pbkdf2-sha512\",\"additionalParameters\":{}}"
     } ],
     "disableableCredentialTypes" : [ ],
