@@ -62,7 +62,7 @@ jobs:
 
       - name: Copy config.json.dist to config.json
         run: |
-          cp app/config.json.dist app/to config.json
+          cp app/config.json.dist app/config.json
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
