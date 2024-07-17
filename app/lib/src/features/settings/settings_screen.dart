@@ -37,7 +37,7 @@ class SettingsScreen extends StatelessWidget {
                         leading: Icon(Icons.face),
                         title: Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text('Information personelle'),
+                          child: Text('Information personnel'),
                         ),
                       ),
                     ),
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                         leading: Icon(Icons.credit_card),
                         title: Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Text('Mode de paiement'),
+                          child: Text('Paiement'),
                         ),
                       ),
                     ),
