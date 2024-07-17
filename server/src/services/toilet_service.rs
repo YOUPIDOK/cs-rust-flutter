@@ -4,11 +4,15 @@ use diesel::result::QueryResult;
 use crate::models::toilet::Toilet;
 use uuid::Uuid;
 
-pub fn get_toilet(conn: &mut PgConnection, id: Uuid) -> QueryResult<Option<Toilet>> {
+pub fn get_toilet(conn: &mut PgConnection, _id: Uuid) -> QueryResult<Option<Toilet>> {
     use crate::schema::toilets::dsl::*;
     toilets.filter(id.eq(id)).first(conn).optional()
 }
 
+pub fn get_toilets(conn: &mut PgConnection) -> QueryResult<Vec<Toilet>> {
+    use crate::schema::toilets::dsl::*;
+    toilets.load::<Toilet>(conn)
+}
 
 fn haversine_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
     let r = 6371.0; // Rayon de la Terre en kilomètres

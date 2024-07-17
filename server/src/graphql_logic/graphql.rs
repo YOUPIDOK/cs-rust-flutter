@@ -56,13 +56,47 @@ impl Query {
     }
 
     // TOILET
+
+     /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToilet(id: "<UUID>") {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
     pub fn get_toilet(context: &GraphQLContext, id: Uuid) -> FieldResult<Option<Toilet>> {
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilet(conn, id);
         graphql_translate(res)
     }
 
-    
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToilets{
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilets(conn);
+        graphql_translate(res)
+    }
+
     /// ### Example de requête GraphQL
     ///
     /// ```graphql
