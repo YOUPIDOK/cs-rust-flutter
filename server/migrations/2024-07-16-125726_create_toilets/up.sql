@@ -3,7 +3,7 @@ CREATE TABLE toilets (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     is_maintenance BOOLEAN NOT NULL,
     door_is_open BOOLEAN NOT NULL,
-    is_locker BOOLEAN NOT NULL,
+    is_locked BOOLEAN NOT NULL,
     name VARCHAR NOT NULL,
     lat DOUBLE PRECISION NOT NULL,
     long DOUBLE PRECISION NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE toilets (
 );
 
 -- Populate the toilets table with initial data
-INSERT INTO toilets (is_maintenance, door_is_open, is_locker, name, lat, long, companies_id)
+INSERT INTO toilets (is_maintenance, door_is_open, is_locked, name, lat, long, companies_id)
 VALUES 
     (false, false, true, '1', 45.750000, 4.850000, '09ea024f-e254-4b6c-8253-d0c45b23e51e'),
     (false, false, false, '2', 45.750000, 4.850000, '09ea024f-e254-4b6c-8253-d0c45b23e51e'),
