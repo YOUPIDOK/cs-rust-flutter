@@ -35,6 +35,7 @@ class ToilettesScreen extends ConsumerWidget {
                   value: toilettesFuture,
                   data: (res) {
                     final toilettes = res.data?.getToiletProche;
+                    print(toilettes);
                     if (toilettes != null) {
                       return ListView.builder(
                         itemCount: toilettes.length,

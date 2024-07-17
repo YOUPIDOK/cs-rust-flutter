@@ -12,9 +12,6 @@ class ToilettesRepository {
   ToilettesRepository(this.ref);
   final Ref ref;
 
-  final String host =
-      '192.168.1.120:8000'; // Note: No http:// prefix for Uri.http
-
   bool isLoading = false;
 
   Future<OperationResponse<GAllToilettesData, GAllToilettesVars>>
