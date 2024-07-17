@@ -32,6 +32,7 @@ pub async fn find_user_with_keycloak_id(
         Some(user) => Ok(Some(user)),
         None => {
             let url = std::env::var("KEYCLOAK_ADDR").unwrap_or_else(|_| "http://keycloak:8080".into());
+            let test = 0;
             println!("url:  {url}");
             let user = std::env::var("KEYCLOAK_USER").unwrap_or_else(|_| "admin".into());
             let password = std::env::var("KEYCLOAK_PASSWORD").unwrap_or_else(|_| "password".into());
