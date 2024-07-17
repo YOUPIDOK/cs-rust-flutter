@@ -1,4 +1,4 @@
-use crate::models::user::{CreateUser, ModifyUser, NewUser, User, UserChangeset};
+use crate::models::user::{NewUser, User, CreateUser, UserGender, ModifyUser, UserChangeset};
 use crate::schema::users::dsl::{/* email ,*/ id, keycloak_uuid, users};
 use diesel::pg::PgConnection;
 use diesel::prelude::*;
@@ -47,10 +47,17 @@ pub async fn find_user_with_keycloak_id(
                         Ok(info) => {
                             if info.email.is_some() && info.first_name.is_some() && info.last_name.is_some() {
                                 let new_user = NewUser {
-                                    email: info.email.unwrap(),
-                                    firstname: info.first_name.unwrap(),
-                                    lastname: info.last_name.unwrap(),
                                     keycloak_uuid: keycloak_id,
+                                    email: info.email.unwrap(),
+                                    firstname: String::from(""),
+                                    lastname: String::from(""),
+                                    gender: UserGender::Other,
+                                    country: String::from(""),
+                                    town: String::from(""),
+                                    postal_code: String::from(""),
+                                    address: String::from(""),
+                                    mobile_number: String::from(""),
+                                    authorize_data_sell: false,
                                 };
                                 match diesel::insert_into(users).values(&new_user).get_result::<User>(conn) {
                                     Ok(user) => Ok(Some(user)),
@@ -81,10 +88,17 @@ pub async fn find_user_with_keycloak_id(
 
 pub fn create_user(conn: &mut PooledConnection<ConnectionManager<PgConnection>>, input: CreateUser) -> Result<User, diesel::result::Error> {
     let new_user = NewUser {
-        email: input.email,
+        keycloak_uuid: input.keycloak_uuid,
         firstname: input.firstname,
         lastname: input.lastname,
-        keycloak_uuid: input.keycloak_uuid,
+        email: input.email,
+        gender: input.gender,
+        country: input.country,
+        address: input.address,
+        town: input.town,
+        postal_code: input.postal_code,
+        mobile_number: input.mobile_number,
+        authorize_data_sell: input.authorize_data_sell
     };
     diesel::insert_into(users).values(&new_user).get_result::<User>(conn)
 }
@@ -94,10 +108,17 @@ pub fn update_user(conn: &mut PooledConnection<ConnectionManager<PgConnection>>,
     diesel::update(target)
         .set(&UserChangeset {
             id: None,
-            email: Some(input.email),
+            keycloak_uuid: Some(input.keycloak_uuid),
             firstname: Some(input.firstname),
             lastname: Some(input.lastname),
-            keycloak_uuid: Some(input.keycloak_uuid),
+            email: Some(input.email),
+            gender: Some(input.gender),
+            country: Some(input.country),
+            town: Some(input.town),
+            postal_code: Some(input.postal_code),
+            address: Some(input.address),
+            mobile_number: Some(input.mobile_number),
+            authorize_data_sell: Some(input.authorize_data_sell)  
         })
         .get_result::<User>(conn)
 }

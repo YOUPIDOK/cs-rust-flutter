@@ -2,5 +2,5 @@
   "GRAPHQL_API_URI": "",
   "MAPBOX_PUBLIC_ACCESS_TOKEN": "",
   "MAPBOX_STYLE_ID": "",
-  "KEYCLOAK_URL": "localhost:8000"
+  "KEYCLOAK_URL": "http://localhost:8081"
 }

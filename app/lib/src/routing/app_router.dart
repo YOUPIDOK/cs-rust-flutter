@@ -37,7 +37,9 @@ GoRouter goRouter(GoRouterRef ref) {
     initialLocation: '/home',
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) async {
-      final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
+      return null;
+
+      /* final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
       final isLoggin = sharedPreferencesRepository.token != '';
 
       if (!isLoggin) {
@@ -49,17 +51,19 @@ GoRouter goRouter(GoRouterRef ref) {
         return '/toilettes';
       }
 
-      return null;
+      return null; */
     },
     refreshListenable: GoRouterRefreshStream(MergeStream([tokenStateChanges])),
     routes: [
-      GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
       StatefulShellRoute.indexedStack(
         builder: (context, state, child) => ScaffoldWithBottomNavBar(child: child),
         branches: [
           StatefulShellBranch(routes: <RouteBase>[
+            GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
+          ]),
+          StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
-              path: '/properties',
+              path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
             ),
@@ -94,7 +98,7 @@ class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNav
 
   @override
   Widget build(BuildContext context) {
-    final tabs = getTabs(context, _currentLocation == GoRouter.of(context).namedLocation(AppRoute.toilettes.name));
+    final tabs = getTabs(context);
 
     return Stack(
       children: [
@@ -130,11 +134,17 @@ CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState stat
       transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
     );
 
-List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context, bool isPropertiesPage) => [
+List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
       const ScaffoldWithNavBarTabItem(
-        initialLocation: '/toilettes',
+        initialLocation: '/home',
         icon: Icon(Icons.home_outlined),
         activeIcon: Icon(Icons.home),
+        label: "Home",
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/toilettes',
+        icon: Icon(Icons.map_outlined),
+        activeIcon: Icon(Icons.map),
         label: "Search",
       ),
     ];
