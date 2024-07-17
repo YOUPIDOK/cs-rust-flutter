@@ -68,6 +68,7 @@ impl Query {
     ///            name
     ///            lat
     ///            long
+    ///            price
     ///            }
     ///            distance
     ///        }
