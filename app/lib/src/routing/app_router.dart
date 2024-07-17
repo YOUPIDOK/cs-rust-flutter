@@ -25,8 +25,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
-  final streamingSharedPreferences =
-      ref.watch(sharedPreferencesRepositoryProvider);
+  final streamingSharedPreferences = ref.watch(sharedPreferencesRepositoryProvider);
 
   final tokenStateChanges = streamingSharedPreferences.getToken;
 
@@ -57,22 +56,16 @@ GoRouter goRouter(GoRouterRef ref) {
     refreshListenable: GoRouterRefreshStream(MergeStream([tokenStateChanges])),
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, child) =>
-            ScaffoldWithBottomNavBar(child: child),
+        builder: (context, state, child) => ScaffoldWithBottomNavBar(child: child),
         branches: [
           StatefulShellBranch(routes: <RouteBase>[
-            GoRoute(
-                path: '/home',
-                name: AppRoute.home.name,
-                pageBuilder: (context, state) =>
-                    pageFadeTransition(context, state, const HomeScreen())),
+            GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
               path: '/toilettes',
               name: AppRoute.toilettes.name,
-              pageBuilder: (context, state) =>
-                  pageFadeTransition(context, state, const ToilettesScreen()),
+              pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
             ),
           ]),
         ],
@@ -86,23 +79,16 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
   final StatefulNavigationShell child;
 
   @override
-  ConsumerState<ScaffoldWithBottomNavBar> createState() =>
-      _ScaffoldWithBottomNavBarState();
+  ConsumerState<ScaffoldWithBottomNavBar> createState() => _ScaffoldWithBottomNavBarState();
 }
 
-class _ScaffoldWithBottomNavBarState
-    extends ConsumerState<ScaffoldWithBottomNavBar> {
+class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
   /* Floating Nav Bar */
-  String get _currentLocation => GoRouter.of(context)
-      .routerDelegate
-      .currentConfiguration
-      .last
-      .matchedLocation;
+  String get _currentLocation => GoRouter.of(context).routerDelegate.currentConfiguration.last.matchedLocation;
 
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {
-    widget.child
-        .goBranch(index, initialLocation: index == widget.child.currentIndex);
+    widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
   }
 
   @override
@@ -122,14 +108,7 @@ class _ScaffoldWithBottomNavBarState
             builder: (ctx, constraints) => widget.child,
           ),
         ),
-        Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: BottomNavigationBar(
-                items: tabs,
-                currentIndex: widget.child.currentIndex,
-                onTap: _onItemTapped)),
+        Positioned(bottom: 0, left: 0, right: 0, child: BottomNavigationBar(items: tabs, currentIndex: widget.child.currentIndex, onTap: _onItemTapped)),
       ],
     );
   }
@@ -148,14 +127,11 @@ class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
   final String initialLocation;
 }
 
-CustomTransitionPage pageFadeTransition(
-        BuildContext context, GoRouterState state, Widget child) =>
-    CustomTransitionPage(
+CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState state, Widget child) => CustomTransitionPage(
       key: state.pageKey,
       child: child,
       opaque: false,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
     );
 
 List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
