@@ -60,6 +60,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-git-
 
+      - name: Navigate to Rust directory and check compilation
+        run: cargo check
+
       - name: Cache Cargo build
         uses: actions/cache@v3
         with:
@@ -74,9 +77,6 @@ jobs:
           ls -la ~/.cargo
           echo "Listing target directory"
           ls -la target
-
-      - name: Navigate to Rust directory and check compilation
-        run: cargo check
 
       - name: Navigate to Rust directory and test compilation
         run: cargo test
