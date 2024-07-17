@@ -12,7 +12,7 @@ diesel::table! {
         id -> Uuid,
         is_maintenance -> Bool,
         door_is_open -> Bool,
-        is_locker -> Bool,
+        is_locked -> Bool,
         name -> Varchar,
         lat -> Float8,
         long -> Float8,
