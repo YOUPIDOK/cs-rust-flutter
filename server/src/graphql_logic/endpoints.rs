@@ -31,10 +31,10 @@ async fn graphql(state: web::Data<AppState>, schema: web::Data<Arc<Schema>>, dat
 }
 
 async fn graphql_auth(
+    claims: StandardKeycloakClaims,
     state: web::Data<AppState>,
     schema: web::Data<Arc<Schema>>,
     data: web::Json<GraphQLRequest>,
-    claims: StandardKeycloakClaims,
 ) -> impl Responder {
     println!("{:?}", claims);
     let pool = state.conn.clone();
