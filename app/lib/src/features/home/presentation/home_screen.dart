@@ -10,28 +10,70 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-@override
+  @override
   Widget build(BuildContext context) {
     final authRepository = ref.read(authRepositoryProvider);
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Home Screen"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              'Auth',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            FilledButton(onPressed: authRepository.signIn, child: const Text("login"))
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(1, 1),
+            colors: <Color>[
+              Color.fromRGBO(144, 39, 142, 1),
+              Color.fromRGBO(3, 144, 235, 1),
+            ],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 100,
+                width: 100,
+                alignment: Alignment.center,
+                child: Image.asset(
+                  'assets/images/logo.webp',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        side: const BorderSide(
+                                            color: Color.fromARGB(
+                                                255, 255, 255, 255))),
+                                  ),
+                                ),
+                                onPressed: authRepository.signIn,
+                                child: const Text('Connexion'),
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
