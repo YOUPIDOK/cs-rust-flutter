@@ -37,7 +37,8 @@ class AuthRepository {
 
   Future<TokenResponse> _authenticate() async {
     // parameters here just for the sake of the question
-    var uri = Uri.parse('http://127.0.0.1:8081/realms/iw_cs_dev');
+    print('${const String.fromEnvironment("KEYCLOAK_URL")}/realms/iw_cs_dev');
+    var uri = Uri.parse('${const String.fromEnvironment("KEYCLOAK_URL")}/realms/iw_cs_dev');
     var clientId = 'app';
     var scopes = List<String>.of(['openid', 'profile']);
     var port = 4200;
