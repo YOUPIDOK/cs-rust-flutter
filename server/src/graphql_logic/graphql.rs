@@ -61,6 +61,27 @@ impl Query {
         let res = toilet_service::get_toilet(conn, id);
         graphql_translate(res)
     }
+
+    
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
+        graphql_translate(res)
+    }
 }
 
 pub struct Mutation;
