@@ -14,8 +14,8 @@ diesel::table! {
         door_is_open -> Bool,
         is_locker -> Bool,
         name -> Varchar,
-        lat -> Nullable<Float8>,
-        long -> Nullable<Float8>,
+        lat -> Float8,
+        long -> Float8,
         companies_id -> Uuid,
     }
 }
