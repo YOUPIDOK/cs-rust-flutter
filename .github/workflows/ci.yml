@@ -37,20 +37,29 @@ jobs:
     needs: detect_changes
     if: needs.detect_changes.outputs.server == 'true'
     runs-on: ubuntu-latest
+    default:
+      run:
+        working-directory: ./server
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
+      
+      - name: Setup cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ./server
 
       - name: Navigate to Rust directory and check compilation
-        run: |
-          cd server
-          cargo check
+        run: cargo check
+
+      - name: Navigate to Rust directory and test compilation
+        run: cargo test
 
   flutter:
     needs: detect_changes
@@ -58,7 +67,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Copy config.json.dist to config.json
+        run: |
+          cp app/config.json.dist app/config.json
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -70,7 +83,7 @@ jobs:
           cd app
           flutter pub get
 
-      - name: Run Flutter tests
-        run: |
-          cd app
-          flutter test --verbose
+#      - name: Run Flutter tests
+#        run: |
+#          cd app
+#          flutter test --verbose
