@@ -60,9 +60,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Copy .env.dist to .env
+      - name: Copy config.json.dist to config.json
         run: |
-          cp app/.env.dist app/.env
+          cp app/config.json.dist app/to config.json
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
