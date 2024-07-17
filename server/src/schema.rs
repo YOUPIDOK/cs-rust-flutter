@@ -54,19 +54,19 @@ diesel::table! {
         keycloak_uuid -> Uuid,
         email -> Varchar,
         firstname -> Varchar,
-        gender -> UserGender,
         lastname -> Varchar,
+        gender -> UserGender,
         #[max_length = 50]
         country -> Varchar,
-        address -> Varchar,
         town -> Varchar,
         #[max_length = 10]
         postal_code -> Varchar,
+        address -> Varchar,
         #[max_length = 20]
         mobile_number -> Varchar,
+        authorize_data_sell -> Bool,
         created_at -> Timestamp,
         updated_at -> Timestamp,
-        authorize_data_sell -> Bool,
     }
 }
 

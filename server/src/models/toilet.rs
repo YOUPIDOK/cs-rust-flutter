@@ -15,7 +15,7 @@ pub struct Toilet {
     pub door_is_open: bool,
     pub is_locked: bool,
     pub name: String,
-    pub lat: Option<f64>,
-    pub long: Option<f64>,
+    pub lat: f64,
+    pub long: f64,
     pub companies_id: Uuid,
 }

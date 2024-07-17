@@ -1,5 +1,5 @@
 use super::context::GraphQLContext;
-use crate::models::user::{CreateUser, ModifyUser, User};
+use crate::models::user::{CreateUser, User, ModifyUser};
 use crate::services::user_service;
 use crate::models::toilet::Toilet;
 use crate::services::toilet_service;
@@ -35,7 +35,7 @@ pub struct Query;
 impl Query {
     // Note, that the field name will be automatically converted to the
     // `camelCased` variant, just as GraphQL conventions imply.
-    fn api_version(context: &GraphQLContext) -> FieldResult<&str> {
+    fn api_version(_context: &GraphQLContext) -> FieldResult<&str> {
         FieldResult::Ok("1.0")
     }
 
@@ -56,9 +56,64 @@ impl Query {
     }
 
     // TOILET
+
+     /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToilet(id: "<UUID>") {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
     pub fn get_toilet(context: &GraphQLContext, id: Uuid) -> FieldResult<Option<Toilet>> {
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilet(conn, id);
+        graphql_translate(res)
+    }
+
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToilets{
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilets(conn);
+        graphql_translate(res)
+    }
+
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
         graphql_translate(res)
     }
 }
