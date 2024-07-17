@@ -17,5 +17,12 @@ pub struct Toilet {
     pub name: String,
     pub lat: f64,
     pub long: f64,
+    pub price: f64,
     pub companies_id: Uuid,
+}
+
+#[derive(Debug, GraphQLObject)]
+pub struct ToiletWithDistance {
+    pub toilet: Toilet,
+    pub distance: f64,
 }

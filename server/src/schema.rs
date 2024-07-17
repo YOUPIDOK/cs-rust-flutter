@@ -41,6 +41,7 @@ diesel::table! {
         name -> Varchar,
         lat -> Float8,
         long -> Float8,
+        price -> Float8,
         companies_id -> Uuid,
     }
 }
