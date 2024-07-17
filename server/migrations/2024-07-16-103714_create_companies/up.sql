@@ -25,3 +25,4 @@ VALUES (
         'caad8e2a-5e5a-477d-b24e-e73a075a73b0',
         'Gare 2thello Strasbourg'
     );
+    

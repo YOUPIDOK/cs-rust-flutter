@@ -1,4 +1,5 @@
-.vscode
 .env
 .idea
+.DS_STORE
+
 web_socket_logic/

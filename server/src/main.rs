@@ -12,6 +12,7 @@ use crate::graphql_logic::context::GraphQLContext;
 
 mod graphql_logic;
 mod models;
+mod providers;
 mod schema;
 mod services;
 

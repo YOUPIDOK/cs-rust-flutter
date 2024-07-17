@@ -1,5 +1,5 @@
 use super::context::GraphQLContext;
-use crate::models::user::{CreateUser, ModifyUser, User};
+use crate::models::user::{CreateUser, User, ModifyUser};
 use crate::services::user_service;
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
