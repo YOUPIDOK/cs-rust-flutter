@@ -129,6 +129,7 @@ version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "24eda4e2a6e042aa4e55ac438a2ae052d3b5da0ecf83d7411e1a368946925208"
 dependencies = [
+ "actix-macros",
  "futures-core",
  "tokio",
 ]
@@ -537,6 +538,28 @@ dependencies = [
  "pin-utils",
  "slab",
  "wasm-bindgen-futures",
+]
+
+[[package]]
+name = "async-stream"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cd56dd203fef61ac097dd65721a419ddccb106b2d2b70ba60a6b529f03961a51"
+dependencies = [
+ "async-stream-impl",
+ "futures-core",
+ "pin-project-lite",
+]
+
+[[package]]
+name = "async-stream-impl"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "16e62a023e7c117e27523144c5d2459f4397fcc3cab0085af8e2224f643a0193"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.71",
 ]
 
 [[package]]
@@ -1655,6 +1678,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "juniper_subscriptions"
+version = "0.17.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e6208a839bd4ca2131924a238311d088d6604ea267c0917903392bad7b70a92c"
+dependencies = [
+ "futures",
+ "juniper",
+]
+
+[[package]]
 name = "keycloak"
 version = "24.0.301"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2422,10 +2455,12 @@ version = "0.1.0"
 dependencies = [
  "actix",
  "actix-cors",
+ "actix-rt",
  "actix-web",
  "actix-web-actors",
  "actix-web-middleware-keycloak-auth",
  "async-std",
+ "async-stream",
  "chrono",
  "diesel",
  "diesel-derive-enum",
@@ -2434,6 +2469,7 @@ dependencies = [
  "env_logger",
  "juniper",
  "juniper_actix",
+ "juniper_subscriptions",
  "keycloak",
  "r2d2",
  "reqwest",

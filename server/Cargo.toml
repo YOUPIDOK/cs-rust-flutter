@@ -17,6 +17,7 @@ chrono = { version = "0.4.38", features = ["serde"] }
 uuid = { version = "1.8.0", features = ["v4"] }
 juniper = { version = "0.16.1", features = ["uuid", "chrono"] }
 juniper_actix = "0.5.0"
+juniper_subscriptions = "0.17.0"
 diesel = { version = "2.2.0", features = [
     "postgres",
     "chrono",
@@ -29,3 +30,5 @@ r2d2 = "0.8.10"
 actix = "0.13.3"
 actix-web-actors = "4.3.0"
 reqwest = "0.12.4"
+actix-rt = "2.10.0"
+async-stream = "0.3.5"

@@ -3,9 +3,13 @@ use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::user_service;
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
-use juniper::{graphql_value, FieldError};
-use juniper::{EmptySubscription, FieldResult, GraphQLEnum, GraphQLObject, RootNode};
+use juniper::{graphql_value, FieldError, FieldResult, GraphQLEnum, GraphQLObject, RootNode, graphql_subscription};
+use juniper::futures::Stream;
+use std::pin::Pin;
 use uuid::Uuid;
+use std::time::Duration;
+use actix_rt::time::sleep;
+use async_stream::stream;
 
 #[derive(Debug, GraphQLObject)]
 pub struct DeleteResult {
@@ -33,8 +37,6 @@ pub struct Query;
 
 #[juniper::graphql_object(Context = GraphQLContext)]
 impl Query {
-    // Note, that the field name will be automatically converted to the
-    // `camelCased` variant, just as GraphQL conventions imply.
     fn api_version(_context: &GraphQLContext) -> FieldResult<&str> {
         FieldResult::Ok("1.0")
     }
@@ -57,7 +59,7 @@ impl Query {
 
     // TOILET
 
-     /// ### Example de requête GraphQL
+    /// ### Exemple de requête GraphQL
     /// La distance retournée est en **Km**
     ///
     /// ```graphql
@@ -74,13 +76,34 @@ impl Query {
     ///        }
     /// }
     /// ```
-    pub fn get_toilet(context: &GraphQLContext, id: Uuid, lat: f64, long: f64) -> FieldResult<ToiletWithDistance> {
+    pub fn get_toilet_with_distance(context: &GraphQLContext, id: Uuid, lat: f64, long: f64) -> FieldResult<ToiletWithDistance> {
         let conn = &mut context.pool.get()?;
-        let (toilet, distance) = toilet_service::get_toilet(conn, id, lat, long)?;
+        let (toilet, distance) = toilet_service::get_toilet_with_distance(conn, id, lat, long)?;
         Ok(ToiletWithDistance { toilet, distance })
     }
 
-    /// ### Example de requête GraphQL
+    /// ### Exemple de requête GraphQL
+    /// 
+    /// ```graphql
+    /// {
+    ///        getToilet(id: "some-uuid") {
+    ///            id
+    ///            name
+    ///            lat
+    ///            long
+    ///            price
+    ///            is_maintenance
+    ///            door_is_open
+    ///        }
+    /// }
+    /// ```
+    pub fn get_toilet(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
+        let conn = &mut context.pool.get()?;
+        let toilet = toilet_service::get_toilet(conn, id)?;
+        Ok(toilet)
+    }
+
+    /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
     /// {
@@ -100,7 +123,7 @@ impl Query {
         graphql_translate(res)
     }
 
-    /// ### Example de requête GraphQL
+    /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
     /// {
@@ -131,17 +154,45 @@ impl Mutation {
         let res = user_service::create_user(conn, input);
         graphql_translate(res)
     }
+    
     pub fn update_user(context: &GraphQLContext, input: ModifyUser) -> FieldResult<User> {
         let conn = &mut context.pool.get()?;
         let res = user_service::update_user(conn, input);
         graphql_translate(res)
     }
+    
+    // TOILET
+    pub fn update_door_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
+        let pool = context.pool.clone();
+        let res = toilet_service::update_door_state(pool, id);
+        graphql_translate(res)
+    }
 }
 
-pub type Schema = RootNode<'static, Query, Mutation, EmptySubscription<GraphQLContext>>;
+pub struct Subscription;
+
+#[graphql_subscription(Context = GraphQLContext)]
+impl Subscription {
+    async fn door_state_updated<'a>(
+        context: &'a GraphQLContext,
+        id: Uuid,
+    ) -> Pin<Box<dyn Stream<Item = FieldResult<Toilet>> + Send + 'a>> {
+        let stream = stream! {
+            let conn = &mut context.pool.get().unwrap();  // Obtenez une référence mutable ici
+            loop {
+                let toilet = toilet_service::get_toilet(conn, id)?;  // Passez la référence mutable ici
+                yield Ok(toilet);
+                sleep(Duration::from_secs(1)).await;
+            }
+        };
+        Box::pin(stream)
+    }
+}
+
+pub type Schema = RootNode<'static, Query, Mutation, Subscription>;
 
 pub fn create_schema() -> Schema {
-    Schema::new(Query {}, Mutation {}, EmptySubscription::new())
+    Schema::new(Query {}, Mutation {}, Subscription {})
 }
 
 fn graphql_translate<T>(res: Result<T, diesel::result::Error>) -> FieldResult<T> {

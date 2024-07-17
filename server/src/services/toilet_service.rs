@@ -3,12 +3,20 @@ use diesel::pg::PgConnection;
 use diesel::result::QueryResult;
 use crate::models::toilet::Toilet;
 use uuid::Uuid;
+use actix_rt::time::sleep;
+use std::time::Duration;
+use diesel::r2d2::{ConnectionManager, Pool};
 
-pub fn get_toilet(conn: &mut PgConnection, id_toilet: Uuid, lat_test: f64, long_test: f64) -> QueryResult<(Toilet, f64)> {
+pub fn get_toilet_with_distance(conn: &mut PgConnection, id_toilet: Uuid, lat_test: f64, long_test: f64) -> QueryResult<(Toilet, f64)> {
     use crate::schema::toilets::dsl::*;
     let toilet = toilets.filter(id.eq(id_toilet)).first::<Toilet>(conn)?;
     let distance = haversine_distance(lat_test, long_test, toilet.lat, toilet.long);
     Ok((toilet, distance))
+}
+
+pub fn get_toilet(conn: &mut PgConnection, id_toilet: Uuid) -> QueryResult<Toilet> {
+    use crate::schema::toilets::dsl::*;
+    toilets.filter(id.eq(id_toilet)).first::<Toilet>(conn)
 }
 
 pub fn get_toilets(conn: &mut PgConnection) -> QueryResult<Vec<Toilet>> {
@@ -37,4 +45,29 @@ pub fn get_toilet_proche(conn: &mut PgConnection, lat_test: f64, lon: f64, radiu
         })
         .collect();
     Ok(nearby_toilets)
+}
+
+pub fn update_door_state(pool: Pool<ConnectionManager<PgConnection>>, toilet_id: Uuid) -> QueryResult<Toilet> {
+    use crate::schema::toilets::dsl::*;
+    let mut conn = pool.get().map_err(|e| diesel::result::Error::DatabaseError(diesel::result::DatabaseErrorKind::Unknown, Box::new(e.to_string())))?;
+    let target = toilets.filter(id.eq(toilet_id)).first::<Toilet>(&mut conn)?;
+
+    if target.is_maintenance {
+        return Err(diesel::result::Error::NotFound);
+    }
+
+    // Planifiez l'ouverture de la porte après 2 secondes
+    actix_rt::spawn({
+        let pool = pool.clone();
+        async move {
+            sleep(Duration::from_secs(2)).await;
+            let mut conn = pool.get().unwrap();
+            diesel::update(toilets.find(toilet_id))
+                .set(door_is_open.eq(true))
+                .execute(&mut conn)
+                .unwrap();
+        }
+    });
+
+    Ok(target)
 }
