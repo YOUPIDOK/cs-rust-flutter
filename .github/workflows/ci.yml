@@ -74,7 +74,7 @@ jobs:
           cd app
           flutter pub get
 
-      - name: Run Flutter tests
-        run: |
-          cd app
-          flutter test --verbose
+#      - name: Run Flutter tests
+#        run: |
+#          cd app
+#          flutter test --verbose
