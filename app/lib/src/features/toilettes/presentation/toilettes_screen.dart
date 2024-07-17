@@ -16,7 +16,7 @@ class ToilettesScreen extends ConsumerWidget {
             color: Color.fromRGBO(234, 234, 234, 1),
           ),
           child: Padding(
-            padding: EdgeInsets.only(top: 70, left: 10, right: 10),
+            padding: const EdgeInsets.only(top: 70, left: 10, right: 10),
             child: Column(
               children: [
                 const TextField(
@@ -35,7 +35,6 @@ class ToilettesScreen extends ConsumerWidget {
                   value: toilettesFuture,
                   data: (res) {
                     final toilettes = res.data?.getToiletProche;
-                    print(res);
                     if (toilettes != null) {
                       return ListView.builder(
                         itemCount: toilettes.length,

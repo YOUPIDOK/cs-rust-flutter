@@ -12,7 +12,7 @@ const AllToilettes = _i1.OperationDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'lat')),
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Float'),
-        isNonNull: false,
+        isNonNull: true,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
@@ -21,7 +21,7 @@ const AllToilettes = _i1.OperationDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'long')),
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Float'),
-        isNonNull: false,
+        isNonNull: true,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
@@ -30,7 +30,7 @@ const AllToilettes = _i1.OperationDefinitionNode(
       variable: _i1.VariableNode(name: _i1.NameNode(value: 'radiusKm')),
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Float'),
-        isNonNull: false,
+        isNonNull: true,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],

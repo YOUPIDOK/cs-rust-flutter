@@ -22,8 +22,8 @@ class ToilettesRepository {
     final client = ref.read(graphqlClientProvider);
     final req = GAllToilettesReq(
       (b) => b
-        ..vars.lat = 6.0
-        ..vars.long = 6.0
+        ..vars.lat = 45.0
+        ..vars.long = 4.0
         ..vars.radiusKm = 500,
     );
 

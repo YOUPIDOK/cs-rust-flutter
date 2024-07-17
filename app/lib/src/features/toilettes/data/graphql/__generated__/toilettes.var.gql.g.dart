@@ -19,29 +19,16 @@ class _$GAllToilettesVarsSerializer
   @override
   Iterable<Object?> serialize(Serializers serializers, GAllToilettesVars object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
-    Object? value;
-    value = object.lat;
-    if (value != null) {
-      result
-        ..add('lat')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
-    value = object.long;
-    if (value != null) {
-      result
-        ..add('long')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
-    value = object.radiusKm;
-    if (value != null) {
-      result
-        ..add('radiusKm')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
-    }
+    final result = <Object?>[
+      'lat',
+      serializers.serialize(object.lat, specifiedType: const FullType(double)),
+      'long',
+      serializers.serialize(object.long, specifiedType: const FullType(double)),
+      'radiusKm',
+      serializers.serialize(object.radiusKm,
+          specifiedType: const FullType(double)),
+    ];
+
     return result;
   }
 
@@ -59,15 +46,15 @@ class _$GAllToilettesVarsSerializer
       switch (key) {
         case 'lat':
           result.lat = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'long':
           result.long = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'radiusKm':
           result.radiusKm = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
+              specifiedType: const FullType(double))! as double;
           break;
       }
     }
@@ -78,17 +65,24 @@ class _$GAllToilettesVarsSerializer
 
 class _$GAllToilettesVars extends GAllToilettesVars {
   @override
-  final double? lat;
+  final double lat;
   @override
-  final double? long;
+  final double long;
   @override
-  final double? radiusKm;
+  final double radiusKm;
 
   factory _$GAllToilettesVars(
           [void Function(GAllToilettesVarsBuilder)? updates]) =>
       (new GAllToilettesVarsBuilder()..update(updates))._build();
 
-  _$GAllToilettesVars._({this.lat, this.long, this.radiusKm}) : super._();
+  _$GAllToilettesVars._(
+      {required this.lat, required this.long, required this.radiusKm})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(lat, r'GAllToilettesVars', 'lat');
+    BuiltValueNullFieldError.checkNotNull(long, r'GAllToilettesVars', 'long');
+    BuiltValueNullFieldError.checkNotNull(
+        radiusKm, r'GAllToilettesVars', 'radiusKm');
+  }
 
   @override
   GAllToilettesVars rebuild(void Function(GAllToilettesVarsBuilder) updates) =>
@@ -172,7 +166,13 @@ class GAllToilettesVarsBuilder
 
   _$GAllToilettesVars _build() {
     final _$result = _$v ??
-        new _$GAllToilettesVars._(lat: lat, long: long, radiusKm: radiusKm);
+        new _$GAllToilettesVars._(
+            lat: BuiltValueNullFieldError.checkNotNull(
+                lat, r'GAllToilettesVars', 'lat'),
+            long: BuiltValueNullFieldError.checkNotNull(
+                long, r'GAllToilettesVars', 'long'),
+            radiusKm: BuiltValueNullFieldError.checkNotNull(
+                radiusKm, r'GAllToilettesVars', 'radiusKm'));
     replace(_$result);
     return _$result;
   }

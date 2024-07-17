@@ -16,9 +16,9 @@ abstract class GAllToilettesVars
           [void Function(GAllToilettesVarsBuilder b) updates]) =
       _$GAllToilettesVars;
 
-  double? get lat;
-  double? get long;
-  double? get radiusKm;
+  double get lat;
+  double get long;
+  double get radiusKm;
   static Serializer<GAllToilettesVars> get serializer =>
       _$gAllToilettesVarsSerializer;
 

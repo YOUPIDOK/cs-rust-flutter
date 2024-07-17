@@ -1,4 +1,4 @@
-query AllToilettes($lat: Float, $long: Float, $radiusKm: Float) {
+query AllToilettes($lat: Float!, $long: Float!, $radiusKm: Float!) {
   getToiletProche(lat: $lat, long: $long, radiusKm: $radiusKm) {
     id,
     lat,
