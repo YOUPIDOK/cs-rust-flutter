@@ -1,6 +1,8 @@
 use super::context::GraphQLContext;
 use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::user_service;
+use crate::models::toilet::Toilet;
+use crate::services::toilet_service;
 use juniper::{graphql_value, FieldError};
 use juniper::{EmptySubscription, FieldResult, GraphQLEnum, GraphQLObject, RootNode};
 use uuid::Uuid;
@@ -51,6 +53,13 @@ impl Query {
             Ok(t) => Ok(t),
             Err(e) => FieldResult::Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
         }
+    }
+
+    // TOILET
+    pub fn get_toilet(context: &GraphQLContext, id: Uuid) -> FieldResult<Option<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilet(conn, id);
+        graphql_translate(res)
     }
 }
 
