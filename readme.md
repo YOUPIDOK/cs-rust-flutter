@@ -29,5 +29,5 @@ On push/pull request event on main :
 
 # Export Realm
 ```shell
-/opt/keycloak/bin/kc.sh export --realm iw_cs_dev --dir /opt/keycloak/data/import
+docker exec container-id /opt/keycloak/bin/kc.sh export --realm iw_cs_dev --dir /opt/keycloak/data/import
 ```
