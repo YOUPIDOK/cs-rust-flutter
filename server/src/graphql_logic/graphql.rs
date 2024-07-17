@@ -33,9 +33,8 @@ pub struct Query;
 impl Query {
     // Note, that the field name will be automatically converted to the
     // `camelCased` variant, just as GraphQL conventions imply.
-    fn api_version(context: &GraphQLContext) -> &'static str {
-        context.keycloak_auth();
-        "1.0"
+    fn api_version(context: &GraphQLContext) -> FieldResult<&str> {
+        FieldResult::Ok("1.0")
     }
 
     // USER
