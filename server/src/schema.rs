@@ -52,7 +52,7 @@ diesel::table! {
     users (id) {
         id -> Uuid,
         keycloak_uuid -> Uuid,
-        email -> Uuid,
+        email -> Varchar,
         firstname -> Varchar,
         gender -> UserGender,
         lastname -> Varchar,

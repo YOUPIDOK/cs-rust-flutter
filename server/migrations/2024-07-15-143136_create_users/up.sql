@@ -3,7 +3,7 @@ CREATE TYPE USER_GENDER as ENUM ('MALE', 'FEMALE', 'OTHER');
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     keycloak_uuid UUID NOT NULL,
-    email UUID NOT NULL,
+    email VARCHAR NOT NULL,
     firstname VARCHAR NOT NULL,
     gender USER_GENDER NOT NULL,
     lastname VARCHAR NOT NULL,
