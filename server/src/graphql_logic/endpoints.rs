@@ -27,7 +27,7 @@ async fn graphql(req: HttpRequest, state: web::Data<AppState>, schema: web::Data
     let pool = state.conn.clone();
     let ctx = GraphQLContext {
         pool,
-        headers: req.headers().clone(),
+        headers: req.headers().clone()
     };
     let res = data.execute(&schema, &ctx).await;
     serde_json::to_string(&res).unwrap()

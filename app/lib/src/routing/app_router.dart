@@ -1,5 +1,6 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/authentication/presentation/account/account_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/settings/account_settings_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
@@ -12,7 +13,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, toilettes, account }
+enum AppRoute { home, toilettes, account, accountSettings }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -59,10 +60,16 @@ GoRouter goRouter(GoRouterRef ref) {
           ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
-              path: '/account',
-              name: AppRoute.account.name,
-              pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
-            ),
+                path: '/account',
+                name: AppRoute.account.name,
+                pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
+                routes: [
+                  GoRoute(
+                    path: '/settings',
+                    name: AppRoute.accountSettings.name,
+                    pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountSettingsScreen()),
+                  ),
+                ]),
           ]),
         ],
       ),
