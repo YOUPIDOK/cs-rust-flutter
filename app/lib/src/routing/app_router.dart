@@ -16,12 +16,6 @@ part 'app_router.g.dart';
 enum AppRoute {
   home,
   toilettes,
-
-  // Account
-  profil,
-
-  //settings
-
   settings
 }
 
@@ -78,14 +72,6 @@ GoRouter goRouter(GoRouterRef ref) {
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) =>
                   pageFadeTransition(context, state, const ToilettesScreen()),
-            ),
-          ]),
-          StatefulShellBranch(routes: <RouteBase>[
-            GoRoute(
-              path: '/profil',
-              name: AppRoute.profil.name,
-              pageBuilder: (context, state) =>
-                  pageFadeTransition(context, state, const ProfilScree()),
             ),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
@@ -191,12 +177,6 @@ List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
         icon: Icon(Icons.map_outlined),
         activeIcon: Icon(Icons.map),
         label: "Search",
-      ),
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/profil',
-        icon: Icon(Icons.person),
-        activeIcon: Icon(Icons.person),
-        label: "Profile",
       ),
       const ScaffoldWithNavBarTabItem(
         initialLocation: '/settings',
