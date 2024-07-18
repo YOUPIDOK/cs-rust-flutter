@@ -15,7 +15,7 @@ pub fn find_user(conn: &mut PooledConnection<ConnectionManager<PgConnection>>, u
 }
 
 /* pub fn find_user_with_email(
-    conn: &mut PooledConnection<ConnectionManager<PgConnection>>,
+    conn: &mut PooledConnection<ConnectionManager<PgConnection>>,f
     user_email: String,
 ) -> Result<Option<User>, diesel::result::Error> {
     match users.filter(email.eq(user_email)).first::<User>(conn) {
@@ -42,10 +42,10 @@ pub async fn find_user_with_keycloak_id(
                     let realm = std::env::var("KEYCLOAK_REALM").unwrap_or_else(|_| "iw_cs".into());
 
                     let user_info = keycloak.realm_users_with_user_id_get(&realm, &keycloak_id.to_string(), None).await;
-
+                    
                     match user_info {
                         Ok(info) => {
-                            if info.email.is_some() && info.first_name.is_some() && info.last_name.is_some() {
+                            if info.email.is_some() {
                                 let new_user = NewUser {
                                     keycloak_uuid: keycloak_id,
                                     email: info.email.unwrap(),

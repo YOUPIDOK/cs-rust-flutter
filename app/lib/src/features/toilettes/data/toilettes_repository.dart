@@ -14,18 +14,18 @@ class ToilettesRepository {
 
   bool isLoading = false;
 
-  Future<OperationResponse<GAllToilettesData, GAllToilettesVars>>
-      fetchToilettes() {
+  Future<OperationResponse<GToilettesData, GToilettesVars>> fetchToilettes() {
     final client = ref.read(graphqlClientProvider);
-    final req = GAllToilettesReq(
-      (b) => b
-        ..vars.lat = 45.0
-        ..vars.long = 4.0
-        ..vars.radiusKm = 500,
-    );
+    final req = GToilettesReq();
 
-    return client.request(req).firstWhere(
-        (element) => !element.loading || element.graphqlErrors != null);
+    return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
+  }
+
+  Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> fetchNearToilettes(GNearToilettesVarsBuilder vars) {
+    final client = ref.read(graphqlClientProvider);
+    final req = GNearToilettesReq((b) => b..vars = vars);
+
+    return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
   }
 }
 
@@ -35,8 +35,13 @@ ToilettesRepository toilettesRepository(ToilettesRepositoryRef ref) {
 }
 
 @riverpod
-Future<OperationResponse<GAllToilettesData, GAllToilettesVars>> toilettesFuture(
-    ToilettesFutureRef ref) {
+Future<OperationResponse<GToilettesData, GToilettesVars>> toilettesFuture(ToilettesFutureRef ref) {
   final toilettesRepository = ref.watch(toilettesRepositoryProvider);
   return toilettesRepository.fetchToilettes();
+}
+
+@riverpod
+Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> nearToilettesFuture(NearToilettesFutureRef ref, GNearToilettesVarsBuilder vars) {
+  final toilettesRepository = ref.watch(toilettesRepositoryProvider);
+  return toilettesRepository.fetchNearToilettes(vars);
 }
