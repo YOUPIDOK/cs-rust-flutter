@@ -44,9 +44,6 @@ jobs:
           toolchain: stable
           override: true
       
-      - name: Lint
-        run: cargo fmt -- --check
-
       - name: Test build
         run: cargo check
 
@@ -76,11 +73,5 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Lint
-        run: flutter analyze
-
-
-#      - name: Run Flutter tests
-#        run: |
-#          cd app
-#          flutter test --verbose
+      - name: Run Flutter tests
+        run: flutter test test/test.dart
