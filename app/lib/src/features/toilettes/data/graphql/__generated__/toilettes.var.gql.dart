@@ -2,6 +2,8 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:app/src/api/graphql/__generated__/schema.schema.gql.dart'
+    as _i2;
 import 'package:app/src/api/graphql/__generated__/serializers.gql.dart' as _i1;
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -52,6 +54,79 @@ abstract class GToilettesVars
   static GToilettesVars? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GToilettesVars.serializer,
+        json,
+      );
+}
+
+abstract class GupdateDoorStateVars
+    implements Built<GupdateDoorStateVars, GupdateDoorStateVarsBuilder> {
+  GupdateDoorStateVars._();
+
+  factory GupdateDoorStateVars(
+          [void Function(GupdateDoorStateVarsBuilder b) updates]) =
+      _$GupdateDoorStateVars;
+
+  _i2.GUuid get id;
+  static Serializer<GupdateDoorStateVars> get serializer =>
+      _$gupdateDoorStateVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GupdateDoorStateVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GupdateDoorStateVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GupdateDoorStateVars.serializer,
+        json,
+      );
+}
+
+abstract class GtoggleLockStateVars
+    implements Built<GtoggleLockStateVars, GtoggleLockStateVarsBuilder> {
+  GtoggleLockStateVars._();
+
+  factory GtoggleLockStateVars(
+          [void Function(GtoggleLockStateVarsBuilder b) updates]) =
+      _$GtoggleLockStateVars;
+
+  _i2.GUuid get id;
+  static Serializer<GtoggleLockStateVars> get serializer =>
+      _$gtoggleLockStateVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GtoggleLockStateVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GtoggleLockStateVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GtoggleLockStateVars.serializer,
+        json,
+      );
+}
+
+abstract class GToiletteSubscriptionVars
+    implements
+        Built<GToiletteSubscriptionVars, GToiletteSubscriptionVarsBuilder> {
+  GToiletteSubscriptionVars._();
+
+  factory GToiletteSubscriptionVars(
+          [void Function(GToiletteSubscriptionVarsBuilder b) updates]) =
+      _$GToiletteSubscriptionVars;
+
+  _i2.GUuid get id;
+  static Serializer<GToiletteSubscriptionVars> get serializer =>
+      _$gToiletteSubscriptionVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GToiletteSubscriptionVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GToiletteSubscriptionVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GToiletteSubscriptionVars.serializer,
         json,
       );
 }

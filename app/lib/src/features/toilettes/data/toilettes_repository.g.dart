@@ -198,5 +198,147 @@ class _NearToilettesFutureProviderElement
   @override
   GNearToilettesVarsBuilder get vars => (origin as NearToilettesFutureProvider).vars;
 }
+
+String _$toiletteSubscriptionStreamHash() =>
+    r'bd9e1cdfcfbb011103fca5d9e375e84c6848eb5d';
+
+/// See also [toiletteSubscriptionStream].
+@ProviderFor(toiletteSubscriptionStream)
+const toiletteSubscriptionStreamProvider = ToiletteSubscriptionStreamFamily();
+
+/// See also [toiletteSubscriptionStream].
+class ToiletteSubscriptionStreamFamily extends Family<
+    AsyncValue<
+        OperationResponse<GToiletteSubscriptionData,
+            GToiletteSubscriptionVars>>> {
+  /// See also [toiletteSubscriptionStream].
+  const ToiletteSubscriptionStreamFamily();
+
+  /// See also [toiletteSubscriptionStream].
+  ToiletteSubscriptionStreamProvider call(
+    GToiletteSubscriptionVarsBuilder vars,
+  ) {
+    return ToiletteSubscriptionStreamProvider(
+      vars,
+    );
+  }
+
+  @override
+  ToiletteSubscriptionStreamProvider getProviderOverride(
+    covariant ToiletteSubscriptionStreamProvider provider,
+  ) {
+    return call(
+      provider.vars,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'toiletteSubscriptionStreamProvider';
+}
+
+/// See also [toiletteSubscriptionStream].
+class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
+    OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> {
+  /// See also [toiletteSubscriptionStream].
+  ToiletteSubscriptionStreamProvider(
+    GToiletteSubscriptionVarsBuilder vars,
+  ) : this._internal(
+          (ref) => toiletteSubscriptionStream(
+            ref as ToiletteSubscriptionStreamRef,
+            vars,
+          ),
+          from: toiletteSubscriptionStreamProvider,
+          name: r'toiletteSubscriptionStreamProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$toiletteSubscriptionStreamHash,
+          dependencies: ToiletteSubscriptionStreamFamily._dependencies,
+          allTransitiveDependencies:
+              ToiletteSubscriptionStreamFamily._allTransitiveDependencies,
+          vars: vars,
+        );
+
+  ToiletteSubscriptionStreamProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.vars,
+  }) : super.internal();
+
+  final GToiletteSubscriptionVarsBuilder vars;
+
+  @override
+  Override overrideWith(
+    Stream<
+                OperationResponse<GToiletteSubscriptionData,
+                    GToiletteSubscriptionVars>>
+            Function(ToiletteSubscriptionStreamRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ToiletteSubscriptionStreamProvider._internal(
+        (ref) => create(ref as ToiletteSubscriptionStreamRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        vars: vars,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<
+      OperationResponse<GToiletteSubscriptionData,
+          GToiletteSubscriptionVars>> createElement() {
+    return _ToiletteSubscriptionStreamProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ToiletteSubscriptionStreamProvider && other.vars == vars;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, vars.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ToiletteSubscriptionStreamRef on AutoDisposeStreamProviderRef<
+    OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> {
+  /// The parameter `vars` of this provider.
+  GToiletteSubscriptionVarsBuilder get vars;
+}
+
+class _ToiletteSubscriptionStreamProviderElement
+    extends AutoDisposeStreamProviderElement<
+        OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>>
+    with ToiletteSubscriptionStreamRef {
+  _ToiletteSubscriptionStreamProviderElement(super.provider);
+
+  @override
+  GToiletteSubscriptionVarsBuilder get vars => (origin as ToiletteSubscriptionStreamProvider).vars;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -19,3 +19,32 @@ query Toilettes {
     isMaintenance
   }
 }
+
+mutation updateDoorState($id: Uuid!) {
+  updateDoorState(id: $id) {
+    id
+    isMaintenance
+    doorIsOpen
+    isLocked
+  }
+}
+
+mutation toggleLockState($id: Uuid!) {
+  toggleLockState(id: $id) {
+    id
+    isMaintenance
+    doorIsOpen
+    isLocked
+  }
+}
+
+
+subscription ToiletteSubscription($id: Uuid!) {
+  doorStateUpdated(id: $id) {
+    id
+    name
+    doorIsOpen
+    isLocked
+    isMaintenance
+  }
+}

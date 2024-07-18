@@ -13,12 +13,28 @@ import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.
     show
         GNearToilettesData,
         GNearToilettesData_getToiletProche,
+        GToiletteSubscriptionData,
+        GToiletteSubscriptionData_doorStateUpdated,
         GToilettesData,
-        GToilettesData_getToilets;
+        GToilettesData_getToilets,
+        GtoggleLockStateData,
+        GtoggleLockStateData_toggleLockState,
+        GupdateDoorStateData,
+        GupdateDoorStateData_updateDoorState;
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.req.gql.dart'
-    show GNearToilettesReq, GToilettesReq;
+    show
+        GNearToilettesReq,
+        GToiletteSubscriptionReq,
+        GToilettesReq,
+        GtoggleLockStateReq,
+        GupdateDoorStateReq;
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.var.gql.dart'
-    show GNearToilettesVars, GToilettesVars;
+    show
+        GNearToilettesVars,
+        GToiletteSubscriptionVars,
+        GToilettesVars,
+        GtoggleLockStateVars,
+        GupdateDoorStateVars;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
@@ -40,11 +56,23 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GNearToilettesData_getToiletProche,
   GNearToilettesReq,
   GNearToilettesVars,
+  GToiletteSubscriptionData,
+  GToiletteSubscriptionData_doorStateUpdated,
+  GToiletteSubscriptionReq,
+  GToiletteSubscriptionVars,
   GToilettesData,
   GToilettesData_getToilets,
   GToilettesReq,
   GToilettesVars,
   GUserGender,
   GUuid,
+  GtoggleLockStateData,
+  GtoggleLockStateData_toggleLockState,
+  GtoggleLockStateReq,
+  GtoggleLockStateVars,
+  GupdateDoorStateData,
+  GupdateDoorStateData_updateDoorState,
+  GupdateDoorStateReq,
+  GupdateDoorStateVars,
 ])
 final Serializers serializers = _serializersBuilder.build();

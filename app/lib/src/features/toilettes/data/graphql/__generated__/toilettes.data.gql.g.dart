@@ -15,6 +15,21 @@ Serializer<GToilettesData> _$gToilettesDataSerializer =
     new _$GToilettesDataSerializer();
 Serializer<GToilettesData_getToilets> _$gToilettesDataGetToiletsSerializer =
     new _$GToilettesData_getToiletsSerializer();
+Serializer<GupdateDoorStateData> _$gupdateDoorStateDataSerializer =
+    new _$GupdateDoorStateDataSerializer();
+Serializer<GupdateDoorStateData_updateDoorState>
+    _$gupdateDoorStateDataUpdateDoorStateSerializer =
+    new _$GupdateDoorStateData_updateDoorStateSerializer();
+Serializer<GtoggleLockStateData> _$gtoggleLockStateDataSerializer =
+    new _$GtoggleLockStateDataSerializer();
+Serializer<GtoggleLockStateData_toggleLockState>
+    _$gtoggleLockStateDataToggleLockStateSerializer =
+    new _$GtoggleLockStateData_toggleLockStateSerializer();
+Serializer<GToiletteSubscriptionData> _$gToiletteSubscriptionDataSerializer =
+    new _$GToiletteSubscriptionDataSerializer();
+Serializer<GToiletteSubscriptionData_doorStateUpdated>
+    _$gToiletteSubscriptionDataDoorStateUpdatedSerializer =
+    new _$GToiletteSubscriptionData_doorStateUpdatedSerializer();
 
 class _$GNearToilettesDataSerializer
     implements StructuredSerializer<GNearToilettesData> {
@@ -279,6 +294,401 @@ class _$GToilettesData_getToiletsSerializer
         case 'companiesId':
           result.companiesId.replace(serializers.deserialize(value,
               specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'isMaintenance':
+          result.isMaintenance = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GupdateDoorStateDataSerializer
+    implements StructuredSerializer<GupdateDoorStateData> {
+  @override
+  final Iterable<Type> types = const [
+    GupdateDoorStateData,
+    _$GupdateDoorStateData
+  ];
+  @override
+  final String wireName = 'GupdateDoorStateData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GupdateDoorStateData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'updateDoorState',
+      serializers.serialize(object.updateDoorState,
+          specifiedType: const FullType(GupdateDoorStateData_updateDoorState)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GupdateDoorStateData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GupdateDoorStateDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'updateDoorState':
+          result.updateDoorState.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(GupdateDoorStateData_updateDoorState))!
+              as GupdateDoorStateData_updateDoorState);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GupdateDoorStateData_updateDoorStateSerializer
+    implements StructuredSerializer<GupdateDoorStateData_updateDoorState> {
+  @override
+  final Iterable<Type> types = const [
+    GupdateDoorStateData_updateDoorState,
+    _$GupdateDoorStateData_updateDoorState
+  ];
+  @override
+  final String wireName = 'GupdateDoorStateData_updateDoorState';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GupdateDoorStateData_updateDoorState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id,
+          specifiedType: const FullType(_i2.GUuid)),
+      'isMaintenance',
+      serializers.serialize(object.isMaintenance,
+          specifiedType: const FullType(bool)),
+      'doorIsOpen',
+      serializers.serialize(object.doorIsOpen,
+          specifiedType: const FullType(bool)),
+      'isLocked',
+      serializers.serialize(object.isLocked,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GupdateDoorStateData_updateDoorState deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GupdateDoorStateData_updateDoorStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'isMaintenance':
+          result.isMaintenance = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'doorIsOpen':
+          result.doorIsOpen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'isLocked':
+          result.isLocked = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GtoggleLockStateDataSerializer
+    implements StructuredSerializer<GtoggleLockStateData> {
+  @override
+  final Iterable<Type> types = const [
+    GtoggleLockStateData,
+    _$GtoggleLockStateData
+  ];
+  @override
+  final String wireName = 'GtoggleLockStateData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GtoggleLockStateData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'toggleLockState',
+      serializers.serialize(object.toggleLockState,
+          specifiedType: const FullType(GtoggleLockStateData_toggleLockState)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GtoggleLockStateData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GtoggleLockStateDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'toggleLockState':
+          result.toggleLockState.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(GtoggleLockStateData_toggleLockState))!
+              as GtoggleLockStateData_toggleLockState);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GtoggleLockStateData_toggleLockStateSerializer
+    implements StructuredSerializer<GtoggleLockStateData_toggleLockState> {
+  @override
+  final Iterable<Type> types = const [
+    GtoggleLockStateData_toggleLockState,
+    _$GtoggleLockStateData_toggleLockState
+  ];
+  @override
+  final String wireName = 'GtoggleLockStateData_toggleLockState';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GtoggleLockStateData_toggleLockState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id,
+          specifiedType: const FullType(_i2.GUuid)),
+      'isMaintenance',
+      serializers.serialize(object.isMaintenance,
+          specifiedType: const FullType(bool)),
+      'doorIsOpen',
+      serializers.serialize(object.doorIsOpen,
+          specifiedType: const FullType(bool)),
+      'isLocked',
+      serializers.serialize(object.isLocked,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GtoggleLockStateData_toggleLockState deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GtoggleLockStateData_toggleLockStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'isMaintenance':
+          result.isMaintenance = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'doorIsOpen':
+          result.doorIsOpen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'isLocked':
+          result.isLocked = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GToiletteSubscriptionDataSerializer
+    implements StructuredSerializer<GToiletteSubscriptionData> {
+  @override
+  final Iterable<Type> types = const [
+    GToiletteSubscriptionData,
+    _$GToiletteSubscriptionData
+  ];
+  @override
+  final String wireName = 'GToiletteSubscriptionData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GToiletteSubscriptionData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'doorStateUpdated',
+      serializers.serialize(object.doorStateUpdated,
+          specifiedType:
+              const FullType(GToiletteSubscriptionData_doorStateUpdated)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GToiletteSubscriptionData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GToiletteSubscriptionDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'doorStateUpdated':
+          result.doorStateUpdated.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GToiletteSubscriptionData_doorStateUpdated))!
+              as GToiletteSubscriptionData_doorStateUpdated);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GToiletteSubscriptionData_doorStateUpdatedSerializer
+    implements
+        StructuredSerializer<GToiletteSubscriptionData_doorStateUpdated> {
+  @override
+  final Iterable<Type> types = const [
+    GToiletteSubscriptionData_doorStateUpdated,
+    _$GToiletteSubscriptionData_doorStateUpdated
+  ];
+  @override
+  final String wireName = 'GToiletteSubscriptionData_doorStateUpdated';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GToiletteSubscriptionData_doorStateUpdated object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id,
+          specifiedType: const FullType(_i2.GUuid)),
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'doorIsOpen',
+      serializers.serialize(object.doorIsOpen,
+          specifiedType: const FullType(bool)),
+      'isLocked',
+      serializers.serialize(object.isLocked,
+          specifiedType: const FullType(bool)),
+      'isMaintenance',
+      serializers.serialize(object.isMaintenance,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GToiletteSubscriptionData_doorStateUpdated deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GToiletteSubscriptionData_doorStateUpdatedBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'doorIsOpen':
+          result.doorIsOpen = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'isLocked':
+          result.isLocked = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isMaintenance':
           result.isMaintenance = serializers.deserialize(value,
@@ -931,6 +1341,917 @@ class GToilettesData_getToiletsBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GToilettesData_getToilets', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GupdateDoorStateData extends GupdateDoorStateData {
+  @override
+  final String G__typename;
+  @override
+  final GupdateDoorStateData_updateDoorState updateDoorState;
+
+  factory _$GupdateDoorStateData(
+          [void Function(GupdateDoorStateDataBuilder)? updates]) =>
+      (new GupdateDoorStateDataBuilder()..update(updates))._build();
+
+  _$GupdateDoorStateData._(
+      {required this.G__typename, required this.updateDoorState})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GupdateDoorStateData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        updateDoorState, r'GupdateDoorStateData', 'updateDoorState');
+  }
+
+  @override
+  GupdateDoorStateData rebuild(
+          void Function(GupdateDoorStateDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GupdateDoorStateDataBuilder toBuilder() =>
+      new GupdateDoorStateDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GupdateDoorStateData &&
+        G__typename == other.G__typename &&
+        updateDoorState == other.updateDoorState;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, updateDoorState.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GupdateDoorStateData')
+          ..add('G__typename', G__typename)
+          ..add('updateDoorState', updateDoorState))
+        .toString();
+  }
+}
+
+class GupdateDoorStateDataBuilder
+    implements Builder<GupdateDoorStateData, GupdateDoorStateDataBuilder> {
+  _$GupdateDoorStateData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  GupdateDoorStateData_updateDoorStateBuilder? _updateDoorState;
+  GupdateDoorStateData_updateDoorStateBuilder get updateDoorState =>
+      _$this._updateDoorState ??=
+          new GupdateDoorStateData_updateDoorStateBuilder();
+  set updateDoorState(
+          GupdateDoorStateData_updateDoorStateBuilder? updateDoorState) =>
+      _$this._updateDoorState = updateDoorState;
+
+  GupdateDoorStateDataBuilder() {
+    GupdateDoorStateData._initializeBuilder(this);
+  }
+
+  GupdateDoorStateDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _updateDoorState = $v.updateDoorState.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GupdateDoorStateData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GupdateDoorStateData;
+  }
+
+  @override
+  void update(void Function(GupdateDoorStateDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GupdateDoorStateData build() => _build();
+
+  _$GupdateDoorStateData _build() {
+    _$GupdateDoorStateData _$result;
+    try {
+      _$result = _$v ??
+          new _$GupdateDoorStateData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GupdateDoorStateData', 'G__typename'),
+              updateDoorState: updateDoorState.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'updateDoorState';
+        updateDoorState.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GupdateDoorStateData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GupdateDoorStateData_updateDoorState
+    extends GupdateDoorStateData_updateDoorState {
+  @override
+  final String G__typename;
+  @override
+  final _i2.GUuid id;
+  @override
+  final bool isMaintenance;
+  @override
+  final bool doorIsOpen;
+  @override
+  final bool isLocked;
+
+  factory _$GupdateDoorStateData_updateDoorState(
+          [void Function(GupdateDoorStateData_updateDoorStateBuilder)?
+              updates]) =>
+      (new GupdateDoorStateData_updateDoorStateBuilder()..update(updates))
+          ._build();
+
+  _$GupdateDoorStateData_updateDoorState._(
+      {required this.G__typename,
+      required this.id,
+      required this.isMaintenance,
+      required this.doorIsOpen,
+      required this.isLocked})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GupdateDoorStateData_updateDoorState', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GupdateDoorStateData_updateDoorState', 'id');
+    BuiltValueNullFieldError.checkNotNull(isMaintenance,
+        r'GupdateDoorStateData_updateDoorState', 'isMaintenance');
+    BuiltValueNullFieldError.checkNotNull(
+        doorIsOpen, r'GupdateDoorStateData_updateDoorState', 'doorIsOpen');
+    BuiltValueNullFieldError.checkNotNull(
+        isLocked, r'GupdateDoorStateData_updateDoorState', 'isLocked');
+  }
+
+  @override
+  GupdateDoorStateData_updateDoorState rebuild(
+          void Function(GupdateDoorStateData_updateDoorStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GupdateDoorStateData_updateDoorStateBuilder toBuilder() =>
+      new GupdateDoorStateData_updateDoorStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GupdateDoorStateData_updateDoorState &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        isMaintenance == other.isMaintenance &&
+        doorIsOpen == other.doorIsOpen &&
+        isLocked == other.isLocked;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, isMaintenance.hashCode);
+    _$hash = $jc(_$hash, doorIsOpen.hashCode);
+    _$hash = $jc(_$hash, isLocked.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GupdateDoorStateData_updateDoorState')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('isMaintenance', isMaintenance)
+          ..add('doorIsOpen', doorIsOpen)
+          ..add('isLocked', isLocked))
+        .toString();
+  }
+}
+
+class GupdateDoorStateData_updateDoorStateBuilder
+    implements
+        Builder<GupdateDoorStateData_updateDoorState,
+            GupdateDoorStateData_updateDoorStateBuilder> {
+  _$GupdateDoorStateData_updateDoorState? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  _i2.GUuidBuilder? _id;
+  _i2.GUuidBuilder get id => _$this._id ??= new _i2.GUuidBuilder();
+  set id(_i2.GUuidBuilder? id) => _$this._id = id;
+
+  bool? _isMaintenance;
+  bool? get isMaintenance => _$this._isMaintenance;
+  set isMaintenance(bool? isMaintenance) =>
+      _$this._isMaintenance = isMaintenance;
+
+  bool? _doorIsOpen;
+  bool? get doorIsOpen => _$this._doorIsOpen;
+  set doorIsOpen(bool? doorIsOpen) => _$this._doorIsOpen = doorIsOpen;
+
+  bool? _isLocked;
+  bool? get isLocked => _$this._isLocked;
+  set isLocked(bool? isLocked) => _$this._isLocked = isLocked;
+
+  GupdateDoorStateData_updateDoorStateBuilder() {
+    GupdateDoorStateData_updateDoorState._initializeBuilder(this);
+  }
+
+  GupdateDoorStateData_updateDoorStateBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id.toBuilder();
+      _isMaintenance = $v.isMaintenance;
+      _doorIsOpen = $v.doorIsOpen;
+      _isLocked = $v.isLocked;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GupdateDoorStateData_updateDoorState other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GupdateDoorStateData_updateDoorState;
+  }
+
+  @override
+  void update(
+      void Function(GupdateDoorStateData_updateDoorStateBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GupdateDoorStateData_updateDoorState build() => _build();
+
+  _$GupdateDoorStateData_updateDoorState _build() {
+    _$GupdateDoorStateData_updateDoorState _$result;
+    try {
+      _$result = _$v ??
+          new _$GupdateDoorStateData_updateDoorState._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                  r'GupdateDoorStateData_updateDoorState', 'G__typename'),
+              id: id.build(),
+              isMaintenance: BuiltValueNullFieldError.checkNotNull(
+                  isMaintenance,
+                  r'GupdateDoorStateData_updateDoorState',
+                  'isMaintenance'),
+              doorIsOpen: BuiltValueNullFieldError.checkNotNull(doorIsOpen,
+                  r'GupdateDoorStateData_updateDoorState', 'doorIsOpen'),
+              isLocked: BuiltValueNullFieldError.checkNotNull(isLocked,
+                  r'GupdateDoorStateData_updateDoorState', 'isLocked'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'id';
+        id.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GupdateDoorStateData_updateDoorState',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GtoggleLockStateData extends GtoggleLockStateData {
+  @override
+  final String G__typename;
+  @override
+  final GtoggleLockStateData_toggleLockState toggleLockState;
+
+  factory _$GtoggleLockStateData(
+          [void Function(GtoggleLockStateDataBuilder)? updates]) =>
+      (new GtoggleLockStateDataBuilder()..update(updates))._build();
+
+  _$GtoggleLockStateData._(
+      {required this.G__typename, required this.toggleLockState})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GtoggleLockStateData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        toggleLockState, r'GtoggleLockStateData', 'toggleLockState');
+  }
+
+  @override
+  GtoggleLockStateData rebuild(
+          void Function(GtoggleLockStateDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GtoggleLockStateDataBuilder toBuilder() =>
+      new GtoggleLockStateDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GtoggleLockStateData &&
+        G__typename == other.G__typename &&
+        toggleLockState == other.toggleLockState;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, toggleLockState.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GtoggleLockStateData')
+          ..add('G__typename', G__typename)
+          ..add('toggleLockState', toggleLockState))
+        .toString();
+  }
+}
+
+class GtoggleLockStateDataBuilder
+    implements Builder<GtoggleLockStateData, GtoggleLockStateDataBuilder> {
+  _$GtoggleLockStateData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  GtoggleLockStateData_toggleLockStateBuilder? _toggleLockState;
+  GtoggleLockStateData_toggleLockStateBuilder get toggleLockState =>
+      _$this._toggleLockState ??=
+          new GtoggleLockStateData_toggleLockStateBuilder();
+  set toggleLockState(
+          GtoggleLockStateData_toggleLockStateBuilder? toggleLockState) =>
+      _$this._toggleLockState = toggleLockState;
+
+  GtoggleLockStateDataBuilder() {
+    GtoggleLockStateData._initializeBuilder(this);
+  }
+
+  GtoggleLockStateDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _toggleLockState = $v.toggleLockState.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GtoggleLockStateData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GtoggleLockStateData;
+  }
+
+  @override
+  void update(void Function(GtoggleLockStateDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GtoggleLockStateData build() => _build();
+
+  _$GtoggleLockStateData _build() {
+    _$GtoggleLockStateData _$result;
+    try {
+      _$result = _$v ??
+          new _$GtoggleLockStateData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GtoggleLockStateData', 'G__typename'),
+              toggleLockState: toggleLockState.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'toggleLockState';
+        toggleLockState.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GtoggleLockStateData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GtoggleLockStateData_toggleLockState
+    extends GtoggleLockStateData_toggleLockState {
+  @override
+  final String G__typename;
+  @override
+  final _i2.GUuid id;
+  @override
+  final bool isMaintenance;
+  @override
+  final bool doorIsOpen;
+  @override
+  final bool isLocked;
+
+  factory _$GtoggleLockStateData_toggleLockState(
+          [void Function(GtoggleLockStateData_toggleLockStateBuilder)?
+              updates]) =>
+      (new GtoggleLockStateData_toggleLockStateBuilder()..update(updates))
+          ._build();
+
+  _$GtoggleLockStateData_toggleLockState._(
+      {required this.G__typename,
+      required this.id,
+      required this.isMaintenance,
+      required this.doorIsOpen,
+      required this.isLocked})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GtoggleLockStateData_toggleLockState', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GtoggleLockStateData_toggleLockState', 'id');
+    BuiltValueNullFieldError.checkNotNull(isMaintenance,
+        r'GtoggleLockStateData_toggleLockState', 'isMaintenance');
+    BuiltValueNullFieldError.checkNotNull(
+        doorIsOpen, r'GtoggleLockStateData_toggleLockState', 'doorIsOpen');
+    BuiltValueNullFieldError.checkNotNull(
+        isLocked, r'GtoggleLockStateData_toggleLockState', 'isLocked');
+  }
+
+  @override
+  GtoggleLockStateData_toggleLockState rebuild(
+          void Function(GtoggleLockStateData_toggleLockStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GtoggleLockStateData_toggleLockStateBuilder toBuilder() =>
+      new GtoggleLockStateData_toggleLockStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GtoggleLockStateData_toggleLockState &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        isMaintenance == other.isMaintenance &&
+        doorIsOpen == other.doorIsOpen &&
+        isLocked == other.isLocked;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, isMaintenance.hashCode);
+    _$hash = $jc(_$hash, doorIsOpen.hashCode);
+    _$hash = $jc(_$hash, isLocked.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GtoggleLockStateData_toggleLockState')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('isMaintenance', isMaintenance)
+          ..add('doorIsOpen', doorIsOpen)
+          ..add('isLocked', isLocked))
+        .toString();
+  }
+}
+
+class GtoggleLockStateData_toggleLockStateBuilder
+    implements
+        Builder<GtoggleLockStateData_toggleLockState,
+            GtoggleLockStateData_toggleLockStateBuilder> {
+  _$GtoggleLockStateData_toggleLockState? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  _i2.GUuidBuilder? _id;
+  _i2.GUuidBuilder get id => _$this._id ??= new _i2.GUuidBuilder();
+  set id(_i2.GUuidBuilder? id) => _$this._id = id;
+
+  bool? _isMaintenance;
+  bool? get isMaintenance => _$this._isMaintenance;
+  set isMaintenance(bool? isMaintenance) =>
+      _$this._isMaintenance = isMaintenance;
+
+  bool? _doorIsOpen;
+  bool? get doorIsOpen => _$this._doorIsOpen;
+  set doorIsOpen(bool? doorIsOpen) => _$this._doorIsOpen = doorIsOpen;
+
+  bool? _isLocked;
+  bool? get isLocked => _$this._isLocked;
+  set isLocked(bool? isLocked) => _$this._isLocked = isLocked;
+
+  GtoggleLockStateData_toggleLockStateBuilder() {
+    GtoggleLockStateData_toggleLockState._initializeBuilder(this);
+  }
+
+  GtoggleLockStateData_toggleLockStateBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id.toBuilder();
+      _isMaintenance = $v.isMaintenance;
+      _doorIsOpen = $v.doorIsOpen;
+      _isLocked = $v.isLocked;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GtoggleLockStateData_toggleLockState other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GtoggleLockStateData_toggleLockState;
+  }
+
+  @override
+  void update(
+      void Function(GtoggleLockStateData_toggleLockStateBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GtoggleLockStateData_toggleLockState build() => _build();
+
+  _$GtoggleLockStateData_toggleLockState _build() {
+    _$GtoggleLockStateData_toggleLockState _$result;
+    try {
+      _$result = _$v ??
+          new _$GtoggleLockStateData_toggleLockState._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                  r'GtoggleLockStateData_toggleLockState', 'G__typename'),
+              id: id.build(),
+              isMaintenance: BuiltValueNullFieldError.checkNotNull(
+                  isMaintenance,
+                  r'GtoggleLockStateData_toggleLockState',
+                  'isMaintenance'),
+              doorIsOpen: BuiltValueNullFieldError.checkNotNull(doorIsOpen,
+                  r'GtoggleLockStateData_toggleLockState', 'doorIsOpen'),
+              isLocked: BuiltValueNullFieldError.checkNotNull(isLocked,
+                  r'GtoggleLockStateData_toggleLockState', 'isLocked'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'id';
+        id.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GtoggleLockStateData_toggleLockState',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GToiletteSubscriptionData extends GToiletteSubscriptionData {
+  @override
+  final String G__typename;
+  @override
+  final GToiletteSubscriptionData_doorStateUpdated doorStateUpdated;
+
+  factory _$GToiletteSubscriptionData(
+          [void Function(GToiletteSubscriptionDataBuilder)? updates]) =>
+      (new GToiletteSubscriptionDataBuilder()..update(updates))._build();
+
+  _$GToiletteSubscriptionData._(
+      {required this.G__typename, required this.doorStateUpdated})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GToiletteSubscriptionData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        doorStateUpdated, r'GToiletteSubscriptionData', 'doorStateUpdated');
+  }
+
+  @override
+  GToiletteSubscriptionData rebuild(
+          void Function(GToiletteSubscriptionDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GToiletteSubscriptionDataBuilder toBuilder() =>
+      new GToiletteSubscriptionDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GToiletteSubscriptionData &&
+        G__typename == other.G__typename &&
+        doorStateUpdated == other.doorStateUpdated;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, doorStateUpdated.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GToiletteSubscriptionData')
+          ..add('G__typename', G__typename)
+          ..add('doorStateUpdated', doorStateUpdated))
+        .toString();
+  }
+}
+
+class GToiletteSubscriptionDataBuilder
+    implements
+        Builder<GToiletteSubscriptionData, GToiletteSubscriptionDataBuilder> {
+  _$GToiletteSubscriptionData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  GToiletteSubscriptionData_doorStateUpdatedBuilder? _doorStateUpdated;
+  GToiletteSubscriptionData_doorStateUpdatedBuilder get doorStateUpdated =>
+      _$this._doorStateUpdated ??=
+          new GToiletteSubscriptionData_doorStateUpdatedBuilder();
+  set doorStateUpdated(
+          GToiletteSubscriptionData_doorStateUpdatedBuilder?
+              doorStateUpdated) =>
+      _$this._doorStateUpdated = doorStateUpdated;
+
+  GToiletteSubscriptionDataBuilder() {
+    GToiletteSubscriptionData._initializeBuilder(this);
+  }
+
+  GToiletteSubscriptionDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _doorStateUpdated = $v.doorStateUpdated.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GToiletteSubscriptionData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GToiletteSubscriptionData;
+  }
+
+  @override
+  void update(void Function(GToiletteSubscriptionDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GToiletteSubscriptionData build() => _build();
+
+  _$GToiletteSubscriptionData _build() {
+    _$GToiletteSubscriptionData _$result;
+    try {
+      _$result = _$v ??
+          new _$GToiletteSubscriptionData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GToiletteSubscriptionData', 'G__typename'),
+              doorStateUpdated: doorStateUpdated.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'doorStateUpdated';
+        doorStateUpdated.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GToiletteSubscriptionData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GToiletteSubscriptionData_doorStateUpdated
+    extends GToiletteSubscriptionData_doorStateUpdated {
+  @override
+  final String G__typename;
+  @override
+  final _i2.GUuid id;
+  @override
+  final String name;
+  @override
+  final bool doorIsOpen;
+  @override
+  final bool isLocked;
+  @override
+  final bool isMaintenance;
+
+  factory _$GToiletteSubscriptionData_doorStateUpdated(
+          [void Function(GToiletteSubscriptionData_doorStateUpdatedBuilder)?
+              updates]) =>
+      (new GToiletteSubscriptionData_doorStateUpdatedBuilder()..update(updates))
+          ._build();
+
+  _$GToiletteSubscriptionData_doorStateUpdated._(
+      {required this.G__typename,
+      required this.id,
+      required this.name,
+      required this.doorIsOpen,
+      required this.isLocked,
+      required this.isMaintenance})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GToiletteSubscriptionData_doorStateUpdated', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GToiletteSubscriptionData_doorStateUpdated', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        name, r'GToiletteSubscriptionData_doorStateUpdated', 'name');
+    BuiltValueNullFieldError.checkNotNull(doorIsOpen,
+        r'GToiletteSubscriptionData_doorStateUpdated', 'doorIsOpen');
+    BuiltValueNullFieldError.checkNotNull(
+        isLocked, r'GToiletteSubscriptionData_doorStateUpdated', 'isLocked');
+    BuiltValueNullFieldError.checkNotNull(isMaintenance,
+        r'GToiletteSubscriptionData_doorStateUpdated', 'isMaintenance');
+  }
+
+  @override
+  GToiletteSubscriptionData_doorStateUpdated rebuild(
+          void Function(GToiletteSubscriptionData_doorStateUpdatedBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GToiletteSubscriptionData_doorStateUpdatedBuilder toBuilder() =>
+      new GToiletteSubscriptionData_doorStateUpdatedBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GToiletteSubscriptionData_doorStateUpdated &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        name == other.name &&
+        doorIsOpen == other.doorIsOpen &&
+        isLocked == other.isLocked &&
+        isMaintenance == other.isMaintenance;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, doorIsOpen.hashCode);
+    _$hash = $jc(_$hash, isLocked.hashCode);
+    _$hash = $jc(_$hash, isMaintenance.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GToiletteSubscriptionData_doorStateUpdated')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('name', name)
+          ..add('doorIsOpen', doorIsOpen)
+          ..add('isLocked', isLocked)
+          ..add('isMaintenance', isMaintenance))
+        .toString();
+  }
+}
+
+class GToiletteSubscriptionData_doorStateUpdatedBuilder
+    implements
+        Builder<GToiletteSubscriptionData_doorStateUpdated,
+            GToiletteSubscriptionData_doorStateUpdatedBuilder> {
+  _$GToiletteSubscriptionData_doorStateUpdated? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  _i2.GUuidBuilder? _id;
+  _i2.GUuidBuilder get id => _$this._id ??= new _i2.GUuidBuilder();
+  set id(_i2.GUuidBuilder? id) => _$this._id = id;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  bool? _doorIsOpen;
+  bool? get doorIsOpen => _$this._doorIsOpen;
+  set doorIsOpen(bool? doorIsOpen) => _$this._doorIsOpen = doorIsOpen;
+
+  bool? _isLocked;
+  bool? get isLocked => _$this._isLocked;
+  set isLocked(bool? isLocked) => _$this._isLocked = isLocked;
+
+  bool? _isMaintenance;
+  bool? get isMaintenance => _$this._isMaintenance;
+  set isMaintenance(bool? isMaintenance) =>
+      _$this._isMaintenance = isMaintenance;
+
+  GToiletteSubscriptionData_doorStateUpdatedBuilder() {
+    GToiletteSubscriptionData_doorStateUpdated._initializeBuilder(this);
+  }
+
+  GToiletteSubscriptionData_doorStateUpdatedBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id.toBuilder();
+      _name = $v.name;
+      _doorIsOpen = $v.doorIsOpen;
+      _isLocked = $v.isLocked;
+      _isMaintenance = $v.isMaintenance;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GToiletteSubscriptionData_doorStateUpdated other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GToiletteSubscriptionData_doorStateUpdated;
+  }
+
+  @override
+  void update(
+      void Function(GToiletteSubscriptionData_doorStateUpdatedBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GToiletteSubscriptionData_doorStateUpdated build() => _build();
+
+  _$GToiletteSubscriptionData_doorStateUpdated _build() {
+    _$GToiletteSubscriptionData_doorStateUpdated _$result;
+    try {
+      _$result = _$v ??
+          new _$GToiletteSubscriptionData_doorStateUpdated._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                  r'GToiletteSubscriptionData_doorStateUpdated', 'G__typename'),
+              id: id.build(),
+              name: BuiltValueNullFieldError.checkNotNull(
+                  name, r'GToiletteSubscriptionData_doorStateUpdated', 'name'),
+              doorIsOpen: BuiltValueNullFieldError.checkNotNull(doorIsOpen,
+                  r'GToiletteSubscriptionData_doorStateUpdated', 'doorIsOpen'),
+              isLocked: BuiltValueNullFieldError.checkNotNull(isLocked,
+                  r'GToiletteSubscriptionData_doorStateUpdated', 'isLocked'),
+              isMaintenance: BuiltValueNullFieldError.checkNotNull(
+                  isMaintenance,
+                  r'GToiletteSubscriptionData_doorStateUpdated',
+                  'isMaintenance'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'id';
+        id.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GToiletteSubscriptionData_doorStateUpdated',
+            _$failedField,
+            e.toString());
       }
       rethrow;
     }
