@@ -16,7 +16,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
     'email': 'johndoe@example.com',
     'gender': 'Male',
     'address': '123 Main St, Anytown, USA',
-    'phoneNumber': '07 123 456 789',
+    'postalCode': '12345',
+    'mobileNumber': '07 123 456 789',
   };
 
   Widget _buildDisplayCard() {
@@ -33,7 +34,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
               Text('Email: ${_formData['email']}', style: const TextStyle(fontWeight: FontWeight.bold)),
               Text('Gender: ${_formData['gender']}', style: const TextStyle(fontWeight: FontWeight.bold)),
               Text('Address: ${_formData['address']}', style: const TextStyle(fontWeight: FontWeight.bold)),
-              Text('Phone Number: ${_formData['phoneNumber']}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text('Postal Code: ${_formData['postalCode']}', style: const TextStyle(fontWeight: FontWeight.bold)),
+              Text('Phone Number: ${_formData['mobileNumber']}', style: const TextStyle(fontWeight: FontWeight.bold)),
               ElevatedButton(
                 onPressed: () => setState(() => _isEditing = true),
                 child: const Text('Modifier'),
@@ -80,9 +82,14 @@ class _PersonalInformationState extends State<PersonalInformation> {
                 onChanged: (value) => _formData['address'] = value,
               ),
               TextFormField(
-                initialValue: _formData['phoneNumber'],
+                initialValue: _formData['postalCode'],
+                decoration: const InputDecoration(labelText: 'Postal Code'),
+                onChanged: (value) => _formData['postalCode'] = value,
+              ),
+              TextFormField(
+                initialValue: _formData['mobileNumber'],
                 decoration: const InputDecoration(labelText: 'Phone Number'),
-                onChanged: (value) => _formData['phoneNumber'] = value,
+                onChanged: (value) => _formData['mobileNumber'] = value,
               ),
               ElevatedButton(
                 onPressed: () => setState(() => _isEditing = false),

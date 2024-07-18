@@ -2,6 +2,7 @@ import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
+import 'package:app/src/features/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,11 +14,8 @@ part 'app_router.g.dart';
 
 enum AppRoute {
   home,
-
-  /// Toilettes
   toilettes,
-
-  // Account
+  settings
 }
 
 // private navigators
@@ -66,6 +64,13 @@ GoRouter goRouter(GoRouterRef ref) {
               path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
+            ),
+          ]),
+          StatefulShellBranch(routes: <RouteBase>[
+            GoRoute(
+              path: '/settings',
+              name: AppRoute.settings.name,
+              pageBuilder: (context, state) => pageFadeTransition(context, state, const SettingsScreen()),
             ),
           ]),
         ],
@@ -135,16 +140,22 @@ CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState stat
     );
 
 List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/home',
-        icon: Icon(Icons.home_outlined),
-        activeIcon: Icon(Icons.home),
-        label: "Home",
-      ),
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/toilettes',
-        icon: Icon(Icons.map_outlined),
-        activeIcon: Icon(Icons.map),
-        label: "Search",
-      ),
-    ];
+  const ScaffoldWithNavBarTabItem(
+    initialLocation: '/home',
+    icon: Icon(Icons.home_outlined),
+    activeIcon: Icon(Icons.home),
+    label: "Home",
+  ),
+  const ScaffoldWithNavBarTabItem(
+    initialLocation: '/toilettes',
+    icon: Icon(Icons.map_outlined),
+    activeIcon: Icon(Icons.map),
+    label: "Search",
+  ),
+  const ScaffoldWithNavBarTabItem(
+    initialLocation: '/settings',
+    icon: Icon(Icons.settings_outlined),
+    activeIcon: Icon(Icons.settings),
+    label: "Settings",
+  ),
+];
