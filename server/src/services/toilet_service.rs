@@ -56,11 +56,11 @@ pub fn update_door_state(pool: Pool<ConnectionManager<PgConnection>>, toilet_id:
         return Err(diesel::result::Error::NotFound);
     }
 
-    // Planifiez l'ouverture de la porte après 2 secondes
+    // Planifiez l'ouverture de la porte après 5 secondes
     actix_rt::spawn({
         let pool = pool.clone();
         async move {
-            sleep(Duration::from_secs(2)).await;
+            sleep(Duration::from_secs(5)).await;
             let mut conn = pool.get().unwrap();
             diesel::update(toilets.find(toilet_id))
                 .set(door_is_open.eq(true))
