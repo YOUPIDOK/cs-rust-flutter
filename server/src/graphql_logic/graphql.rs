@@ -1,5 +1,5 @@
 use super::context::GraphQLContext;
-use crate::models::comment::Comment;
+use crate::models::comment::{Comment, CreateComment};
 use crate::models::user::{self, CreateUser, ModifyUser, User};
 use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
@@ -182,6 +182,14 @@ impl Mutation {
     pub fn update_user(context: &GraphQLContext, input: ModifyUser) -> FieldResult<User> {
         let conn = &mut context.pool.get()?;
         let res = user_service::update_user(conn, input);
+        graphql_translate(res)
+    }
+
+    // Comment
+    pub async fn create_comment(context: &GraphQLContext, input: CreateComment) -> FieldResult<Comment> {
+        let user = context.authorize().await?;
+        let conn = &mut context.pool.get()?;
+        let res = comment_service::create_comment(conn, input, user.id);
         graphql_translate(res)
     }
 }
