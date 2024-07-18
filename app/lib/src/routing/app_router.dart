@@ -65,7 +65,7 @@ GoRouter goRouter(GoRouterRef ref) {
                 pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
                 routes: [
                   GoRoute(
-                    path: '/settings',
+                    path: 'settings',
                     name: AppRoute.accountSettings.name,
                     pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountSettingsScreen()),
                   ),
