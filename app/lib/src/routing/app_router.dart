@@ -1,5 +1,6 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
+import 'package:app/src/features/profil/presentation/profil.screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ enum AppRoute {
   toilettes,
 
   // Account
+
+  profil,
 }
 
 // private navigators
@@ -66,6 +69,13 @@ GoRouter goRouter(GoRouterRef ref) {
               path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
+            ),
+          ]),
+          StatefulShellBranch(routes: <RouteBase>[
+            GoRoute(
+              path: '/profil',
+              name: AppRoute.profil.name,
+              pageBuilder: (context, state) => pageFadeTransition(context, state, const ProfilScree()),
             ),
           ]),
         ],
@@ -146,5 +156,11 @@ List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
         icon: Icon(Icons.map_outlined),
         activeIcon: Icon(Icons.map),
         label: "Search",
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/profil',
+        icon: Icon(Icons.person),
+        activeIcon: Icon(Icons.person),
+        label: "Profile",
       ),
     ];
