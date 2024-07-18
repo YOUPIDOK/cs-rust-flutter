@@ -37,7 +37,8 @@ pub struct Query;
 impl Query {
     // Note, that the field name will be automatically converted to the
     // `camelCased` variant, just as GraphQL conventions imply.
-    fn api_version(context: &GraphQLContext) -> FieldResult<&str> {
+    async fn api_version(context: &GraphQLContext) -> FieldResult<&str> {
+        context.authorize().await?;
         FieldResult::Ok("1.0")
     }
 
