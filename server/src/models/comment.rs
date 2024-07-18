@@ -1,7 +1,7 @@
 use diesel::prelude::*;
-use juniper::GraphQLObject;
 use uuid::Uuid;
 use chrono::NaiveDateTime;
+use juniper::{GraphQLInputObject, GraphQLObject};
 
 use crate::schema::comments;
 use crate::models::toilet::Toilet;
@@ -21,4 +21,21 @@ pub struct Comment {
     pub note: f64,
     pub comment: Option<String>,
     pub created_at: NaiveDateTime,
+}
+
+
+#[derive(Insertable)]
+#[diesel(table_name = comments)]
+pub struct NewComment {
+    pub toilet_id: Uuid,
+    pub user_id: Uuid,
+    pub note: f64,
+    pub comment: Option<String>,
+}
+
+#[derive(GraphQLInputObject)]
+pub struct CreateComment {
+    pub toilet_id: Uuid,
+    pub note: f64,
+    pub comment: Option<String>,
 }
