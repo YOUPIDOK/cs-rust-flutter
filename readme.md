@@ -6,6 +6,10 @@
 - Amine Fajry
 - Nalvac Atinhounon
 - Nadia Schwaller 
+
+## Projects
+- [Flutter app](app/README.md)
+- [Server API](server/README.md)
 ## Install
 **Config .env**
 ```shell

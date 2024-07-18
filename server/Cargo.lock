@@ -139,6 +139,7 @@ version = "2.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "24eda4e2a6e042aa4e55ac438a2ae052d3b5da0ecf83d7411e1a368946925208"
 dependencies = [
+ "actix-macros",
  "futures-core",
  "tokio",
 ]
@@ -266,6 +267,19 @@ dependencies = [
  "serde",
  "serde_json",
  "uuid",
+]
+
+[[package]]
+name = "actix-ws"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "535aec173810be3ca6f25dd5b4d431ae7125d62000aa3cbae1ec739921b02cf3"
+dependencies = [
+ "actix-codec",
+ "actix-http",
+ "actix-web",
+ "futures-core",
+ "tokio",
 ]
 
 [[package]]
@@ -1792,9 +1806,11 @@ checksum = "2eafd05a9b03395e4c032e5d903109a5fceaf89bb7ae6731e416bc2088f9e556"
 dependencies = [
  "actix-http",
  "actix-web",
+ "actix-ws",
  "anyhow",
  "futures",
  "juniper",
+ "juniper_graphql_ws",
  "serde",
  "serde_json",
 ]
@@ -1809,6 +1825,28 @@ dependencies = [
  "quote",
  "syn 2.0.71",
  "url",
+]
+
+[[package]]
+name = "juniper_graphql_ws"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "709eb11c716072f5c9fcbfa705dd684bd3c070943102f9fc56ccb812a36ba017"
+dependencies = [
+ "juniper",
+ "juniper_subscriptions",
+ "serde",
+ "tokio",
+]
+
+[[package]]
+name = "juniper_subscriptions"
+version = "0.17.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e6208a839bd4ca2131924a238311d088d6604ea267c0917903392bad7b70a92c"
+dependencies = [
+ "futures",
+ "juniper",
 ]
 
 [[package]]
@@ -2662,22 +2700,29 @@ version = "0.1.0"
 dependencies = [
  "actix",
  "actix-cors",
+ "actix-rt",
  "actix-web",
  "actix-web-actors",
  "actix-web-middleware-keycloak-auth",
+ "actix-ws",
  "async-graphql",
  "async-graphql-actix-web",
  "async-std",
+ "async-stream",
  "chrono",
  "diesel",
  "diesel-derive-enum",
  "dotenv",
  "dotenvy",
  "env_logger",
+ "futures",
  "jsonwebtoken",
  "juniper",
  "juniper_actix",
+ "juniper_graphql_ws",
+ "juniper_subscriptions",
  "keycloak",
+ "log",
  "r2d2",
  "reqwest",
  "serde",
