@@ -1,13 +1,14 @@
+import 'package:app/src/constants/paddings.dart';
 import 'package:flutter/material.dart';
 
-class ReviewHistory extends StatefulWidget {
-  const ReviewHistory({super.key});
+class AccountReviewHistoryScreen extends StatefulWidget {
+  const AccountReviewHistoryScreen({super.key});
 
   @override
-  _ReviewHistoryState createState() => _ReviewHistoryState();
+  State<AccountReviewHistoryScreen> createState() => _AccountReviewHistoryScreenState();
 }
 
-class _ReviewHistoryState extends State<ReviewHistory> {
+class _AccountReviewHistoryScreenState extends State<AccountReviewHistoryScreen> {
   List<Map<String, dynamic>> reviews = [
     {'title': 'WC Vieux Lyon', 'subtitle': '7 rue des Fleurs 37000 Tours', 'starCount': 5},
     {'title': 'WC Debourg', 'subtitle': '5 rue Victor Hugo 69000 Lyon', 'starCount': 4},
@@ -22,7 +23,7 @@ class _ReviewHistoryState extends State<ReviewHistory> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Modifier l\'avis'),
+              title: const Text('Modifier l\'avis'),
               content: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: List.generate(5, (i) {
@@ -74,16 +75,19 @@ class _ReviewHistoryState extends State<ReviewHistory> {
     return Scaffold(
       appBar: AppBar(title: const Text('Votre historique des avis')),
       body: SingleChildScrollView(
-        child: Column(
-          children: List.generate(reviews.length, (index) {
-            return cardWithRating(
-              reviews[index]['title'],
-              reviews[index]['subtitle'],
-              reviews[index]['starCount'],
-                  () => _editReview(index),
-                  () => _deleteReview(index),
-            );
-          }),
+        child: Padding(
+          padding: Paddings.page,
+          child: Column(
+            children: List.generate(reviews.length, (index) {
+              return cardWithRating(
+                reviews[index]['title'],
+                reviews[index]['subtitle'],
+                reviews[index]['starCount'],
+                () => _editReview(index),
+                () => _deleteReview(index),
+              );
+            }),
+          ),
         ),
       ),
     );
@@ -107,7 +111,17 @@ class _ReviewHistoryState extends State<ReviewHistory> {
               children: [
                 Text(subtitle),
                 Row(
-                  children: List.generate(5, (index) => index < starCount ? Icon(Icons.star, color: Colors.amber,) : Icon(Icons.star_border, color: Colors.amber,)),
+                  children: List.generate(
+                      5,
+                      (index) => index < starCount
+                          ? const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            )
+                          : const Icon(
+                              Icons.star_border,
+                              color: Colors.amber,
+                            )),
                 ),
               ],
             ),
@@ -116,13 +130,13 @@ class _ReviewHistoryState extends State<ReviewHistory> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               TextButton(
-                child: const Text('Modifier'),
                 onPressed: onEdit,
+                child: const Text('Modifier'),
               ),
               const SizedBox(width: 8),
               TextButton(
-                child: const Text('Supprimer'),
                 onPressed: onDelete,
+                child: const Text('Supprimer'),
               ),
               const SizedBox(width: 8),
             ],
@@ -134,7 +148,7 @@ class _ReviewHistoryState extends State<ReviewHistory> {
 }
 
 void main() {
-  runApp(MaterialApp(
-    home: ReviewHistory(),
+  runApp(const MaterialApp(
+    home: AccountReviewHistoryScreen(),
   ));
 }

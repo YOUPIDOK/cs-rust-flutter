@@ -1,6 +1,8 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/authentication/presentation/account/account_screen.dart';
-import 'package:app/src/features/authentication/presentation/account/settings/account_settings_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/payment_method/payment_method.dart';
+import 'package:app/src/features/authentication/presentation/account/personal_information/account_personal_information_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
@@ -13,7 +15,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, toilettes, account, accountSettings }
+enum AppRoute { home, toilettes, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -65,9 +67,19 @@ GoRouter goRouter(GoRouterRef ref) {
                 pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
                 routes: [
                   GoRoute(
-                    path: 'settings',
-                    name: AppRoute.accountSettings.name,
-                    pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountSettingsScreen()),
+                    path: 'personnal-info',
+                    name: AppRoute.accountPersonnalInfo.name,
+                    builder: (context, state) => const AccountPersonalInformationScreen(),
+                  ),
+                  GoRoute(
+                    path: 'payment-method',
+                    name: AppRoute.accountPaymentMethod.name,
+                    builder: (context, state) => const AccountPaymentMethodScreen(),
+                  ),
+                  GoRoute(
+                    path: 'review-history',
+                    name: AppRoute.accountReviewHistory.name,
+                    builder: (context, state) => const AccountReviewHistoryScreen(),
                   ),
                 ]),
           ]),
