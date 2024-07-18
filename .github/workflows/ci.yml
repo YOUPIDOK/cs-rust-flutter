@@ -75,13 +75,9 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-<<<<<<< HEAD
 
       - name: Lint
         run: flutter analyze
-
-=======
->>>>>>> feature/devops
 
       - name: Run Flutter tests
         run: flutter test test/test.dart
