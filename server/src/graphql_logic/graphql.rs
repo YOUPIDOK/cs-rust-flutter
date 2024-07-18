@@ -74,19 +74,6 @@ impl Query {
     /// }
     /// ```
     pub async fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
-        let user = context.authorize().await?;
-        
-        // let user_id = match user.id {
-        //     Some(user_id) => user_id,
-        //     None => {
-        //         return Err(FieldError::new(
-        //             "Error in user id context",
-        //             graphql_value!({ "internal_error": "User ID is None" }),
-        //         ));
-        //     }
-        // };
-        
-        print!("{}", user.id);
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
         graphql_translate(res)
@@ -131,7 +118,10 @@ impl Query {
     ///   }
     /// }
     /// ```
-    pub fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
+    pub async  fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
+        let user = context.authorize().await?;
+        println!("{}", user.id);
+
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilets(conn);
         graphql_translate(res)
