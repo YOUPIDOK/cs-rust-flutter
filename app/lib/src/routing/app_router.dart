@@ -5,7 +5,8 @@ import 'package:app/src/features/authentication/presentation/account/personal_in
 import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
-import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
+import 'package:app/src/features/toilettes/presentation/toilette/toilette_screen.dart';
+import 'package:app/src/features/toilettes/presentation/toilettes/toilettes_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +16,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, toilettes, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
+enum AppRoute { home, toilettes, toilette, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -58,6 +59,13 @@ GoRouter goRouter(GoRouterRef ref) {
               path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
+              routes: [
+                GoRoute(
+                  path: ":id",
+                  name: AppRoute.toilette.name,
+                  builder: (context, state) => ToiletteScreen(id: state.pathParameters['id']!),
+                ),
+              ],
             ),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
@@ -99,7 +107,7 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
 
 class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
   // callback used to navigate to the desired tab
-  void _onItemTapped(int index) {
+  void _goBranch(int index) {
     widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
   }
 
@@ -112,16 +120,13 @@ class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNav
   Widget build(BuildContext context) {
     final tabs = getTabs(context);
 
-    return Stack(
-      children: [
-        HeroControllerScope(
-          controller: MaterialApp.createMaterialHeroController(),
-          child: LayoutBuilder(
-            builder: (ctx, constraints) => widget.child,
-          ),
-        ),
-        Positioned(bottom: 0, left: 0, right: 0, child: BottomNavigationBar(items: tabs, currentIndex: widget.child.currentIndex, onTap: _onItemTapped)),
-      ],
+    return Scaffold(
+      body: widget.child,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: widget.child.currentIndex,
+        destinations: tabs,
+        onDestinationSelected: _goBranch,
+      ),
     );
   }
 }
@@ -146,17 +151,15 @@ CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState stat
       transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
     );
 
-List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/toilettes',
+List<NavigationDestination> getTabs(BuildContext context) => [
+      const NavigationDestination(
         icon: Icon(Icons.map_outlined),
-        activeIcon: Icon(Icons.map),
+        selectedIcon: Icon(Icons.map),
         label: "Search",
       ),
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/account',
+      const NavigationDestination(
         icon: Icon(Icons.person_outline),
-        activeIcon: Icon(Icons.person),
+        selectedIcon: Icon(Icons.person),
         label: "Account",
       ),
     ];

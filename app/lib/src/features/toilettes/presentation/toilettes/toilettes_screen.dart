@@ -1,7 +1,8 @@
 import 'package:app/src/common_widgets/map/mapbox.dart';
 import 'package:app/src/features/geolocator/data/geolocator_repository.dart';
 import 'package:app/src/features/toilettes/data/toilettes_repository.dart';
-import 'package:app/src/features/toilettes/presentation/toilettes_notifier.dart';
+import 'package:app/src/features/toilettes/presentation/toilettes/draggable_scroll_sheet/toilettes_draggable_scroll_sheet.dart';
+import 'package:app/src/features/toilettes/presentation/toilettes/toilettes_notifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -35,24 +36,37 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
       final Uint8List list = bytes.buffer.asUint8List();
       var options = <PointAnnotationOptions>[];
       for (var toilette in toilettes) {
+        debugPrint('Toilette: ${toilette.name}');
         options.add(PointAnnotationOptions(
           geometry: Point(coordinates: Position(toilette.long, toilette.lat)),
           image: list,
           iconSize: 3,
         ));
       }
+
+      while (pointAnnotationManager == null) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+
       pointAnnotationManager?.createMulti(options);
     });
 
     return Scaffold(
-      body: MapBox(
-        onMapCreated: _onMapCreated,
-        onCameraChangeListener: _onCameraChangeListener,
-        onMapLoadedListener: _onMapLoadedListener,
-        onTapListener: _onTapListener,
-        gestureRecognizers: {
-          Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
-        },
+      body: Stack(
+        children: [
+          MapBox(
+            onMapCreated: _onMapCreated,
+            onCameraChangeListener: _onCameraChangeListener,
+            onMapLoadedListener: _onMapLoadedListener,
+            onTapListener: _onTapListener,
+            gestureRecognizers: {
+              Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
+            },
+          ),
+          const Positioned.fill(
+            child: ToilettesDraggableScrollSheet(),
+          )
+        ],
       ),
     );
   }
@@ -82,7 +96,10 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
     final cameraLng = camera.center.coordinates.lng.toDouble();
     final cameraZoom = camera.zoom;
 
-    ref.read(toilettesNotifierProvider.notifier).setCamera(lat: cameraLat, lng: cameraLng, zoom: cameraZoom);
+    final coordinateBounds =
+        await mapboxMap?.coordinateBoundsForCamera(CameraOptions(zoom: cameraZoom, center: Point(coordinates: Position(cameraLng, cameraLat))));
+
+    ref.read(toilettesNotifierProvider.notifier).setCamera(lat: cameraLat, lng: cameraLng, zoom: cameraZoom, coordinateBounds: coordinateBounds);
   }
 
   void _onTapListener(MapContentGestureContext mapContentGestureContext) async {}
