@@ -17,7 +17,17 @@ class AccountScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Account'),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(1, 1),
+            colors: <Color>[
+              Color.fromRGBO(144, 39, 142, 0.8),
+              Color.fromRGBO(3, 144, 235, 0.8),
+            ],
+          ),
+        ),
         padding: Paddings.page,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -92,20 +102,6 @@ class AccountScreen extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _SampleCard extends StatelessWidget {
-  const _SampleCard({required this.cardName});
-  final String cardName;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 100,
-      child: Center(child: Text(cardName)),
     );
   }
 }

@@ -43,28 +43,30 @@ jobs:
         with:
           toolchain: stable
           override: true
+      
+      - name: Lint
+        run: cargo fmt -- --check
 
-      - name: Navigate to Rust directory and check compilation
+      - name: Test build
         run: cargo check
 
-      - name: Navigate to Rust directory and test compilation
+      - name: Test
         run: cargo test
 
-  flutter:
+  flutter:  
     needs: detect_changes
     if: needs.detect_changes.outputs.app == 'true'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Copy config.json.dist to config.json
         run: |
-          cp app/config.json.dist app/config.json
-
-      - name: Copy config.json.dist to config.json
-        run: |
-          cp app/config.json.dist app/config.json
+          cp config.json.dist config.json
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -72,9 +74,11 @@ jobs:
           flutter-version: '3.22.2'
 
       - name: Install dependencies
-        run: |
-          cd app
-          flutter pub get
+        run: flutter pub get
+
+      - name: Lint
+        run: flutter analyze
+
 
 #      - name: Run Flutter tests
 #        run: |

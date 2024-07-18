@@ -10,9 +10,21 @@ class AccountReviewHistoryScreen extends StatefulWidget {
 
 class _AccountReviewHistoryScreenState extends State<AccountReviewHistoryScreen> {
   List<Map<String, dynamic>> reviews = [
-    {'title': 'WC Vieux Lyon', 'subtitle': '7 rue des Fleurs 37000 Tours', 'starCount': 5},
-    {'title': 'WC Debourg', 'subtitle': '5 rue Victor Hugo 69000 Lyon', 'starCount': 4},
-    {'title': 'WC Villeurbanne', 'subtitle': '5 rue Victor Hugo 69100 Villeurbanne', 'starCount': 2},
+    {
+      'title': 'WC Vieux Lyon',
+      'subtitle': '7 rue des Fleurs 37000 Tours',
+      'starCount': 5
+    },
+    {
+      'title': 'WC Debourg',
+      'subtitle': '5 rue Victor Hugo 69000 Lyon',
+      'starCount': 4
+    },
+    {
+      'title': 'WC Villeurbanne',
+      'subtitle': '5 rue Victor Hugo 69100 Villeurbanne',
+      'starCount': 2
+    },
   ];
 
   void _editReview(int index) {
@@ -73,28 +85,43 @@ class _AccountReviewHistoryScreenState extends State<AccountReviewHistoryScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Votre historique des avis')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: Paddings.page,
-          child: Column(
-            children: List.generate(reviews.length, (index) {
-              return cardWithRating(
-                reviews[index]['title'],
-                reviews[index]['subtitle'],
-                reviews[index]['starCount'],
-                () => _editReview(index),
-                () => _deleteReview(index),
-              );
-            }),
+      appBar: AppBar(title: const Text('Mes avis')),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              Color.fromRGBO(144, 39, 142, 0.8),
+              Color.fromRGBO(3, 144, 235, 0.8),
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: Paddings.page,
+            child: Column(
+              children: List.generate(reviews.length, (index) {
+                return cardWithRating(
+                  reviews[index]['title'],
+                  reviews[index]['subtitle'],
+                  reviews[index]['starCount'],
+                  () => _editReview(index),
+                  () => _deleteReview(index),
+                );
+              }),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget cardWithRating(String title, String subtitle, int starCount, VoidCallback onEdit, VoidCallback onDelete) {
+  Widget cardWithRating(String title, String subtitle, int starCount,
+      VoidCallback onEdit, VoidCallback onDelete) {
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -145,10 +172,4 @@ class _AccountReviewHistoryScreenState extends State<AccountReviewHistoryScreen>
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: AccountReviewHistoryScreen(),
-  ));
 }

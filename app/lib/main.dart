@@ -16,7 +16,8 @@ void main() async {
   final prefs = await StreamingSharedPreferences.instance;
 
   // Init Graphql Client
-  final graphqlClientBazzile = await createClient(tokenStore: prefs, endpoint: graphqlApiUri);
+  final graphqlClientBazzile =
+      await createClient(tokenStore: prefs, endpoint: graphqlApiUri);
 
 // * Create ProviderContainer with any required overrides
   final container = ProviderContainer(
@@ -54,22 +55,37 @@ void registerErrorHandlers(ErrorLogger errorLogger) {
   // * Show some error UI when any widget in the app fails to build
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.error_outline_outlined,
-              color: Color(0xFFe0115f),
-              size: 100,
-            ),
-            Text(kReleaseMode ? 'Oops... something went wrong,\n try to reload the app !' : details.exception.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment(1, 1),
+            colors: <Color>[
+              Color.fromRGBO(144, 39, 142, 0.8),
+              Color.fromRGBO(3, 144, 235, 0.8),
+            ],
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.error_outline_outlined,
+                color: Color(0xFFe0115f),
+                size: 100,
+              ),
+              Text(
+                  kReleaseMode
+                      ? 'Oops... something went wrong,\n try to reload the app !'
+                      : details.exception.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  )),
+            ],
+          ),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/authentication/presentation/account/account_screen.dart';
-import 'package:app/src/features/authentication/presentation/account/payment_method/payment_method.dart';
+import 'package:app/src/features/authentication/presentation/account/payment_method/account_payment_method_screen.dart';
 import 'package:app/src/features/authentication/presentation/account/personal_information/account_personal_information_screen.dart';
 import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
@@ -98,9 +98,6 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
 }
 
 class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
-  /* Floating Nav Bar */
-  String get _currentLocation => GoRouter.of(context).routerDelegate.currentConfiguration.last.matchedLocation;
-
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {
     widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
