@@ -7,6 +7,11 @@ edition = "2021"
 env_logger = "0.11.3"
 actix-cors = "0.7.0"
 actix-web = "4.5.1"
+actix-ws = { version = "0.2"}
+actix = "0.13.3"
+actix-web-actors = "4.3.0"
+actix-rt = "2.10.0"
+async-stream = "0.3.5"
 actix-web-middleware-keycloak-auth = "0.4.2"
 keycloak = "24.0.301"
 async-std = { version = "1.12.0", features = ["attributes", "tokio1"] }
@@ -16,8 +21,12 @@ dotenv = "0.15.0"
 chrono = { version = "0.4.38", features = ["serde"] }
 uuid = { version = "1.8.0", features = ["v4"] }
 juniper = { version = "0.16.1", features = ["uuid", "chrono"] }
-juniper_actix = "0.5.0"
+juniper_actix = {version = "0.5.0", features = ["subscriptions"]}
 juniper_subscriptions = "0.17.0"
+juniper_graphql_ws = { version = "0.4.0", features = [
+    "graphql-transport-ws",
+    "graphql-ws",
+] }
 diesel = { version = "2.2.0", features = [
     "postgres",
     "chrono",
@@ -27,10 +36,6 @@ diesel = { version = "2.2.0", features = [
 diesel-derive-enum = { version = "2.1.0", features = ["postgres"] }
 dotenvy = "0.15"
 r2d2 = "0.8.10"
-actix = "0.13.3"
-actix-web-actors = "4.3.0"
 reqwest = "0.12.4"
 jsonwebtoken = "9.3"
-
-actix-rt = "2.10.0"
-async-stream = "0.3.5"
+futures = "0.3.22"

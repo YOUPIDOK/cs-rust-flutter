@@ -1,15 +1,12 @@
-use crate::models::user::{CreateUser, ModifyUser, User};
-use crate::services::user_service;
+use crate::graphql_logic::context::GraphQLContext;
 use crate::models::toilet::{Toilet, ToiletWithDistance};
+use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::toilet_service;
-use juniper::{graphql_value, FieldError, FieldResult, GraphQLEnum, GraphQLObject, RootNode, graphql_subscription};
+use crate::services::user_service;
 use juniper::futures::Stream;
+use juniper::{graphql_subscription, graphql_value, FieldError, FieldResult, GraphQLEnum, GraphQLObject, RootNode};
 use std::pin::Pin;
 use uuid::Uuid;
-use std::time::Duration;
-use actix_rt::time::sleep;
-use async_stream::stream;
-use crate::graphql_logic::context::GraphQLContext;  // Assurez-vous que cela pointe vers le bon module
 
 #[derive(Debug, GraphQLObject)]
 pub struct DeleteResult {
@@ -37,7 +34,8 @@ pub struct Query;
 
 #[juniper::graphql_object(Context = GraphQLContext)]
 impl Query {
-    fn api_version(_context: &GraphQLContext) -> FieldResult<&str> {
+    async fn api_version(context: &GraphQLContext) -> FieldResult<&str> {
+        context.authorize().await?;
         FieldResult::Ok("1.0")
     }
 
@@ -83,7 +81,7 @@ impl Query {
     }
 
     /// ### Exemple de requête GraphQL
-    /// 
+    ///
     /// ```graphql
     /// {
     ///        getToilet(id: "some-uuid") {
@@ -154,13 +152,13 @@ impl Mutation {
         let res = user_service::create_user(conn, input);
         graphql_translate(res)
     }
-    
+
     pub fn update_user(context: &GraphQLContext, input: ModifyUser) -> FieldResult<User> {
         let conn = &mut context.pool.get()?;
         let res = user_service::update_user(conn, input);
         graphql_translate(res)
     }
-    
+
     // TOILET
     pub fn update_door_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
         let pool = context.pool.clone();
@@ -169,11 +167,21 @@ impl Mutation {
     }
 }
 
+type StringStream = Pin<Box<dyn Stream<Item = Result<String, FieldError>> + Send>>;
+
 pub struct Subscription;
 
 #[graphql_subscription]
-#[juniper::graphql_object(Context = GraphQLContext)]
+#[graphql(context = GraphQLContext)]
 impl Subscription {
+    // This subscription operation emits two values sequentially:
+    // the `String`s "Hello" and "World!".
+    async fn hello_world() -> StringStream {
+        let stream = futures::stream::iter([Ok(String::from("Hello")), Ok(String::from("World!"))]);
+        Box::pin(stream)
+    }
+
+    /*
     async fn door_state_updated(
         context: &GraphQLContext,
         id: Uuid,
@@ -188,11 +196,12 @@ impl Subscription {
         };
         Box::pin(stream)
     }
+     */
 }
 
 pub type Schema = RootNode<'static, Query, Mutation, Subscription>;
 
-pub fn create_schema() -> Schema {
+pub fn schema() -> Schema {
     Schema::new(Query {}, Mutation {}, Subscription {})
 }
 
