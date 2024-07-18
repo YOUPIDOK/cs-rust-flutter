@@ -3,6 +3,7 @@ import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/profil/presentation/profil.screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
+import 'package:app/src/features/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,13 +15,14 @@ part 'app_router.g.dart';
 
 enum AppRoute {
   home,
-
-  /// Toilettes
   toilettes,
 
   // Account
-
   profil,
+
+  //settings
+
+  settings
 }
 
 // private navigators
@@ -28,7 +30,8 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
-  final streamingSharedPreferences = ref.watch(sharedPreferencesRepositoryProvider);
+  final streamingSharedPreferences =
+      ref.watch(sharedPreferencesRepositoryProvider);
 
   final tokenStateChanges = streamingSharedPreferences.getToken;
 
@@ -59,23 +62,38 @@ GoRouter goRouter(GoRouterRef ref) {
     refreshListenable: GoRouterRefreshStream(MergeStream([tokenStateChanges])),
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, child) => ScaffoldWithBottomNavBar(child: child),
+        builder: (context, state, child) =>
+            ScaffoldWithBottomNavBar(child: child),
         branches: [
           StatefulShellBranch(routes: <RouteBase>[
-            GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
+            GoRoute(
+                path: '/home',
+                name: AppRoute.home.name,
+                pageBuilder: (context, state) =>
+                    pageFadeTransition(context, state, const HomeScreen())),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
               path: '/toilettes',
               name: AppRoute.toilettes.name,
-              pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
+              pageBuilder: (context, state) =>
+                  pageFadeTransition(context, state, const ToilettesScreen()),
             ),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
               path: '/profil',
               name: AppRoute.profil.name,
-              pageBuilder: (context, state) => pageFadeTransition(context, state, const ProfilScree()),
+              pageBuilder: (context, state) =>
+                  pageFadeTransition(context, state, const ProfilScree()),
+            ),
+          ]),
+          StatefulShellBranch(routes: <RouteBase>[
+            GoRoute(
+              path: '/settings',
+              name: AppRoute.settings.name,
+              pageBuilder: (context, state) =>
+                  pageFadeTransition(context, state, const SettingsScreen()),
             ),
           ]),
         ],
@@ -89,16 +107,23 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
   final StatefulNavigationShell child;
 
   @override
-  ConsumerState<ScaffoldWithBottomNavBar> createState() => _ScaffoldWithBottomNavBarState();
+  ConsumerState<ScaffoldWithBottomNavBar> createState() =>
+      _ScaffoldWithBottomNavBarState();
 }
 
-class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
+class _ScaffoldWithBottomNavBarState
+    extends ConsumerState<ScaffoldWithBottomNavBar> {
   /* Floating Nav Bar */
-  String get _currentLocation => GoRouter.of(context).routerDelegate.currentConfiguration.last.matchedLocation;
+  String get _currentLocation => GoRouter.of(context)
+      .routerDelegate
+      .currentConfiguration
+      .last
+      .matchedLocation;
 
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {
-    widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
+    widget.child
+        .goBranch(index, initialLocation: index == widget.child.currentIndex);
   }
 
   @override
@@ -118,7 +143,14 @@ class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNav
             builder: (ctx, constraints) => widget.child,
           ),
         ),
-        Positioned(bottom: 0, left: 0, right: 0, child: BottomNavigationBar(items: tabs, currentIndex: widget.child.currentIndex, onTap: _onItemTapped)),
+        Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: BottomNavigationBar(
+                items: tabs,
+                currentIndex: widget.child.currentIndex,
+                onTap: _onItemTapped)),
       ],
     );
   }
@@ -137,11 +169,14 @@ class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
   final String initialLocation;
 }
 
-CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState state, Widget child) => CustomTransitionPage(
+CustomTransitionPage pageFadeTransition(
+        BuildContext context, GoRouterState state, Widget child) =>
+    CustomTransitionPage(
       key: state.pageKey,
       child: child,
       opaque: false,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+          FadeTransition(opacity: animation, child: child),
     );
 
 List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
@@ -162,5 +197,11 @@ List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
         icon: Icon(Icons.person),
         activeIcon: Icon(Icons.person),
         label: "Profile",
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/settings',
+        icon: Icon(Icons.settings_outlined),
+        activeIcon: Icon(Icons.settings),
+        label: "Settings",
       ),
     ];
