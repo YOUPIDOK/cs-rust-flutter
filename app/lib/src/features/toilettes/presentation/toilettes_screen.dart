@@ -45,19 +45,15 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
     });
 
     return Scaffold(
-      body: Container(
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(234, 234, 234, 1),
-          ),
-          child: MapBox(
-            onMapCreated: _onMapCreated,
-            onCameraChangeListener: _onCameraChangeListener,
-            onMapLoadedListener: _onMapLoadedListener,
-            onTapListener: _onTapListener,
-            gestureRecognizers: {
-              Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
-            },
-          )),
+      body: MapBox(
+        onMapCreated: _onMapCreated,
+        onCameraChangeListener: _onCameraChangeListener,
+        onMapLoadedListener: _onMapLoadedListener,
+        onTapListener: _onTapListener,
+        gestureRecognizers: {
+          Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
+        },
+      ),
     );
   }
 
