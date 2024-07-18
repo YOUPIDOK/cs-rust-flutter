@@ -76,7 +76,7 @@ class NearToilettesFutureFamily extends Family<
 
   /// See also [nearToilettesFuture].
   NearToilettesFutureProvider call(
-    InvalidType vars,
+    GNearToilettesVarsBuilder vars,
   ) {
     return NearToilettesFutureProvider(
       vars,
@@ -112,7 +112,7 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
     OperationResponse<GNearToilettesData, GNearToilettesVars>> {
   /// See also [nearToilettesFuture].
   NearToilettesFutureProvider(
-    InvalidType vars,
+    GNearToilettesVarsBuilder vars,
   ) : this._internal(
           (ref) => nearToilettesFuture(
             ref as NearToilettesFutureRef,
@@ -140,7 +140,7 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
     required this.vars,
   }) : super.internal();
 
-  final InvalidType vars;
+  final GNearToilettesVarsBuilder vars;
 
   @override
   Override overrideWith(
@@ -186,7 +186,7 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
 mixin NearToilettesFutureRef on AutoDisposeFutureProviderRef<
     OperationResponse<GNearToilettesData, GNearToilettesVars>> {
   /// The parameter `vars` of this provider.
-  InvalidType get vars;
+  GNearToilettesVarsBuilder get vars;
 }
 
 class _NearToilettesFutureProviderElement
@@ -196,7 +196,7 @@ class _NearToilettesFutureProviderElement
   _NearToilettesFutureProviderElement(super.provider);
 
   @override
-  InvalidType get vars => (origin as NearToilettesFutureProvider).vars;
+  GNearToilettesVarsBuilder get vars => (origin as NearToilettesFutureProvider).vars;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
