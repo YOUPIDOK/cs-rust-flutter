@@ -1,6 +1,6 @@
 use super::context::GraphQLContext;
 use crate::models::comment::Comment;
-use crate::models::user::{self, CreateUser, ModifyUser, User};
+use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
@@ -126,18 +126,16 @@ impl Query {
     /// ### Example de requête GraphQL
     ///
     /// ```graphql
-    /// {
-    ///     getCommentsByToilet(id: 1324-1234-1234-1234) {
-    ///     comment {
-    ///         id
-    ///         toilet_id
-    ///         user_id
-    ///         note
-    ///         comment
-    ///         created_at
-    ///     }
-    ///   }
-    /// }
+    ///    {
+    ///        getCommentsByToilet(toiletIdFilter: "UUID") {
+    ///            id
+    ///            toiletId
+    ///            userId
+    ///            note
+    ///            comment
+    ///            createdAt
+    ///       }
+    ///    }
     /// ```
     pub fn get_comments_by_toilet(context: &GraphQLContext, toilet_id_filter: Uuid) -> FieldResult<Vec<Comment>> {
         let conn = &mut context.pool.get()?;
@@ -150,14 +148,12 @@ impl Query {
     /// ```graphql
     /// {
     ///     getCommentsByUser() {
-    ///     comment {
     ///         id
-    ///         toilet_id
-    ///         user_id
+    ///         toiletId
+    ///         userId
     ///         note
     ///         comment
-    ///         created_at
-    ///     }
+    ///         createdAt
     ///   }
     /// }
     /// ```
