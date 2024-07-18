@@ -19,41 +19,45 @@ class _ReviewHistoryState extends State<ReviewHistory> {
       context: context,
       builder: (BuildContext context) {
         int newStarCount = reviews[index]['starCount'];
-        return AlertDialog(
-          title: Text('Modifier l\'avis'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(5, (i) {
-              return IconButton(
-                icon: Icon(
-                  i < newStarCount ? Icons.star : Icons.star_border,
-                  color: Colors.amber,
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Modifier l\'avis'),
+              content: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(5, (i) {
+                  return IconButton(
+                    icon: Icon(
+                      i < newStarCount ? Icons.star : Icons.star_border,
+                      color: Colors.amber,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        newStarCount = i + 1;
+                      });
+                    },
+                  );
+                }),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Annuler'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-                onPressed: () {
-                  setState(() {
-                    newStarCount = i + 1;
-                  });
-                },
-              );
-            }),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Annuler'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: const Text('Sauvegarder'),
-              onPressed: () {
-                setState(() {
-                  reviews[index]['starCount'] = newStarCount;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
+                TextButton(
+                  child: const Text('Sauvegarder'),
+                  onPressed: () {
+                    setState(() {
+                      reviews[index]['starCount'] = newStarCount;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
       },
     );
