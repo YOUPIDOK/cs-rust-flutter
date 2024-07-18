@@ -42,7 +42,7 @@ class _PaymentMethodStateState extends State<_PaymentMethodState> {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.blue,
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Colors.blue,
               secondary: Colors.blue,
             ),
@@ -144,7 +144,7 @@ class _PaymentMethodStateState extends State<_PaymentMethodState> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
+                            offset: const Offset(0, 3), // changes position of shadow
                           ),
                         ],
                       ),

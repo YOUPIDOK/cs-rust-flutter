@@ -91,12 +91,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 onPressed: () => setState(() => _isEditing = true),
-                child: const Text('Modifier'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
+                child: const Text('Modifier'),
               ),
             ),
           ],
@@ -278,7 +278,10 @@ class _PersonalInformationState extends State<PersonalInformation> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
-                  onPressed: () => setState(() => _isEditing = false),
+                  onPressed: () => setState(() {
+                    _isEditing = false;
+                    _submitForm();
+                  }),
                   child: const Text('Enregistrer'),
                 ),
               ),

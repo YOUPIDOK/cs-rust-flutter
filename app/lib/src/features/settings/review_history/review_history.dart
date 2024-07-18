@@ -34,7 +34,7 @@ class _ReviewHistoryState extends State<ReviewHistory> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text('Modifier l\'avis'),
+              title: const Text('Modifier l\'avis'),
               content: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: List.generate(5, (i) {
