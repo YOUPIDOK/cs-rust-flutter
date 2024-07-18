@@ -87,6 +87,12 @@ flutter:
       - assets/symbols/
       - assets/symbols/2.0x/
       - assets/symbols/3.0x/
+      - assets/contactless.png
+      - assets/unlocked.png
+      - assets/disabled.png
+      - assets/lock.png
+      - assets/padlock.png
+      - assets/error.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
