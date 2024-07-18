@@ -72,11 +72,7 @@ jobs:
           flutter-version: '3.22.2'
 
       - name: Install dependencies
-        run: |
-          cd app
-          flutter pub get
+        run: flutter pub get
 
-#      - name: Run Flutter tests
-#        run: |
-#          cd app
-#          flutter test --verbose
+      - name: Run Flutter tests
+        run: flutter test test/test.dart
