@@ -2502,6 +2502,7 @@ dependencies = [
  "juniper_graphql_ws",
  "juniper_subscriptions",
  "keycloak",
+ "log",
  "r2d2",
  "reqwest",
  "serde",

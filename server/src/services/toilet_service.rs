@@ -6,6 +6,7 @@ use uuid::Uuid;
 use actix_rt::time::sleep;
 use std::time::Duration;
 use diesel::r2d2::{ConnectionManager, Pool};
+use log::{error, info};
 
 pub fn get_toilet_with_distance(conn: &mut PgConnection, id_toilet: Uuid, lat_test: f64, long_test: f64) -> QueryResult<(Toilet, f64)> {
     use crate::schema::toilets::dsl::*;
@@ -49,23 +50,41 @@ pub fn get_toilet_proche(conn: &mut PgConnection, lat_test: f64, lon: f64, radiu
 
 pub fn update_door_state(pool: Pool<ConnectionManager<PgConnection>>, toilet_id: Uuid) -> QueryResult<Toilet> {
     use crate::schema::toilets::dsl::*;
-    let mut conn = pool.get().map_err(|e| diesel::result::Error::DatabaseError(diesel::result::DatabaseErrorKind::Unknown, Box::new(e.to_string())))?;
-    let target = toilets.filter(id.eq(toilet_id)).first::<Toilet>(&mut conn)?;
+    let mut conn = pool.get().map_err(|e| {
+        error!("Failed to get database connection: {}", e);  // Log connection error
+        diesel::result::Error::DatabaseError(diesel::result::DatabaseErrorKind::Unknown, Box::new(e.to_string()))
+    })?;
+
+    info!("Attempting to find toilet with id {}", toilet_id);
+    let target = toilets.filter(id.eq(toilet_id)).first::<Toilet>(&mut conn).map_err(|e| {
+        error!("Failed to find toilet with id {}: {}", toilet_id, e);  // Log retrieval error
+        e
+    })?;
 
     if target.is_maintenance {
+        error!("Toilet with id {} is in maintenance", toilet_id);
         return Err(diesel::result::Error::NotFound);
     }
 
-    // Planifiez l'ouverture de la porte après 5 secondes
+    info!("Toilet found: {:?}", target);  // Log the found toilet
+
+    // Determine the new state for door_is_open
+    let new_door_state = !target.door_is_open;
+    let action = if new_door_state { "opening" } else { "closing" };
+
+    info!("Scheduling door {} for toilet with id {} in 5 seconds", action, toilet_id);
+
+    // Schedule the door state change after 3 seconds
     actix_rt::spawn({
         let pool = pool.clone();
         async move {
-            sleep(Duration::from_secs(5)).await;
+            sleep(Duration::from_secs(3)).await;
             let mut conn = pool.get().unwrap();
             diesel::update(toilets.find(toilet_id))
-                .set(door_is_open.eq(true))
+                .set(door_is_open.eq(new_door_state))
                 .execute(&mut conn)
                 .unwrap();
+            info!("Door state updated to {} for toilet with id {}", if new_door_state { "open" } else { "closed" }, toilet_id);  // Log update
         }
     });
 

@@ -162,22 +162,19 @@ impl Mutation {
     }
 
     // TOILET
+    /// ### Information
+    /// Ouvre ou ferme la porte. Si un toilet est en maintenance dans docker on reçoit ca: 
+    /// cs-rust-flutter-back-1| [2024-07-18T15:01:51Z ERROR server::services::toilet_service] Toilet with id c7748088-444f-44b9-8d13-d1f4d4906ee7 is in maintenance
     /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
-    ///     mutation {
-    ///         updateDoorState(id: "some-uuid") {
-    ///           id
-    ///           isMaintenance
-    ///           doorIsOpen
-    ///           isLocked
-    ///           name
-    ///           lat
-    ///           long
-    ///           price
-    ///           companiesId
-    ///         }
-    ///       }
+    ///        mutation {
+    ///                updateDoorState(id: "UUID") {
+    ///                id
+    ///                isMaintenance
+    ///                doorIsOpen
+    ///                }
+    ///            }
     /// ```
     pub fn update_door_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
         let pool = context.pool.clone();
