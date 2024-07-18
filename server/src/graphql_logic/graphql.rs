@@ -185,9 +185,24 @@ impl Mutation {
         graphql_translate(res)
     }
 
-    // Comment
+    /// ### Exemple de requête GraphQL
+    ///
+    // mutation {
+    //     createComment(input: {
+    //       toiletId: "1c41d9e3-08bf-47c1-9a71-17c8897678d7",
+    //       note: 4.5,
+    //       comment: "Clean and well-maintained!"
+    //     }) {
+    //       id
+    //       toiletId
+    //       userId
+    //       note
+    //       comment
+    //       createdAt
+    //     }
+    //   }
     pub async fn create_comment(context: &GraphQLContext, input: CreateComment) -> FieldResult<Comment> {
-        let user = context.authorize().await?;
+        let user: User = context.authorize().await?;
         let conn = &mut context.pool.get()?;
         let res = comment_service::create_comment(conn, input, user.id);
         graphql_translate(res)
