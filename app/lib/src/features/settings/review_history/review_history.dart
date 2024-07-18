@@ -4,10 +4,10 @@ class ReviewHistory extends StatefulWidget {
   const ReviewHistory({super.key});
 
   @override
-  _ReviewHistoryState createState() => _ReviewHistoryState();
+  ReviewHistoryState createState() => ReviewHistoryState();
 }
 
-class _ReviewHistoryState extends State<ReviewHistory> {
+class ReviewHistoryState extends State<ReviewHistory> {
   List<Map<String, dynamic>> reviews = [
     {
       'title': 'WC Vieux Lyon',

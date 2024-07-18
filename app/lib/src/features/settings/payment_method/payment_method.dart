@@ -15,7 +15,7 @@ class PaymentMethod extends StatelessWidget {
 }
 
 class _PaymentMethodState extends StatefulWidget {
-  const _PaymentMethodState({super.key});
+  const _PaymentMethodState();
 
   @override
   _PaymentMethodStateState createState() => _PaymentMethodStateState();
@@ -46,7 +46,8 @@ class _PaymentMethodStateState extends State<_PaymentMethodState> {
               primary: Colors.blue,
               secondary: Colors.blue,
             ),
-            buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
+            buttonTheme:
+                const ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
           child: child!,
         );
@@ -109,7 +110,7 @@ class _PaymentMethodStateState extends State<_PaymentMethodState> {
                       ],
                     ),
                   );
-                }).toList(),
+                }),
                 const Divider(),
                 Card(
                   child: Column(
@@ -144,7 +145,8 @@ class _PaymentMethodStateState extends State<_PaymentMethodState> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),

@@ -12,11 +12,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute {
-  home,
-  toilettes,
-  settings
-}
+enum AppRoute { home, toilettes, settings }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -99,11 +95,11 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
 class _ScaffoldWithBottomNavBarState
     extends ConsumerState<ScaffoldWithBottomNavBar> {
   /* Floating Nav Bar */
-  String get _currentLocation => GoRouter.of(context)
+/*   String get _currentLocation => GoRouter.of(context)
       .routerDelegate
       .currentConfiguration
       .last
-      .matchedLocation;
+      .matchedLocation; */
 
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {

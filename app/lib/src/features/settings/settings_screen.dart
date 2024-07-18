@@ -70,7 +70,7 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => PaymentMethod()),
+                              builder: (context) => const PaymentMethod()),
                         );
                       },
                       child: const SizedBox(
@@ -91,7 +91,7 @@ class SettingsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Card(
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.grey, width: 1),
+                        side: const BorderSide(color: Colors.grey, width: 1),
                         borderRadius: BorderRadius.circular(5)),
                     clipBehavior: Clip.hardEdge,
                     child: InkWell(
@@ -99,7 +99,7 @@ class SettingsScreen extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => ReviewHistory()),
+                              builder: (context) => const ReviewHistory()),
                         );
                       },
                       child: const SizedBox(
@@ -125,16 +125,3 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class _SampleCard extends StatelessWidget {
-  const _SampleCard({required this.cardName});
-  final String cardName;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 100,
-      child: Center(child: Text(cardName)),
-    );
-  }
-}
