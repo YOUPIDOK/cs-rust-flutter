@@ -8,28 +8,50 @@ import 'package:built_value/serializer.dart';
 
 part 'toilettes.var.gql.g.dart';
 
-abstract class GAllToilettesVars
-    implements Built<GAllToilettesVars, GAllToilettesVarsBuilder> {
-  GAllToilettesVars._();
+abstract class GNearToilettesVars
+    implements Built<GNearToilettesVars, GNearToilettesVarsBuilder> {
+  GNearToilettesVars._();
 
-  factory GAllToilettesVars(
-          [void Function(GAllToilettesVarsBuilder b) updates]) =
-      _$GAllToilettesVars;
+  factory GNearToilettesVars(
+          [void Function(GNearToilettesVarsBuilder b) updates]) =
+      _$GNearToilettesVars;
 
   double get lat;
   double get long;
   double get radiusKm;
-  static Serializer<GAllToilettesVars> get serializer =>
-      _$gAllToilettesVarsSerializer;
+  static Serializer<GNearToilettesVars> get serializer =>
+      _$gNearToilettesVarsSerializer;
 
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
-        GAllToilettesVars.serializer,
+        GNearToilettesVars.serializer,
         this,
       ) as Map<String, dynamic>);
 
-  static GAllToilettesVars? fromJson(Map<String, dynamic> json) =>
+  static GNearToilettesVars? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
-        GAllToilettesVars.serializer,
+        GNearToilettesVars.serializer,
+        json,
+      );
+}
+
+abstract class GToilettesVars
+    implements Built<GToilettesVars, GToilettesVarsBuilder> {
+  GToilettesVars._();
+
+  factory GToilettesVars([void Function(GToilettesVarsBuilder b) updates]) =
+      _$GToilettesVars;
+
+  static Serializer<GToilettesVars> get serializer =>
+      _$gToilettesVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GToilettesVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GToilettesVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GToilettesVars.serializer,
         json,
       );
 }
