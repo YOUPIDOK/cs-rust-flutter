@@ -5,7 +5,6 @@ import 'package:app/src/features/authentication/presentation/account/personal_in
 import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
-import 'package:app/src/features/toilettes/presentation/toilette/toilette_screen.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes/toilettes_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +15,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, toilettes, toilette, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
+enum AppRoute { home, toilettes, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -59,13 +58,6 @@ GoRouter goRouter(GoRouterRef ref) {
               path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
-              routes: [
-                GoRoute(
-                  path: ":id",
-                  name: AppRoute.toilette.name,
-                  builder: (context, state) => ToiletteScreen(id: state.pathParameters['id']!),
-                ),
-              ],
             ),
           ]),
           StatefulShellBranch(routes: <RouteBase>[

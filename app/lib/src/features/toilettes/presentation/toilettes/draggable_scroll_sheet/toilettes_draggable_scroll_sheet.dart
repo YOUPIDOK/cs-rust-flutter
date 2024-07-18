@@ -5,7 +5,6 @@ import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.
 import 'package:app/src/features/toilettes/data/toilettes_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes/toilettes_notifier.dart';
 import 'package:app/src/features/toilettes/utils/toilettes_in_coordinate_bounds.dart';
-import 'package:app/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -19,29 +18,32 @@ class ToilettesDraggableScrollSheet extends ConsumerWidget {
     final coordinateBounds = ref.watch(toilettesNotifierProvider.select((value) => value.coordinateBounds));
 
     showToilette(BuildContext context, GToilettesData_getToilets toilette) {
-      if (toilette.isMaintenance) {
-        return showModalBottomSheet(
-            context: context,
-            showDragHandle: true,
-            builder: (BuildContext context) {
-              return Container(
-                width: double.infinity,
-                padding: Paddings.page,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Maintenance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                    gapH12,
-                    const Text('Cette toilette est en maintenance, veuillez en choisir une autre'),
-                    gapH24,
-                    FilledButton(onPressed: context.pop, child: const Text('En choisir une autre')),
-                  ],
-                ),
-              );
-            });
-      }
-      context.goNamed(AppRoute.toilette.name, pathParameters: {'id': toilette.id.toString()});
+      showModalBottomSheet(
+          context: context,
+          showDragHandle: true,
+          builder: (BuildContext context) {
+            return Container(
+              width: double.infinity,
+              padding: Paddings.page,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisSize: MainAxisSize.min,
+                children: toilette.isMaintenance
+                    ? [
+                        const Text('Maintenance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                        gapH12,
+                        const Text('Cette toilette est en maintenance, veuillez en choisir une autre'),
+                        gapH24,
+                        FilledButton(onPressed: context.pop, child: const Text('En choisir une autre')),
+                      ]
+                    : [
+                        Text(toilette.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                        gapH24,
+                        FilledButton(onPressed: context.pop, child: const Text('Fermer')),
+                      ],
+              ),
+            );
+          });
     }
 
     return DraggableScrollableSheet(
