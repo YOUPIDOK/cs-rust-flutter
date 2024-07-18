@@ -22,6 +22,7 @@ class CardExample extends StatelessWidget {
         children: <Widget>[
           cardWithRating('WC Vieux Lyon', '7 rue des Fleurs 37000 Tours', 5),
           cardWithRating('WC Debourg', '5 rue Victor Hugo 69000 Lyon', 4),
+          cardWithRating('WC Villeurbanne', '5 rue Victor Hugo 69100 Villeurbanne', 2),
         ],
       ),
     );
@@ -35,7 +36,7 @@ class CardExample extends StatelessWidget {
           ListTile(
             leading: Image.network(
               'https://cdn-s-www.bienpublic.com/images/F330C08A-333C-4DDB-882D-B75B5D1F3FDF/NW_raw/pour-beaucoup-de-personnes-l-idee-de-partager-cet-espace-avec-une-foule-d-inconnus-n-a-rien-de-tres-agreable-illustration-adobe-stock-1646667252.jpg',
-              width: 56, // Adjust the size to fit your layout
+              width: 56,
               height: 56,
               fit: BoxFit.cover,
             ),
