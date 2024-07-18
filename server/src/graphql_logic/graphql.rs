@@ -47,6 +47,7 @@ impl Query {
     }
 
     // USER
+
     pub fn find_user(context: &GraphQLContext, user_id: Uuid) -> FieldResult<Option<User>> {
         let conn = &mut context.pool.get()?;
         let res = user_service::find_user(conn, user_id);
@@ -62,6 +63,8 @@ impl Query {
             Err(e) => FieldResult::Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
         }
     }
+
+    // TOILET
 
     /// ### Example de requête GraphQL
     ///
@@ -146,6 +149,8 @@ impl Query {
         graphql_translate(res)
     }
 
+    // COMMENT
+
     /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
@@ -193,6 +198,7 @@ pub struct Mutation;
 #[juniper::graphql_object(Context = GraphQLContext)]
 impl Mutation {
     // USER
+
     pub fn create_user(context: &GraphQLContext, input: CreateUser) -> FieldResult<User> {
         let conn = &mut context.pool.get()?;
         let res = user_service::create_user(conn, input);
@@ -206,6 +212,7 @@ impl Mutation {
     }
 
     // TOILET
+
     /// ### Information
     /// Ouvre ou ferme la porte. Si un toilet est en maintenance dans docker on reçoit ca: 
     /// cs-rust-flutter-back-1| [2024-07-18T15:01:51Z ERROR server::services::toilet_service] Toilet with id c7748088-444f-44b9-8d13-d1f4d4906ee7 is in maintenance
@@ -245,6 +252,8 @@ impl Mutation {
         graphql_translate(res)
     }
 
+    // COMMENT
+    
     /// ### Exemple de requête GraphQL
     ///
     // mutation {
