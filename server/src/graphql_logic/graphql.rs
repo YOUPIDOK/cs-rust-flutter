@@ -7,9 +7,9 @@ use juniper::futures::Stream;
 use std::pin::Pin;
 use uuid::Uuid;
 use std::time::Duration;
-use actix_rt::time::sleep;
+use async_std::task::sleep;
 use async_stream::stream;
-use crate::graphql_logic::context::GraphQLContext;  // Assurez-vous que cela pointe vers le bon module
+use crate::graphql_logic::context::GraphQLContext;
 
 #[derive(Debug, GraphQLObject)]
 pub struct DeleteResult {
@@ -64,7 +64,7 @@ impl Query {
     ///
     /// ```graphql
     /// {
-    ///        getToilet(id: "some-uuid", lat: 48.8566, long: 2.3522) {
+    ///        getToiletWithDistance(id: "some-uuid", lat: 48.8566, long: 2.3522) {
     ///            toilet {
     ///            id
     ///            name
@@ -92,8 +92,7 @@ impl Query {
     ///            lat
     ///            long
     ///            price
-    ///            is_maintenance
-    ///            door_is_open
+    ///            isMaintenance
     ///        }
     /// }
     /// ```
@@ -171,18 +170,38 @@ impl Mutation {
 
 pub struct Subscription;
 
-#[graphql_subscription]
-#[juniper::graphql_object(Context = GraphQLContext)]
+#[graphql_subscription(context = GraphQLContext)]
 impl Subscription {
-    async fn door_state_updated(
-        context: &GraphQLContext,
+    /// ### Exemple de requête GraphQL
+    ///
+    /// ```graphql
+    ///     subscription {
+    ///         doorStateUpdated(id: "some-uuid") {
+    ///           id
+    ///           isMaintenance
+    ///           doorIsOpen
+    ///           isLocked
+    ///           name
+    ///           lat
+    ///           long
+    ///           price
+    ///           companiesId
+    ///         }
+    ///       }
+    /// ```
+    async fn door_state_updated<'a>(
+        context: &'a GraphQLContext,
         id: Uuid,
-    ) -> Pin<Box<dyn Stream<Item = FieldResult<Toilet>> + Send + '_>> {
+    ) -> Pin<Box<dyn Stream<Item = FieldResult<Toilet>> + Send>> {
+        let pool = context.pool.clone();
         let stream = stream! {
-            let conn = &mut context.pool.get().unwrap();
             loop {
-                let toilet = toilet_service::get_toilet(conn, id)?;
-                yield Ok(toilet);
+                let conn = &mut pool.get().unwrap();
+                let toilet = toilet_service::get_toilet(conn, id);
+                match toilet {
+                    Ok(toilet) => yield Ok(toilet),
+                    Err(e) => yield Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
+                }
                 sleep(Duration::from_secs(1)).await;
             }
         };
