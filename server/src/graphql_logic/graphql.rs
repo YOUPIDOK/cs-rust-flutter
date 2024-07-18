@@ -170,14 +170,13 @@ impl Mutation {
 }
 
 type StringStream = Pin<Box<dyn Stream<Item = Result<String, FieldError>> + Send>>;
+type ToiletStream = Pin<Box<dyn Stream<Item = FieldResult<Toilet>> + Send>>;
 
 pub struct Subscription;
 
 #[graphql_subscription]
 #[graphql(context = GraphQLContext)]
 impl Subscription {
-    // This subscription operation emits two values sequentially:
-    // the `String`s "Hello" and "World!".
     async fn hello_world() -> StringStream {
         let stream = futures::stream::iter([Ok(String::from("Hello")), Ok(String::from("World!"))]);
         Box::pin(stream)
@@ -200,19 +199,33 @@ impl Subscription {
     ///         }
     ///       }
     /// ```
-    async fn door_state_updated<'a>(
-        context: &'a GraphQLContext,
+    async fn door_state_updated(
+        context: &GraphQLContext,
         id: Uuid,
-    ) -> Pin<Box<dyn Stream<Item = FieldResult<Toilet>> + Send>> {
+    ) -> ToiletStream {
         let pool = context.pool.clone();
         let stream = stream! {
             loop {
                 let conn = &mut pool.get().unwrap();
                 let toilet = toilet_service::get_toilet(conn, id);
+
                 match toilet {
-                    Ok(toilet) => yield Ok(toilet),
-                    Err(e) => yield Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
+                    Ok(toilet) => {
+                        let door_is_open = toilet.door_is_open;  // Extract the value before moving
+                        yield Ok(toilet);
+
+                        // Arrêtez la souscription lorsque la porte est ouverte
+                        if door_is_open {
+                            break;
+                        }
+                    },
+                    Err(e) => {
+                        yield Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"})));
+                        break;
+                    },
                 }
+                
+                // Limitez les requêtes à une fois par seconde
                 sleep(Duration::from_secs(1)).await;
             }
         };
