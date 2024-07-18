@@ -1,7 +1,6 @@
 use super::context::GraphQLContext;
 use crate::models::comment::Comment;
 use crate::models::user::{self, CreateUser, ModifyUser, User};
-use crate::schema::comments::toilet_id;
 use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
@@ -119,9 +118,6 @@ impl Query {
     /// }
     /// ```
     pub async  fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
-        let user = context.authorize().await?;
-        println!("{}", user.id);
-
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilets(conn);
         graphql_translate(res)

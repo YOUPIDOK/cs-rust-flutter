@@ -63,7 +63,6 @@ impl GraphQLContext {
         match decode::<Value>(token, &keycloak_oid_public_key, &validation) {
             Ok(data) => {
                 let conn = &mut self.pool.get()?;
-
                 let sub = data.claims["sub"].as_str().ok_or_else(|| {
                     FieldError::new(
                         AuthError::DecodeError("Missing 'sub' field in token".to_string()),
