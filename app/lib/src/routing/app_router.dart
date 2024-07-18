@@ -1,8 +1,11 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
+import 'package:app/src/features/authentication/presentation/account/account_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/payment_method/account_payment_method_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/personal_information/account_personal_information_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
-import 'package:app/src/features/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -12,15 +15,14 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute { home, toilettes, settings }
+enum AppRoute { home, toilettes, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @Riverpod(keepAlive: true)
 GoRouter goRouter(GoRouterRef ref) {
-  final streamingSharedPreferences =
-      ref.watch(sharedPreferencesRepositoryProvider);
+  final streamingSharedPreferences = ref.watch(sharedPreferencesRepositoryProvider);
 
   final tokenStateChanges = streamingSharedPreferences.getToken;
 
@@ -32,50 +34,54 @@ GoRouter goRouter(GoRouterRef ref) {
     initialLocation: '/home',
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) async {
-      return null;
-
-      /* final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
+      final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
       final isLoggin = sharedPreferencesRepository.token != '';
 
       if (!isLoggin) {
         return '/home';
       }
 
-      // after login/signup, redirect to toilettes if phone and email are confirmed
       if ((state.fullPath == '/home')) {
         return '/toilettes';
       }
 
-      return null; */
+      return null;
     },
     refreshListenable: GoRouterRefreshStream(MergeStream([tokenStateChanges])),
     routes: [
+      GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
       StatefulShellRoute.indexedStack(
-        builder: (context, state, child) =>
-            ScaffoldWithBottomNavBar(child: child),
+        builder: (context, state, child) => ScaffoldWithBottomNavBar(child: child),
         branches: [
-          StatefulShellBranch(routes: <RouteBase>[
-            GoRoute(
-                path: '/home',
-                name: AppRoute.home.name,
-                pageBuilder: (context, state) =>
-                    pageFadeTransition(context, state, const HomeScreen())),
-          ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
               path: '/toilettes',
               name: AppRoute.toilettes.name,
-              pageBuilder: (context, state) =>
-                  pageFadeTransition(context, state, const ToilettesScreen()),
+              pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
             ),
           ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
-              path: '/settings',
-              name: AppRoute.settings.name,
-              pageBuilder: (context, state) =>
-                  pageFadeTransition(context, state, const SettingsScreen()),
-            ),
+                path: '/account',
+                name: AppRoute.account.name,
+                pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'personnal-info',
+                    name: AppRoute.accountPersonnalInfo.name,
+                    builder: (context, state) => const AccountPersonalInformationScreen(),
+                  ),
+                  GoRoute(
+                    path: 'payment-method',
+                    name: AppRoute.accountPaymentMethod.name,
+                    builder: (context, state) => const AccountPaymentMethodScreen(),
+                  ),
+                  GoRoute(
+                    path: 'review-history',
+                    name: AppRoute.accountReviewHistory.name,
+                    builder: (context, state) => const AccountReviewHistoryScreen(),
+                  ),
+                ]),
           ]),
         ],
       ),
@@ -88,23 +94,13 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
   final StatefulNavigationShell child;
 
   @override
-  ConsumerState<ScaffoldWithBottomNavBar> createState() =>
-      _ScaffoldWithBottomNavBarState();
+  ConsumerState<ScaffoldWithBottomNavBar> createState() => _ScaffoldWithBottomNavBarState();
 }
 
-class _ScaffoldWithBottomNavBarState
-    extends ConsumerState<ScaffoldWithBottomNavBar> {
-  /* Floating Nav Bar */
-/*   String get _currentLocation => GoRouter.of(context)
-      .routerDelegate
-      .currentConfiguration
-      .last
-      .matchedLocation; */
-
+class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {
-    widget.child
-        .goBranch(index, initialLocation: index == widget.child.currentIndex);
+    widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
   }
 
   @override
@@ -124,14 +120,7 @@ class _ScaffoldWithBottomNavBarState
             builder: (ctx, constraints) => widget.child,
           ),
         ),
-        Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: BottomNavigationBar(
-                items: tabs,
-                currentIndex: widget.child.currentIndex,
-                onTap: _onItemTapped)),
+        Positioned(bottom: 0, left: 0, right: 0, child: BottomNavigationBar(items: tabs, currentIndex: widget.child.currentIndex, onTap: _onItemTapped)),
       ],
     );
   }
@@ -150,23 +139,14 @@ class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
   final String initialLocation;
 }
 
-CustomTransitionPage pageFadeTransition(
-        BuildContext context, GoRouterState state, Widget child) =>
-    CustomTransitionPage(
+CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState state, Widget child) => CustomTransitionPage(
       key: state.pageKey,
       child: child,
       opaque: false,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(opacity: animation, child: child),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) => FadeTransition(opacity: animation, child: child),
     );
 
 List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
-      const ScaffoldWithNavBarTabItem(
-        initialLocation: '/home',
-        icon: Icon(Icons.home_outlined),
-        activeIcon: Icon(Icons.home),
-        label: "Home",
-      ),
       const ScaffoldWithNavBarTabItem(
         initialLocation: '/toilettes',
         icon: Icon(Icons.map_outlined),
@@ -174,9 +154,9 @@ List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
         label: "Search",
       ),
       const ScaffoldWithNavBarTabItem(
-        initialLocation: '/settings',
-        icon: Icon(Icons.settings_outlined),
-        activeIcon: Icon(Icons.settings),
-        label: "Settings",
+        initialLocation: '/account',
+        icon: Icon(Icons.person_outline),
+        activeIcon: Icon(Icons.person),
+        label: "Account",
       ),
     ];
