@@ -1,12 +1,10 @@
-use crate::graphql_logic::context::GraphQLContext;
+// use crate::graphql_logic::context::GraphQLContext;
 use super::context::GraphQLContext;
 use crate::models::comment::{Comment, CreateComment};
-use crate::models::user::{self, CreateUser, ModifyUser, User};
 use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::toilet_service;
-use crate::services::user_service;
 use juniper::futures::Stream;
 use juniper::{graphql_subscription, graphql_value, FieldError, FieldResult, GraphQLEnum, GraphQLObject, RootNode};
 use std::pin::Pin;
@@ -253,7 +251,7 @@ impl Mutation {
     }
 
     // COMMENT
-    
+
     /// ### Exemple de requête GraphQL
     ///
     // mutation {
