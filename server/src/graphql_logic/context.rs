@@ -15,7 +15,7 @@ pub struct GraphQLContext {
 }
 
 impl GraphQLContext {
-    pub async fn authorize(&self) -> FieldResult<(User)> {
+    pub async fn authorize(&self) -> FieldResult<User> {
         let keycloak_pk = std::env::var("KEYCLOAK_PK").expect("KEYCLOAK_PK not found in .env file");
         let keycloak_pk = format!("-----BEGIN PUBLIC KEY-----\n{keycloak_pk}\n-----END PUBLIC KEY-----");
 
