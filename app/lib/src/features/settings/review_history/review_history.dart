@@ -9,9 +9,21 @@ class ReviewHistory extends StatefulWidget {
 
 class _ReviewHistoryState extends State<ReviewHistory> {
   List<Map<String, dynamic>> reviews = [
-    {'title': 'WC Vieux Lyon', 'subtitle': '7 rue des Fleurs 37000 Tours', 'starCount': 5},
-    {'title': 'WC Debourg', 'subtitle': '5 rue Victor Hugo 69000 Lyon', 'starCount': 4},
-    {'title': 'WC Villeurbanne', 'subtitle': '5 rue Victor Hugo 69100 Villeurbanne', 'starCount': 2},
+    {
+      'title': 'WC Vieux Lyon',
+      'subtitle': '7 rue des Fleurs 37000 Tours',
+      'starCount': 5
+    },
+    {
+      'title': 'WC Debourg',
+      'subtitle': '5 rue Victor Hugo 69000 Lyon',
+      'starCount': 4
+    },
+    {
+      'title': 'WC Villeurbanne',
+      'subtitle': '5 rue Victor Hugo 69100 Villeurbanne',
+      'starCount': 2
+    },
   ];
 
   void _editReview(int index) {
@@ -72,25 +84,43 @@ class _ReviewHistoryState extends State<ReviewHistory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Votre historique des avis')),
-      body: SingleChildScrollView(
-        child: Column(
-          children: List.generate(reviews.length, (index) {
-            return cardWithRating(
-              reviews[index]['title'],
-              reviews[index]['subtitle'],
-              reviews[index]['starCount'],
+      appBar: AppBar(title: const Text('Mes avis')),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: <Color>[
+              Color.fromRGBO(144, 39, 142, 0.8),
+              Color.fromRGBO(3, 144, 235, 0.8),
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: List.generate(reviews.length, (index) {
+                return cardWithRating(
+                  reviews[index]['title'],
+                  reviews[index]['subtitle'],
+                  reviews[index]['starCount'],
                   () => _editReview(index),
                   () => _deleteReview(index),
-            );
-          }),
+                );
+              }),
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget cardWithRating(String title, String subtitle, int starCount, VoidCallback onEdit, VoidCallback onDelete) {
+  Widget cardWithRating(String title, String subtitle, int starCount,
+      VoidCallback onEdit, VoidCallback onDelete) {
     return Card(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -107,7 +137,17 @@ class _ReviewHistoryState extends State<ReviewHistory> {
               children: [
                 Text(subtitle),
                 Row(
-                  children: List.generate(5, (index) => index < starCount ? Icon(Icons.star, color: Colors.amber,) : Icon(Icons.star_border, color: Colors.amber,)),
+                  children: List.generate(
+                      5,
+                      (index) => index < starCount
+                          ? const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            )
+                          : const Icon(
+                              Icons.star_border,
+                              color: Colors.amber,
+                            )),
                 ),
               ],
             ),
@@ -116,13 +156,13 @@ class _ReviewHistoryState extends State<ReviewHistory> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               TextButton(
-                child: const Text('Modifier'),
                 onPressed: onEdit,
+                child: const Text('Modifier'),
               ),
               const SizedBox(width: 8),
               TextButton(
-                child: const Text('Supprimer'),
                 onPressed: onDelete,
+                child: const Text('Supprimer'),
               ),
               const SizedBox(width: 8),
             ],
@@ -131,10 +171,4 @@ class _ReviewHistoryState extends State<ReviewHistory> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: ReviewHistory(),
-  ));
 }
