@@ -1,6 +1,5 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
-import 'package:app/src/features/profil/presentation/profil.screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
 import 'package:app/src/features/settings/settings_screen.dart';
