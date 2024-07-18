@@ -181,6 +181,25 @@ impl Mutation {
         let res = toilet_service::update_door_state(pool, id);
         graphql_translate(res)
     }
+
+    /// ### Information
+    /// Ouvre ou ferme A CLE les toilettes
+    /// ### Exemple de requête GraphQL
+    ///
+    /// ```graphql
+    ///        mutation {
+    ///                toggleLockState(id: "UUID") {
+    ///                id
+    ///                isMaintenance
+    ///                isLocked
+    ///                }
+    ///            }
+    /// ```
+    pub fn toggle_lock_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
+        let pool = context.pool.clone();
+        let res = toilet_service::toggle_lock_state(pool, id);
+        graphql_translate(res)
+    }
 }
 
 type StringStream = Pin<Box<dyn Stream<Item = Result<String, FieldError>> + Send>>;

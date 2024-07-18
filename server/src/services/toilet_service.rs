@@ -90,3 +90,21 @@ pub fn update_door_state(pool: Pool<ConnectionManager<PgConnection>>, toilet_id:
 
     Ok(target)
 }
+
+pub fn toggle_lock_state(pool: Pool<ConnectionManager<PgConnection>>, toilet_id: Uuid) -> QueryResult<Toilet> {
+    use crate::schema::toilets::dsl::*;
+    let mut conn = pool.get().map_err(|e| {
+        diesel::result::Error::DatabaseError(diesel::result::DatabaseErrorKind::Unknown, Box::new(e.to_string()))
+    })?;
+
+    let target = toilets.filter(id.eq(toilet_id)).first::<Toilet>(&mut conn)?;
+
+    let new_lock_state = !target.is_locked;
+
+    diesel::update(toilets.find(toilet_id))
+        .set(is_locked.eq(new_lock_state))
+        .execute(&mut conn)?;
+
+    let updated_toilet = toilets.filter(id.eq(toilet_id)).first::<Toilet>(&mut conn)?;
+    Ok(updated_toilet)
+}
