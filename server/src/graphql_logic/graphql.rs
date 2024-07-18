@@ -162,6 +162,23 @@ impl Mutation {
     }
 
     // TOILET
+    /// ### Exemple de requête GraphQL
+    ///
+    /// ```graphql
+    ///     mutation {
+    ///         updateDoorState(id: "some-uuid") {
+    ///           id
+    ///           isMaintenance
+    ///           doorIsOpen
+    ///           isLocked
+    ///           name
+    ///           lat
+    ///           long
+    ///           price
+    ///           companiesId
+    ///         }
+    ///       }
+    /// ```
     pub fn update_door_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
         let pool = context.pool.clone();
         let res = toilet_service::update_door_state(pool, id);
@@ -182,6 +199,8 @@ impl Subscription {
         Box::pin(stream)
     }
 
+    /// ### Information
+    /// Le code écoute tout le temps le toilette mais n'envoie une réponse que quand la porte change
     /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
@@ -205,6 +224,7 @@ impl Subscription {
     ) -> ToiletStream {
         let pool = context.pool.clone();
         let stream = stream! {
+            let mut previous_state: Option<bool> = None;
             loop {
                 let conn = &mut pool.get().unwrap();
                 let toilet = toilet_service::get_toilet(conn, id);
@@ -212,11 +232,11 @@ impl Subscription {
                 match toilet {
                     Ok(toilet) => {
                         let door_is_open = toilet.door_is_open;  // Extract the value before moving
-                        yield Ok(toilet);
 
-                        // Arrêtez la souscription lorsque la porte est ouverte
-                        if door_is_open {
-                            break;
+                        // Check if the state has changed
+                        if previous_state.is_none() || previous_state != Some(door_is_open) {
+                            yield Ok(toilet);
+                            previous_state = Some(door_is_open);
                         }
                     },
                     Err(e) => {
@@ -225,7 +245,7 @@ impl Subscription {
                     },
                 }
                 
-                // Limitez les requêtes à une fois par seconde
+                // Sleep for a short period before checking again
                 sleep(Duration::from_secs(1)).await;
             }
         };
