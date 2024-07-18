@@ -1,12 +1,6 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'server/**'
-      - 'app/**'
   pull_request:
     branches:
       - main
@@ -37,7 +31,7 @@ jobs:
     needs: detect_changes
     if: needs.detect_changes.outputs.server == 'true'
     runs-on: ubuntu-latest
-    default:
+    defaults:
       run:
         working-directory: ./server
     steps:
@@ -49,11 +43,6 @@ jobs:
         with:
           toolchain: stable
           override: true
-      
-      - name: Setup cache
-        uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: ./server
 
       - name: Navigate to Rust directory and check compilation
         run: cargo check

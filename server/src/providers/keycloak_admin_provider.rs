@@ -1,4 +1,4 @@
-use keycloak::{KeycloakAdmin, KeycloakAdminToken};
+/* use keycloak::{KeycloakAdmin, KeycloakAdminToken};
 
 pub async fn get_admin() -> Result<KeycloakAdmin, Box<dyn std::error::Error>> {
     let url = std::env::var("KEYCLOAK_ADDR").unwrap_or_else(|_| "http://localhost:8080".into());
@@ -10,4 +10,4 @@ pub async fn get_admin() -> Result<KeycloakAdmin, Box<dyn std::error::Error>> {
     let admin = KeycloakAdmin::new(&url, admin_token, client);
 
     Ok(admin)
-}
+} */

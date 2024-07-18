@@ -1,6 +1,5 @@
 use actix_cors::Cors;
 use actix_web::{web, App, HttpServer};
-use actix_web_middleware_keycloak_auth::{AlwaysPassPolicy, AlwaysReturnPolicy, DecodingKey, KeycloakAuth};
 use diesel::pg::PgConnection;
 use diesel::r2d2::ConnectionManager;
 use graphql_logic::db::get_pool;
