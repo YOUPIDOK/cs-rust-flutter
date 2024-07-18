@@ -6,7 +6,7 @@ part of 'toilettes_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$toilettesNotifierHash() => r'5be6a71ceb37307a0215b2e07f7dee34534b2d4a';
+String _$toilettesNotifierHash() => r'176653bb69d801a32fa483ae6c5399cc438a50d3';
 
 /// See also [ToilettesNotifier].
 @ProviderFor(ToilettesNotifier)

@@ -1,10 +1,33 @@
 directive @specifiedBy(url: String!) on SCALAR
 
+"""A comment"""
+type Comment {
+  id: Uuid!
+  toiletId: Uuid!
+  userId: Uuid!
+  note: Float!
+  comment: String
+  createdAt: LocalDateTime!
+}
+
+input CreateComment {
+  toiletId: Uuid!
+  note: Float!
+  comment: String
+}
+
 input CreateUser {
+  keycloakUuid: Uuid!
   firstname: String!
   lastname: String!
   email: String!
-  keycloakUuid: Uuid!
+  gender: UserGender!
+  country: String!
+  town: String!
+  postalCode: String!
+  address: String!
+  mobileNumber: String!
+  authorizeDataSell: Boolean!
 }
 
 """
@@ -18,59 +41,71 @@ scalar LocalDateTime
 
 input ModifyUser {
   id: Uuid!
+  keycloakUuid: Uuid!
   firstname: String!
   lastname: String!
   email: String!
-  keycloakUuid: Uuid!
+  gender: UserGender!
+  country: String!
+  town: String!
+  postalCode: String!
+  address: String!
+  mobileNumber: String!
+  authorizeDataSell: Boolean!
 }
 
 type Mutation {
   createUser(input: CreateUser!): User!
   updateUser(input: ModifyUser!): User!
+
+  """
+  ### Information
+  Ouvre ou ferme la porte. Si un toilet est en maintenance dans docker on reçoit ca:
+  cs-rust-flutter-back-1| [2024-07-18T15:01:51Z ERROR
+  server::services::toilet_service] Toilet with id
+  c7748088-444f-44b9-8d13-d1f4d4906ee7 is in maintenance
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+         mutation {
+                 updateDoorState(id: "UUID") {
+                 id
+                 isMaintenance
+                 doorIsOpen
+                 }
+             }
+  ```
+  """
+  updateDoorState(id: Uuid!): Toilet!
+
+  """
+  ### Information
+  Ouvre ou ferme A CLE les toilettes
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+         mutation {
+                 toggleLockState(id: "UUID") {
+                 id
+                 isMaintenance
+                 isLocked
+                 }
+             }
+  ```
+  """
+  toggleLockState(id: Uuid!): Toilet!
+
+  """
+  ### Exemple de requête GraphQL
+  
+  """
+  createComment(input: CreateComment!): Comment!
 }
 
 type Query {
   apiVersion: String!
   findUser(userId: Uuid!): User
   findUserWithKeycloakId(keycloakId: Uuid!): User
-
-  """
-  ### Example de requête GraphQL
-  La distance retournée est en **Km**
-  
-  ```graphql
-  {
-         getToilet(id: "some-uuid", lat: 48.8566, long: 2.3522) {
-             toilet {
-             id
-             name
-             lat
-             long
-             }
-             distance
-         }
-  }
-  ```
-  """
-  getToilet(id: Uuid!, lat: Float!, long: Float!): ToiletWithDistance!
-
-  """
-  ### Example de requête GraphQL
-  
-  ```graphql
-  {
-      getToilets{
-      id,
-      lat,
-      long,
-      name,
-      companiesId,
-      isMaintenance
-    }
-  }
-  ```
-  """
-  getToilets: [Toilet!]!
 
   """
   ### Example de requête GraphQL
@@ -89,6 +124,126 @@ type Query {
   ```
   """
   getToiletProche(lat: Float!, long: Float!, radiusKm: Float!): [Toilet!]!
+
+  """
+  ### Exemple de requête GraphQL
+  La distance retournée est en **Km**
+  
+  ```graphql
+  {
+         getToiletWithDistance(id: "some-uuid", lat: 48.8566, long: 2.3522) {
+             toilet {
+             id
+             name
+             lat
+             long
+             price
+             }
+             distance
+         }
+  }
+  ```
+  """
+  getToiletWithDistance(id: Uuid!, lat: Float!, long: Float!): ToiletWithDistance!
+
+  """
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+  {
+         getToilet(id: "some-uuid") {
+             id
+             name
+             lat
+             long
+             price
+             isMaintenance
+         }
+  }
+  ```
+  """
+  getToilet(id: Uuid!): Toilet!
+
+  """
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+  {
+      getToilets{
+      id,
+      lat,
+      long,
+      name,
+      companiesId,
+      isMaintenance
+    }
+  }
+  ```
+  """
+  getToilets: [Toilet!]!
+
+  """
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+     {
+         getCommentsByToilet(toiletIdFilter: "UUID") {
+             id
+             toiletId
+             userId
+             note
+             comment
+             createdAt
+        }
+     }
+  ```
+  """
+  getCommentsByToilet(toiletIdFilter: Uuid!): [Comment!]!
+
+  """
+  ### Example de requête GraphQL
+  
+  ```graphql
+  {
+      getCommentsByUser() {
+          id
+          toiletId
+          userId
+          note
+          comment
+          createdAt
+    }
+  }
+  ```
+  """
+  getCommentsByUser: [Comment!]!
+}
+
+type Subscription {
+  helloWorld: String!
+
+  """
+  ### Information
+  Le code écoute tout le temps le toilette mais n'envoie une réponse que quand la porte change
+  ### Exemple de requête GraphQL
+  
+  ```graphql
+      subscription {
+          doorStateUpdated(id: "some-uuid") {
+            id
+            isMaintenance
+            doorIsOpen
+            isLocked
+            name
+            lat
+            long
+            price
+            companiesId
+          }
+        }
+  ```
+  """
+  doorStateUpdated(id: Uuid!): Toilet!
 }
 
 """A toilet"""
@@ -100,6 +255,7 @@ type Toilet {
   name: String!
   lat: Float!
   long: Float!
+  price: Float!
   companiesId: Uuid!
 }
 
@@ -111,12 +267,25 @@ type ToiletWithDistance {
 """A user"""
 type User {
   id: Uuid!
+  keycloakUuid: Uuid!
+  email: String!
   firstname: String!
   lastname: String!
-  email: String!
-  keycloakUuid: Uuid!
+  gender: UserGender!
+  country: String!
+  town: String!
+  postalCode: String!
+  address: String!
+  mobileNumber: String!
+  authorizeDataSell: Boolean!
   createdAt: LocalDateTime!
   updatedAt: LocalDateTime!
+}
+
+enum UserGender {
+  MALE
+  FEMALE
+  OTHER
 }
 
 scalar Uuid

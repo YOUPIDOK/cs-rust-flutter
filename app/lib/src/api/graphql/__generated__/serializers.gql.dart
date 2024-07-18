@@ -2,7 +2,13 @@
 // ignore_for_file: type=lint
 
 import 'package:app/src/api/graphql/__generated__/schema.schema.gql.dart'
-    show GCreateUser, GLocalDateTime, GModifyUser, GUuid;
+    show
+        GCreateComment,
+        GCreateUser,
+        GLocalDateTime,
+        GModifyUser,
+        GUserGender,
+        GUuid;
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.data.gql.dart'
     show
         GNearToilettesData,
@@ -26,6 +32,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   ..add(OperationSerializer())
   ..addPlugin(StandardJsonPlugin());
 @SerializersFor([
+  GCreateComment,
   GCreateUser,
   GLocalDateTime,
   GModifyUser,
@@ -37,6 +44,7 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GToilettesData_getToilets,
   GToilettesReq,
   GToilettesVars,
+  GUserGender,
   GUuid,
 ])
 final Serializers serializers = _serializersBuilder.build();

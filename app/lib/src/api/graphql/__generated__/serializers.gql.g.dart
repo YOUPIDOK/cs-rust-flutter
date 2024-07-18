@@ -8,6 +8,7 @@ part of 'serializers.gql.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(FetchPolicy.serializer)
+      ..add(GCreateComment.serializer)
       ..add(GCreateUser.serializer)
       ..add(GLocalDateTime.serializer)
       ..add(GModifyUser.serializer)
@@ -19,6 +20,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GToilettesData_getToilets.serializer)
       ..add(GToilettesReq.serializer)
       ..add(GToilettesVars.serializer)
+      ..add(GUserGender.serializer)
       ..add(GUuid.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList,
