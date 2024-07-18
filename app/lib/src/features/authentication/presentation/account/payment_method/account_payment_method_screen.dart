@@ -3,26 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 
-class AccountPaymentMethodScreen extends StatelessWidget {
+
+class AccountPaymentMethodScreen extends StatefulWidget {
   const AccountPaymentMethodScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Paiement')),
-      body: const _AccountPaymentMethodScreenState(),
-    );
-  }
+  State<AccountPaymentMethodScreen> createState() => _AccountPaymentMethodScreenStateState();
 }
 
-class _AccountPaymentMethodScreenState extends StatefulWidget {
-  const _AccountPaymentMethodScreenState({super.key});
-
-  @override
-  _AccountPaymentMethodScreenStateState createState() => _AccountPaymentMethodScreenStateState();
-}
-
-class _AccountPaymentMethodScreenStateState extends State<_AccountPaymentMethodScreenState> {
+class _AccountPaymentMethodScreenStateState extends State<AccountPaymentMethodScreen> {
   String _selectedMethod = 'XXXX-XXXX-XXXX-1234';
   List<Map<String, String>> cards = [
     {'number': 'XXXX-XXXX-XXXX-1234', 'expiry': '12/24'}
