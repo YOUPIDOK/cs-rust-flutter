@@ -1,6 +1,8 @@
 use super::context::GraphQLContext;
-use crate::models::user::{CreateUser, User, ModifyUser};
-use crate::services::user_service;
+use crate::models::comment::Comment;
+use crate::models::user::{self, CreateUser, ModifyUser, User};
+use crate::schema::comments::toilet_id;
+use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::services::toilet_service;
 use juniper::{graphql_value, FieldError};
@@ -49,13 +51,47 @@ impl Query {
     pub async fn find_user_with_keycloak_id(context: &GraphQLContext, keycloak_id: Uuid) -> FieldResult<Option<User>> {
         let conn = &mut context.pool.get()?;
         let res = user_service::find_user_with_keycloak_id(conn, keycloak_id).await;
+
         match res {
             Ok(t) => Ok(t),
             Err(e) => FieldResult::Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
         }
     }
 
-    // TOILET
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub async fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+        let user = context.authorize().await?;
+        
+        // let user_id = match user.id {
+        //     Some(user_id) => user_id,
+        //     None => {
+        //         return Err(FieldError::new(
+        //             "Error in user id context",
+        //             graphql_value!({ "internal_error": "User ID is None" }),
+        //         ));
+        //     }
+        // };
+        
+        print!("{}", user.id);
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
+        graphql_translate(res)
+    }
+
+        // TOILET
 
      /// ### Example de requête GraphQL
     /// La distance retournée est en **Km**
@@ -104,19 +140,44 @@ impl Query {
     ///
     /// ```graphql
     /// {
-    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
-    ///     id,
-    ///     lat,
-    ///     long,
-    ///     name,
-    ///     companiesId,
-    ///     isMaintenance
+    ///     getCommentsByToilet(id: 1324-1234-1234-1234) {
+    ///     comment {
+    ///         id
+    ///         toilet_id
+    ///         user_id
+    ///         note
+    ///         comment
+    ///         created_at
+    ///     }
     ///   }
     /// }
     /// ```
-    pub fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+    pub fn get_comments_by_toilet(context: &GraphQLContext, toilet_id_filter: Uuid) -> FieldResult<Vec<Comment>> {
         let conn = &mut context.pool.get()?;
-        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
+        let res = comment_service::get_comments_by_toilet(conn, toilet_id_filter);
+        graphql_translate(res)
+    }
+
+        /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getCommentsByUser() {
+    ///     comment {
+    ///         id
+    ///         toilet_id
+    ///         user_id
+    ///         note
+    ///         comment
+    ///         created_at
+    ///     }
+    ///   }
+    /// }
+    /// ```
+    pub async fn get_comments_by_user(context: &GraphQLContext) -> FieldResult<Vec<Comment>> {
+        let user = context.authorize().await?;
+        let conn = &mut context.pool.get()?;
+        let res = comment_service::get_comments_by_user(conn, user.id);
         graphql_translate(res)
     }
 }
