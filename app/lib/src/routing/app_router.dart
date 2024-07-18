@@ -1,4 +1,8 @@
 import 'package:app/src/features/authentication/data/auth_repository.dart';
+import 'package:app/src/features/authentication/presentation/account/account_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/payment_method/account_payment_method_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/personal_information/account_personal_information_screen.dart';
+import 'package:app/src/features/authentication/presentation/account/review_history/account_review_history_screen.dart';
 import 'package:app/src/features/home/presentation/home_screen.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/presentation/toilettes_screen.dart';
@@ -11,14 +15,7 @@ import 'go_router_refresh_stream.dart';
 
 part 'app_router.g.dart';
 
-enum AppRoute {
-  home,
-
-  /// Toilettes
-  toilettes,
-
-  // Account
-}
+enum AppRoute { home, toilettes, account, accountPersonnalInfo, accountPaymentMethod, accountReviewHistory }
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -37,36 +34,54 @@ GoRouter goRouter(GoRouterRef ref) {
     initialLocation: '/home',
     navigatorKey: _rootNavigatorKey,
     redirect: (context, state) async {
-      return null;
-
-      /* final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
+      final sharedPreferencesRepository = ref.read(sharedPreferencesRepositoryProvider);
       final isLoggin = sharedPreferencesRepository.token != '';
 
       if (!isLoggin) {
         return '/home';
       }
 
-      // after login/signup, redirect to toilettes if phone and email are confirmed
       if ((state.fullPath == '/home')) {
         return '/toilettes';
       }
 
-      return null; */
+      return null;
     },
     refreshListenable: GoRouterRefreshStream(MergeStream([tokenStateChanges])),
     routes: [
+      GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
       StatefulShellRoute.indexedStack(
         builder: (context, state, child) => ScaffoldWithBottomNavBar(child: child),
         branches: [
-          StatefulShellBranch(routes: <RouteBase>[
-            GoRoute(path: '/home', name: AppRoute.home.name, pageBuilder: (context, state) => pageFadeTransition(context, state, const HomeScreen())),
-          ]),
           StatefulShellBranch(routes: <RouteBase>[
             GoRoute(
               path: '/toilettes',
               name: AppRoute.toilettes.name,
               pageBuilder: (context, state) => pageFadeTransition(context, state, const ToilettesScreen()),
             ),
+          ]),
+          StatefulShellBranch(routes: <RouteBase>[
+            GoRoute(
+                path: '/account',
+                name: AppRoute.account.name,
+                pageBuilder: (context, state) => pageFadeTransition(context, state, const AccountScreen()),
+                routes: [
+                  GoRoute(
+                    path: 'personnal-info',
+                    name: AppRoute.accountPersonnalInfo.name,
+                    builder: (context, state) => const AccountPersonalInformationScreen(),
+                  ),
+                  GoRoute(
+                    path: 'payment-method',
+                    name: AppRoute.accountPaymentMethod.name,
+                    builder: (context, state) => const AccountPaymentMethodScreen(),
+                  ),
+                  GoRoute(
+                    path: 'review-history',
+                    name: AppRoute.accountReviewHistory.name,
+                    builder: (context, state) => const AccountReviewHistoryScreen(),
+                  ),
+                ]),
           ]),
         ],
       ),
@@ -83,9 +98,6 @@ class ScaffoldWithBottomNavBar extends ConsumerStatefulWidget {
 }
 
 class _ScaffoldWithBottomNavBarState extends ConsumerState<ScaffoldWithBottomNavBar> {
-  /* Floating Nav Bar */
-  String get _currentLocation => GoRouter.of(context).routerDelegate.currentConfiguration.last.matchedLocation;
-
   // callback used to navigate to the desired tab
   void _onItemTapped(int index) {
     widget.child.goBranch(index, initialLocation: index == widget.child.currentIndex);
@@ -136,15 +148,15 @@ CustomTransitionPage pageFadeTransition(BuildContext context, GoRouterState stat
 
 List<ScaffoldWithNavBarTabItem> getTabs(BuildContext context) => [
       const ScaffoldWithNavBarTabItem(
-        initialLocation: '/home',
-        icon: Icon(Icons.home_outlined),
-        activeIcon: Icon(Icons.home),
-        label: "Home",
-      ),
-      const ScaffoldWithNavBarTabItem(
         initialLocation: '/toilettes',
         icon: Icon(Icons.map_outlined),
         activeIcon: Icon(Icons.map),
         label: "Search",
+      ),
+      const ScaffoldWithNavBarTabItem(
+        initialLocation: '/account',
+        icon: Icon(Icons.person_outline),
+        activeIcon: Icon(Icons.person),
+        label: "Account",
       ),
     ];

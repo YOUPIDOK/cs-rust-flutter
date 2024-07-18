@@ -36,7 +36,6 @@ fn haversine_distance(lat1: f64, lon1: f64, lat2: f64, lon2: f64) -> f64 {
 
 pub fn get_toilet_proche(conn: &mut PgConnection, lat_test: f64, lon: f64, radius_km: f64) -> QueryResult<Vec<Toilet>> {
     // let radius_km = 5.0;
-
     use crate::schema::toilets::dsl::*;
     let all_toilets = toilets.load::<Toilet>(conn)?;
     let nearby_toilets: Vec<Toilet> = all_toilets.into_iter()

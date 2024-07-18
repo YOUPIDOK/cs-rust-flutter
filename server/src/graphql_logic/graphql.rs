@@ -1,4 +1,8 @@
 use crate::graphql_logic::context::GraphQLContext;
+use super::context::GraphQLContext;
+use crate::models::comment::{Comment, CreateComment};
+use crate::models::user::{self, CreateUser, ModifyUser, User};
+use crate::services::{comment_service, user_service};
 use crate::models::toilet::{Toilet, ToiletWithDistance};
 use crate::models::user::{CreateUser, ModifyUser, User};
 use crate::services::toilet_service;
@@ -52,13 +56,32 @@ impl Query {
     pub async fn find_user_with_keycloak_id(context: &GraphQLContext, keycloak_id: Uuid) -> FieldResult<Option<User>> {
         let conn = &mut context.pool.get()?;
         let res = user_service::find_user_with_keycloak_id(conn, keycloak_id).await;
+
         match res {
             Ok(t) => Ok(t),
             Err(e) => FieldResult::Err(FieldError::new(e.to_string(), graphql_value!({"database_error": "Impossible"}))),
         }
     }
 
-    // TOILET
+    /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
+    /// {
+    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
+    ///     id,
+    ///     lat,
+    ///     long,
+    ///     name,
+    ///     companiesId,
+    ///     isMaintenance
+    ///   }
+    /// }
+    /// ```
+    pub async fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+        let conn = &mut context.pool.get()?;
+        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
+        graphql_translate(res)
+    }
 
     /// ### Exemple de requête GraphQL
     /// La distance retournée est en **Km**
@@ -117,7 +140,7 @@ impl Query {
     ///   }
     /// }
     /// ```
-    pub fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
+    pub async  fn get_toilets(context: &GraphQLContext) -> FieldResult<Vec<Toilet>> {
         let conn = &mut context.pool.get()?;
         let res = toilet_service::get_toilets(conn);
         graphql_translate(res)
@@ -126,20 +149,41 @@ impl Query {
     /// ### Exemple de requête GraphQL
     ///
     /// ```graphql
+    ///    {
+    ///        getCommentsByToilet(toiletIdFilter: "UUID") {
+    ///            id
+    ///            toiletId
+    ///            userId
+    ///            note
+    ///            comment
+    ///            createdAt
+    ///       }
+    ///    }
+    /// ```
+    pub fn get_comments_by_toilet(context: &GraphQLContext, toilet_id_filter: Uuid) -> FieldResult<Vec<Comment>> {
+        let conn = &mut context.pool.get()?;
+        let res = comment_service::get_comments_by_toilet(conn, toilet_id_filter);
+        graphql_translate(res)
+    }
+
+        /// ### Example de requête GraphQL
+    ///
+    /// ```graphql
     /// {
-    ///     getToiletProche(lat: 34.886306, long: 134.37971, radiusKm: 5.0) {
-    ///     id,
-    ///     lat,
-    ///     long,
-    ///     name,
-    ///     companiesId,
-    ///     isMaintenance
+    ///     getCommentsByUser() {
+    ///         id
+    ///         toiletId
+    ///         userId
+    ///         note
+    ///         comment
+    ///         createdAt
     ///   }
     /// }
     /// ```
-    pub fn get_toilet_proche(context: &GraphQLContext, lat: f64, long: f64, radius_km: f64) -> FieldResult<Vec<Toilet>> {
+    pub async fn get_comments_by_user(context: &GraphQLContext) -> FieldResult<Vec<Comment>> {
+        let user = context.authorize().await?;
         let conn = &mut context.pool.get()?;
-        let res = toilet_service::get_toilet_proche(conn, lat, long, radius_km);
+        let res = comment_service::get_comments_by_user(conn, user.id);
         graphql_translate(res)
     }
 }
@@ -198,6 +242,29 @@ impl Mutation {
     pub fn toggle_lock_state(context: &GraphQLContext, id: Uuid) -> FieldResult<Toilet> {
         let pool = context.pool.clone();
         let res = toilet_service::toggle_lock_state(pool, id);
+        graphql_translate(res)
+    }
+
+    /// ### Exemple de requête GraphQL
+    ///
+    // mutation {
+    //     createComment(input: {
+    //       toiletId: "1c41d9e3-08bf-47c1-9a71-17c8897678d7",
+    //       note: 4.5,
+    //       comment: "Clean and well-maintained!"
+    //     }) {
+    //       id
+    //       toiletId
+    //       userId
+    //       note
+    //       comment
+    //       createdAt
+    //     }
+    //   }
+    pub async fn create_comment(context: &GraphQLContext, input: CreateComment) -> FieldResult<Comment> {
+        let user: User = context.authorize().await?;
+        let conn = &mut context.pool.get()?;
+        let res = comment_service::create_comment(conn, input, user.id);
         graphql_translate(res)
     }
 }

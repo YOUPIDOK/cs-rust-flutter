@@ -11,8 +11,9 @@ diesel::table! {
         id -> Uuid,
         toilet_id -> Uuid,
         user_id -> Uuid,
+        note -> Float8,
+        comment -> Nullable<Text>,
         created_at -> Timestamp,
-        note -> Nullable<Numeric>,
     }
 }
 

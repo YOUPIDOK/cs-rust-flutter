@@ -37,7 +37,7 @@ async fn subscriptions(req: HttpRequest, state: web::Data<AppState>, stream: web
     let pool = state.conn.clone();
     let ctx = GraphQLContext {
         pool,
-        headers: req.headers().clone(),
+        headers: req.headers().clone()
     };
     let schema = schema().into();
     let config = ConnectionConfig::new(ctx);
