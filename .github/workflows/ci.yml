@@ -62,13 +62,13 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context:    .
-          file:       ./Dockerfile
+          context:    ./server
+          file:       ./server/Dockerfile
           push:       true
           tags:       youpidok/cs-rust-flutter:latest
           cache-from: type=registry,ref=youpidok/cs-rust-flutter:cache
           cache-to:   type=registry,ref=youpidok/cs-rust-flutter:cache,mode=max
-          
+
   flutter:  
     needs: detect_changes
     if: needs.detect_changes.outputs.app == 'true'
