@@ -6,18 +6,21 @@ part of 'toilettes.var.gql.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<GAllToilettesVars> _$gAllToilettesVarsSerializer =
-    new _$GAllToilettesVarsSerializer();
+Serializer<GNearToilettesVars> _$gNearToilettesVarsSerializer =
+    new _$GNearToilettesVarsSerializer();
+Serializer<GToilettesVars> _$gToilettesVarsSerializer =
+    new _$GToilettesVarsSerializer();
 
-class _$GAllToilettesVarsSerializer
-    implements StructuredSerializer<GAllToilettesVars> {
+class _$GNearToilettesVarsSerializer
+    implements StructuredSerializer<GNearToilettesVars> {
   @override
-  final Iterable<Type> types = const [GAllToilettesVars, _$GAllToilettesVars];
+  final Iterable<Type> types = const [GNearToilettesVars, _$GNearToilettesVars];
   @override
-  final String wireName = 'GAllToilettesVars';
+  final String wireName = 'GNearToilettesVars';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GAllToilettesVars object,
+  Iterable<Object?> serialize(
+      Serializers serializers, GNearToilettesVars object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'lat',
@@ -33,10 +36,10 @@ class _$GAllToilettesVarsSerializer
   }
 
   @override
-  GAllToilettesVars deserialize(
+  GNearToilettesVars deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GAllToilettesVarsBuilder();
+    final result = new GNearToilettesVarsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -63,7 +66,28 @@ class _$GAllToilettesVarsSerializer
   }
 }
 
-class _$GAllToilettesVars extends GAllToilettesVars {
+class _$GToilettesVarsSerializer
+    implements StructuredSerializer<GToilettesVars> {
+  @override
+  final Iterable<Type> types = const [GToilettesVars, _$GToilettesVars];
+  @override
+  final String wireName = 'GToilettesVars';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, GToilettesVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    return <Object?>[];
+  }
+
+  @override
+  GToilettesVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    return new GToilettesVarsBuilder().build();
+  }
+}
+
+class _$GNearToilettesVars extends GNearToilettesVars {
   @override
   final double lat;
   @override
@@ -71,31 +95,32 @@ class _$GAllToilettesVars extends GAllToilettesVars {
   @override
   final double radiusKm;
 
-  factory _$GAllToilettesVars(
-          [void Function(GAllToilettesVarsBuilder)? updates]) =>
-      (new GAllToilettesVarsBuilder()..update(updates))._build();
+  factory _$GNearToilettesVars(
+          [void Function(GNearToilettesVarsBuilder)? updates]) =>
+      (new GNearToilettesVarsBuilder()..update(updates))._build();
 
-  _$GAllToilettesVars._(
+  _$GNearToilettesVars._(
       {required this.lat, required this.long, required this.radiusKm})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(lat, r'GAllToilettesVars', 'lat');
-    BuiltValueNullFieldError.checkNotNull(long, r'GAllToilettesVars', 'long');
+    BuiltValueNullFieldError.checkNotNull(lat, r'GNearToilettesVars', 'lat');
+    BuiltValueNullFieldError.checkNotNull(long, r'GNearToilettesVars', 'long');
     BuiltValueNullFieldError.checkNotNull(
-        radiusKm, r'GAllToilettesVars', 'radiusKm');
+        radiusKm, r'GNearToilettesVars', 'radiusKm');
   }
 
   @override
-  GAllToilettesVars rebuild(void Function(GAllToilettesVarsBuilder) updates) =>
+  GNearToilettesVars rebuild(
+          void Function(GNearToilettesVarsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GAllToilettesVarsBuilder toBuilder() =>
-      new GAllToilettesVarsBuilder()..replace(this);
+  GNearToilettesVarsBuilder toBuilder() =>
+      new GNearToilettesVarsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GAllToilettesVars &&
+    return other is GNearToilettesVars &&
         lat == other.lat &&
         long == other.long &&
         radiusKm == other.radiusKm;
@@ -113,7 +138,7 @@ class _$GAllToilettesVars extends GAllToilettesVars {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GAllToilettesVars')
+    return (newBuiltValueToStringHelper(r'GNearToilettesVars')
           ..add('lat', lat)
           ..add('long', long)
           ..add('radiusKm', radiusKm))
@@ -121,9 +146,9 @@ class _$GAllToilettesVars extends GAllToilettesVars {
   }
 }
 
-class GAllToilettesVarsBuilder
-    implements Builder<GAllToilettesVars, GAllToilettesVarsBuilder> {
-  _$GAllToilettesVars? _$v;
+class GNearToilettesVarsBuilder
+    implements Builder<GNearToilettesVars, GNearToilettesVarsBuilder> {
+  _$GNearToilettesVars? _$v;
 
   double? _lat;
   double? get lat => _$this._lat;
@@ -137,9 +162,9 @@ class GAllToilettesVarsBuilder
   double? get radiusKm => _$this._radiusKm;
   set radiusKm(double? radiusKm) => _$this._radiusKm = radiusKm;
 
-  GAllToilettesVarsBuilder();
+  GNearToilettesVarsBuilder();
 
-  GAllToilettesVarsBuilder get _$this {
+  GNearToilettesVarsBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _lat = $v.lat;
@@ -151,28 +176,86 @@ class GAllToilettesVarsBuilder
   }
 
   @override
-  void replace(GAllToilettesVars other) {
+  void replace(GNearToilettesVars other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$GAllToilettesVars;
+    _$v = other as _$GNearToilettesVars;
   }
 
   @override
-  void update(void Function(GAllToilettesVarsBuilder)? updates) {
+  void update(void Function(GNearToilettesVarsBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GAllToilettesVars build() => _build();
+  GNearToilettesVars build() => _build();
 
-  _$GAllToilettesVars _build() {
+  _$GNearToilettesVars _build() {
     final _$result = _$v ??
-        new _$GAllToilettesVars._(
+        new _$GNearToilettesVars._(
             lat: BuiltValueNullFieldError.checkNotNull(
-                lat, r'GAllToilettesVars', 'lat'),
+                lat, r'GNearToilettesVars', 'lat'),
             long: BuiltValueNullFieldError.checkNotNull(
-                long, r'GAllToilettesVars', 'long'),
+                long, r'GNearToilettesVars', 'long'),
             radiusKm: BuiltValueNullFieldError.checkNotNull(
-                radiusKm, r'GAllToilettesVars', 'radiusKm'));
+                radiusKm, r'GNearToilettesVars', 'radiusKm'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GToilettesVars extends GToilettesVars {
+  factory _$GToilettesVars([void Function(GToilettesVarsBuilder)? updates]) =>
+      (new GToilettesVarsBuilder()..update(updates))._build();
+
+  _$GToilettesVars._() : super._();
+
+  @override
+  GToilettesVars rebuild(void Function(GToilettesVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GToilettesVarsBuilder toBuilder() =>
+      new GToilettesVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GToilettesVars;
+  }
+
+  @override
+  int get hashCode {
+    return 29432515;
+  }
+
+  @override
+  String toString() {
+    return newBuiltValueToStringHelper(r'GToilettesVars').toString();
+  }
+}
+
+class GToilettesVarsBuilder
+    implements Builder<GToilettesVars, GToilettesVarsBuilder> {
+  _$GToilettesVars? _$v;
+
+  GToilettesVarsBuilder();
+
+  @override
+  void replace(GToilettesVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GToilettesVars;
+  }
+
+  @override
+  void update(void Function(GToilettesVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GToilettesVars build() => _build();
+
+  _$GToilettesVars _build() {
+    final _$result = _$v ?? new _$GToilettesVars._();
     replace(_$result);
     return _$result;
   }

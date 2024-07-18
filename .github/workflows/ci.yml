@@ -43,28 +43,46 @@ jobs:
         with:
           toolchain: stable
           override: true
-
-      - name: Navigate to Rust directory and check compilation
+      
+      - name: Test build
         run: cargo check
 
-      - name: Navigate to Rust directory and test compilation
+      - name: Test
         run: cargo test
+      
+      - name: Install docker
+        uses: docker/setup-buildx-action@v3
 
-  flutter:
+      - name: Docker Hub login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context:    .
+          file:       ./Dockerfile
+          push:       true
+          tags:       youpidok/cs-rust-flutter:latest
+          cache-from: type=registry,ref=youpidok/cs-rust-flutter:cache
+          cache-to:   type=registry,ref=youpidok/cs-rust-flutter:cache,mode=max
+          
+  flutter:  
     needs: detect_changes
     if: needs.detect_changes.outputs.app == 'true'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Copy config.json.dist to config.json
         run: |
-          cp app/config.json.dist app/config.json
-
-      - name: Copy config.json.dist to config.json
-        run: |
-          cp app/config.json.dist app/config.json
+          cp config.json.dist config.json
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -72,11 +90,7 @@ jobs:
           flutter-version: '3.22.2'
 
       - name: Install dependencies
-        run: |
-          cd app
-          flutter pub get
+        run: flutter pub get
 
-#      - name: Run Flutter tests
-#        run: |
-#          cd app
-#          flutter test --verbose
+      - name: Run Flutter tests
+        run: flutter test test/test.dart

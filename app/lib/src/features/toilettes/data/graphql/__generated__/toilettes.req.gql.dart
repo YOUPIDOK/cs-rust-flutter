@@ -16,24 +16,25 @@ import 'package:gql_exec/gql_exec.dart' as _i4;
 
 part 'toilettes.req.gql.g.dart';
 
-abstract class GAllToilettesReq
+abstract class GNearToilettesReq
     implements
-        Built<GAllToilettesReq, GAllToilettesReqBuilder>,
-        _i1.OperationRequest<_i2.GAllToilettesData, _i3.GAllToilettesVars> {
-  GAllToilettesReq._();
+        Built<GNearToilettesReq, GNearToilettesReqBuilder>,
+        _i1.OperationRequest<_i2.GNearToilettesData, _i3.GNearToilettesVars> {
+  GNearToilettesReq._();
 
-  factory GAllToilettesReq([void Function(GAllToilettesReqBuilder b) updates]) =
-      _$GAllToilettesReq;
+  factory GNearToilettesReq(
+          [void Function(GNearToilettesReqBuilder b) updates]) =
+      _$GNearToilettesReq;
 
-  static void _initializeBuilder(GAllToilettesReqBuilder b) => b
+  static void _initializeBuilder(GNearToilettesReqBuilder b) => b
     ..operation = _i4.Operation(
       document: _i5.document,
-      operationName: 'AllToilettes',
+      operationName: 'NearToilettes',
     )
     ..executeOnListen = true;
 
   @override
-  _i3.GAllToilettesVars get vars;
+  _i3.GNearToilettesVars get vars;
   @override
   _i4.Operation get operation;
   @override
@@ -47,12 +48,12 @@ abstract class GAllToilettesReq
   String? get requestId;
   @override
   @BuiltValueField(serialize: false)
-  _i2.GAllToilettesData? Function(
-    _i2.GAllToilettesData?,
-    _i2.GAllToilettesData?,
+  _i2.GNearToilettesData? Function(
+    _i2.GNearToilettesData?,
+    _i2.GNearToilettesData?,
   )? get updateResult;
   @override
-  _i2.GAllToilettesData? get optimisticResponse;
+  _i2.GNearToilettesData? get optimisticResponse;
   @override
   String? get updateCacheHandlerKey;
   @override
@@ -65,31 +66,108 @@ abstract class GAllToilettesReq
   @BuiltValueField(serialize: false)
   _i4.Context? get context;
   @override
-  _i2.GAllToilettesData? parseData(Map<String, dynamic> json) =>
-      _i2.GAllToilettesData.fromJson(json);
+  _i2.GNearToilettesData? parseData(Map<String, dynamic> json) =>
+      _i2.GNearToilettesData.fromJson(json);
 
   @override
   Map<String, dynamic> varsToJson() => vars.toJson();
 
   @override
-  Map<String, dynamic> dataToJson(_i2.GAllToilettesData data) => data.toJson();
+  Map<String, dynamic> dataToJson(_i2.GNearToilettesData data) => data.toJson();
 
   @override
-  _i1.OperationRequest<_i2.GAllToilettesData, _i3.GAllToilettesVars>
+  _i1.OperationRequest<_i2.GNearToilettesData, _i3.GNearToilettesVars>
       transformOperation(_i4.Operation Function(_i4.Operation) transform) =>
           this.rebuild((b) => b..operation = transform(operation));
 
-  static Serializer<GAllToilettesReq> get serializer =>
-      _$gAllToilettesReqSerializer;
+  static Serializer<GNearToilettesReq> get serializer =>
+      _$gNearToilettesReqSerializer;
 
   Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
-        GAllToilettesReq.serializer,
+        GNearToilettesReq.serializer,
         this,
       ) as Map<String, dynamic>);
 
-  static GAllToilettesReq? fromJson(Map<String, dynamic> json) =>
+  static GNearToilettesReq? fromJson(Map<String, dynamic> json) =>
       _i6.serializers.deserializeWith(
-        GAllToilettesReq.serializer,
+        GNearToilettesReq.serializer,
+        json,
+      );
+}
+
+abstract class GToilettesReq
+    implements
+        Built<GToilettesReq, GToilettesReqBuilder>,
+        _i1.OperationRequest<_i2.GToilettesData, _i3.GToilettesVars> {
+  GToilettesReq._();
+
+  factory GToilettesReq([void Function(GToilettesReqBuilder b) updates]) =
+      _$GToilettesReq;
+
+  static void _initializeBuilder(GToilettesReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'Toilettes',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GToilettesVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GToilettesData? Function(
+    _i2.GToilettesData?,
+    _i2.GToilettesData?,
+  )? get updateResult;
+  @override
+  _i2.GToilettesData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GToilettesData? parseData(Map<String, dynamic> json) =>
+      _i2.GToilettesData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GToilettesData data) => data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GToilettesData, _i3.GToilettesVars>
+      transformOperation(_i4.Operation Function(_i4.Operation) transform) =>
+          this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GToilettesReq> get serializer => _$gToilettesReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GToilettesReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GToilettesReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GToilettesReq.serializer,
         json,
       );
 }

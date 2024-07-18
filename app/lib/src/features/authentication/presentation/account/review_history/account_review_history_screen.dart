@@ -1,13 +1,14 @@
+import 'package:app/src/constants/paddings.dart';
 import 'package:flutter/material.dart';
 
-class ReviewHistory extends StatefulWidget {
-  const ReviewHistory({super.key});
+class AccountReviewHistoryScreen extends StatefulWidget {
+  const AccountReviewHistoryScreen({super.key});
 
   @override
-  ReviewHistoryState createState() => ReviewHistoryState();
+  State<AccountReviewHistoryScreen> createState() => _AccountReviewHistoryScreenState();
 }
 
-class ReviewHistoryState extends State<ReviewHistory> {
+class _AccountReviewHistoryScreenState extends State<AccountReviewHistoryScreen> {
   List<Map<String, dynamic>> reviews = [
     {
       'title': 'WC Vieux Lyon',
@@ -97,9 +98,9 @@ class ReviewHistoryState extends State<ReviewHistory> {
             ],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: Paddings.page,
             child: Column(
               children: List.generate(reviews.length, (index) {
                 return cardWithRating(
