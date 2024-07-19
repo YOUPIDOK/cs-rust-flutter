@@ -19,3 +19,53 @@ query Toilettes {
     isMaintenance
   }
 }
+
+query getCommentsByToilet($toiletIdFilter: Uuid!) {
+  getCommentsByToilet(toiletIdFilter: $toiletIdFilter) {
+    id
+    toiletId
+    userId
+    note
+    comment
+    createdAt
+  }
+}
+
+mutation updateDoorState($id: Uuid!) {
+  updateDoorState(id: $id) {
+    id
+    isMaintenance
+    doorIsOpen
+    isLocked
+  }
+}
+
+mutation toggleLockState($id: Uuid!) {
+  toggleLockState(id: $id) {
+    id
+    isMaintenance
+    doorIsOpen
+    isLocked
+  }
+}
+
+mutation toiletteCreateComment($input: CreateComment!) {
+  createComment(input: $input) {
+    id
+    toiletId
+    userId
+    note
+    comment
+    createdAt
+  }
+}
+
+subscription ToiletteSubscription($id: Uuid!) {
+  doorStateUpdated(id: $id) {
+    id
+    name
+    doorIsOpen
+    isLocked
+    isMaintenance
+  }
+}

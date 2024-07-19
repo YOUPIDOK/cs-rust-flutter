@@ -1,7 +1,8 @@
 import 'package:app/src/common_widgets/map/mapbox.dart';
 import 'package:app/src/features/geolocator/data/geolocator_repository.dart';
 import 'package:app/src/features/toilettes/data/toilettes_repository.dart';
-import 'package:app/src/features/toilettes/presentation/toilettes_notifier.dart';
+import 'package:app/src/features/toilettes/presentation/toilettes/draggable_scroll_sheet/toilettes_draggable_scroll_sheet.dart';
+import 'package:app/src/features/toilettes/presentation/toilettes/toilettes_notifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Load Markers when properties change
+    // Load Markers when toilettes change
     ref.listen(toilettesFutureProvider, (_, state) async {
       final toilettes = state.value?.data?.getToilets;
 
@@ -41,18 +42,30 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
           iconSize: 3,
         ));
       }
+
+      while (pointAnnotationManager == null) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+
       pointAnnotationManager?.createMulti(options);
     });
 
     return Scaffold(
-      body: MapBox(
-        onMapCreated: _onMapCreated,
-        onCameraChangeListener: _onCameraChangeListener,
-        onMapLoadedListener: _onMapLoadedListener,
-        onTapListener: _onTapListener,
-        gestureRecognizers: {
-          Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
-        },
+      body: Stack(
+        children: [
+          MapBox(
+            onMapCreated: _onMapCreated,
+            onCameraChangeListener: _onCameraChangeListener,
+            onMapLoadedListener: _onMapLoadedListener,
+            onTapListener: _onTapListener,
+            gestureRecognizers: {
+              Factory<EagerGestureRecognizer>(() => EagerGestureRecognizer()),
+            },
+          ),
+          const Positioned.fill(
+            child: ToilettesDraggableScrollSheet(),
+          )
+        ],
       ),
     );
   }
@@ -82,45 +95,11 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
     final cameraLng = camera.center.coordinates.lng.toDouble();
     final cameraZoom = camera.zoom;
 
-    ref.read(toilettesNotifierProvider.notifier).setCamera(lat: cameraLat, lng: cameraLng, zoom: cameraZoom);
+    final coordinateBounds =
+        await mapboxMap?.coordinateBoundsForCamera(CameraOptions(zoom: cameraZoom, center: Point(coordinates: Position(cameraLng, cameraLat))));
+
+    ref.read(toilettesNotifierProvider.notifier).setCamera(lat: cameraLat, lng: cameraLng, zoom: cameraZoom, coordinateBounds: coordinateBounds);
   }
 
   void _onTapListener(MapContentGestureContext mapContentGestureContext) async {}
 }
-
-
-          /* Padding(
-            padding: const EdgeInsets.only(top: 70, left: 10, right: 10),
-            child: Column(
-              children: [
-                const TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: 'Rechercher une toillette',
-                    prefixIcon: Icon(Icons.arrow_back),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                    ),
-                  ),
-                ),
-                Expanded(
-                    child: AsyncValueWidget(
-                  value: toilettesFuture,
-                  data: (res) {
-                    final toilettes = res.data?.getToiletProche;
-                    if (toilettes != null) {
-                      return ListView.builder(
-                        itemCount: toilettes.length,
-                        itemBuilder: (context, index) {
-                          return Text(toilettes[index].name);
-                        },
-                      );
-                    } else {
-                      return const SizedBox();
-                    }
-                  },
-                ))
-              ],
-            ),
-          ) */

@@ -1,5 +1,6 @@
 const keycloackUrl = String.fromEnvironment("KEYCLOAK_URL");
 const graphqlApiUri = String.fromEnvironment("GRAPHQL_API_URI");
+const graphqlWsApiUri = String.fromEnvironment("GRAPHQL_WS_API_URI");
 
 const String mapboxPublicAccessToken =
     String.fromEnvironment("MAPBOX_PUBLIC_ACCESS_TOKEN");

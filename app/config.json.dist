@@ -1,5 +1,6 @@
 {
   "GRAPHQL_API_URI": "",
+  "GRAPHQL_WS_API_URI": "",
   "MAPBOX_PUBLIC_ACCESS_TOKEN": "",
   "MAPBOX_STYLE_ID": "",
   "KEYCLOAK_URL": "http://localhost:8081"

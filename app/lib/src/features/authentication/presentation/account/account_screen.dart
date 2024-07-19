@@ -18,16 +18,6 @@ class AccountScreen extends ConsumerWidget {
         title: const Text('Account'),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment(1, 1),
-            colors: <Color>[
-              Color.fromRGBO(144, 39, 142, 0.8),
-              Color.fromRGBO(3, 144, 235, 0.8),
-            ],
-          ),
-        ),
         padding: Paddings.page,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

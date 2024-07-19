@@ -9,6 +9,7 @@ class ToilettesNotifierState {
   final double? cameraLat;
   final double? cameraLng;
   final double? cameraZoom;
+  final CoordinateBounds? coordinateBounds;
   final GToilettesData_getToilets? currentToilette;
 
   ToilettesNotifierState({
@@ -16,16 +17,23 @@ class ToilettesNotifierState {
     this.cameraLat,
     this.cameraLng,
     this.cameraZoom,
+    this.coordinateBounds,
     this.currentToilette,
   });
 
   ToilettesNotifierState copyWith(
-      {MapboxMap? controller, double? cameraLat, double? cameraLng, double? cameraZoom, GToilettesData_getToilets? currentToilette}) {
+      {MapboxMap? controller,
+      double? cameraLat,
+      double? cameraLng,
+      double? cameraZoom,
+      CoordinateBounds? coordinateBounds,
+      GToilettesData_getToilets? currentToilette}) {
     return ToilettesNotifierState(
         controller: controller ?? this.controller,
         cameraLat: cameraLat ?? this.cameraLat,
         cameraLng: cameraLng ?? this.cameraLng,
         cameraZoom: cameraZoom ?? this.cameraZoom,
+        coordinateBounds: coordinateBounds ?? this.coordinateBounds,
         currentToilette: currentToilette ?? this.currentToilette);
   }
 }
@@ -52,7 +60,7 @@ class ToilettesNotifier extends _$ToilettesNotifier {
     state = state.copyWith(controller: controller);
   }
 
-  void setCamera({double? lat, double? lng, double? zoom}) {
-    state = state.copyWith(cameraLat: lat, cameraLng: lng, cameraZoom: zoom);
+  void setCamera({double? lat, double? lng, double? zoom, CoordinateBounds? coordinateBounds}) {
+    state = state.copyWith(cameraLat: lat, cameraLng: lng, cameraZoom: zoom, coordinateBounds: coordinateBounds);
   }
 }

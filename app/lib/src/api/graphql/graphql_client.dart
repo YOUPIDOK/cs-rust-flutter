@@ -95,6 +95,11 @@ Future<Client> _initClientInIsolate(_InitParams params, SendPort? sendPort) asyn
           HttpLink(
             params.endpoint,
           )),
+      defaultFetchPolicies: {
+        OperationType.query: FetchPolicy.NetworkOnly,
+        OperationType.mutation: FetchPolicy.NetworkOnly,
+        OperationType.subscription: FetchPolicy.NetworkOnly,
+      },
       cache: Cache(
         store: HiveStore(
           await _openCacheBox(),
