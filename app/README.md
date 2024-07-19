@@ -1,16 +1,15 @@
-# app
+[Back](../readme.md)
 
-A new Flutter project.
+# App
+> Flutter App
 
-## Getting Started
+## Install
+**Config en vars**
+```shell
+cp config.json.dist config.json
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Launch app**
+```shell
+flutter run --dart-define=KEYCLOAK_URL=http://localhost:8081/ --dart-define=GRAPHQL_API_URI=http://localhost:8000/graphiql
+```
