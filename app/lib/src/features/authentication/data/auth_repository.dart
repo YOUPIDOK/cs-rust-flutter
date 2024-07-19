@@ -1,6 +1,5 @@
 import 'package:app/src/constants/api.dart';
 import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:openid_client/openid_client_io.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -30,7 +29,6 @@ class AuthRepository {
 
   Future<void> signIn() async {
     final token = await _authenticate();
-    debugPrint('Token: ${token.accessToken}');
     await ref.read(sharedPreferencesRepositoryProvider).setToken(token.accessToken);
   }
 

@@ -172,6 +172,88 @@ abstract class GToilettesReq
       );
 }
 
+abstract class GgetCommentsByToiletReq
+    implements
+        Built<GgetCommentsByToiletReq, GgetCommentsByToiletReqBuilder>,
+        _i1.OperationRequest<_i2.GgetCommentsByToiletData,
+            _i3.GgetCommentsByToiletVars> {
+  GgetCommentsByToiletReq._();
+
+  factory GgetCommentsByToiletReq(
+          [void Function(GgetCommentsByToiletReqBuilder b) updates]) =
+      _$GgetCommentsByToiletReq;
+
+  static void _initializeBuilder(GgetCommentsByToiletReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'getCommentsByToilet',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GgetCommentsByToiletVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GgetCommentsByToiletData? Function(
+    _i2.GgetCommentsByToiletData?,
+    _i2.GgetCommentsByToiletData?,
+  )? get updateResult;
+  @override
+  _i2.GgetCommentsByToiletData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GgetCommentsByToiletData? parseData(Map<String, dynamic> json) =>
+      _i2.GgetCommentsByToiletData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GgetCommentsByToiletData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GgetCommentsByToiletData,
+      _i3.GgetCommentsByToiletVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GgetCommentsByToiletReq> get serializer =>
+      _$ggetCommentsByToiletReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GgetCommentsByToiletReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetCommentsByToiletReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GgetCommentsByToiletReq.serializer,
+        json,
+      );
+}
+
 abstract class GupdateDoorStateReq
     implements
         Built<GupdateDoorStateReq, GupdateDoorStateReqBuilder>,
@@ -330,6 +412,88 @@ abstract class GtoggleLockStateReq
   static GtoggleLockStateReq? fromJson(Map<String, dynamic> json) =>
       _i6.serializers.deserializeWith(
         GtoggleLockStateReq.serializer,
+        json,
+      );
+}
+
+abstract class GtoiletteCreateCommentReq
+    implements
+        Built<GtoiletteCreateCommentReq, GtoiletteCreateCommentReqBuilder>,
+        _i1.OperationRequest<_i2.GtoiletteCreateCommentData,
+            _i3.GtoiletteCreateCommentVars> {
+  GtoiletteCreateCommentReq._();
+
+  factory GtoiletteCreateCommentReq(
+          [void Function(GtoiletteCreateCommentReqBuilder b) updates]) =
+      _$GtoiletteCreateCommentReq;
+
+  static void _initializeBuilder(GtoiletteCreateCommentReqBuilder b) => b
+    ..operation = _i4.Operation(
+      document: _i5.document,
+      operationName: 'toiletteCreateComment',
+    )
+    ..executeOnListen = true;
+
+  @override
+  _i3.GtoiletteCreateCommentVars get vars;
+  @override
+  _i4.Operation get operation;
+  @override
+  _i4.Request get execRequest => _i4.Request(
+        operation: operation,
+        variables: vars.toJson(),
+        context: context ?? const _i4.Context(),
+      );
+
+  @override
+  String? get requestId;
+  @override
+  @BuiltValueField(serialize: false)
+  _i2.GtoiletteCreateCommentData? Function(
+    _i2.GtoiletteCreateCommentData?,
+    _i2.GtoiletteCreateCommentData?,
+  )? get updateResult;
+  @override
+  _i2.GtoiletteCreateCommentData? get optimisticResponse;
+  @override
+  String? get updateCacheHandlerKey;
+  @override
+  Map<String, dynamic>? get updateCacheHandlerContext;
+  @override
+  _i1.FetchPolicy? get fetchPolicy;
+  @override
+  bool get executeOnListen;
+  @override
+  @BuiltValueField(serialize: false)
+  _i4.Context? get context;
+  @override
+  _i2.GtoiletteCreateCommentData? parseData(Map<String, dynamic> json) =>
+      _i2.GtoiletteCreateCommentData.fromJson(json);
+
+  @override
+  Map<String, dynamic> varsToJson() => vars.toJson();
+
+  @override
+  Map<String, dynamic> dataToJson(_i2.GtoiletteCreateCommentData data) =>
+      data.toJson();
+
+  @override
+  _i1.OperationRequest<_i2.GtoiletteCreateCommentData,
+      _i3.GtoiletteCreateCommentVars> transformOperation(
+          _i4.Operation Function(_i4.Operation) transform) =>
+      this.rebuild((b) => b..operation = transform(operation));
+
+  static Serializer<GtoiletteCreateCommentReq> get serializer =>
+      _$gtoiletteCreateCommentReqSerializer;
+
+  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
+        GtoiletteCreateCommentReq.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GtoiletteCreateCommentReq? fromJson(Map<String, dynamic> json) =>
+      _i6.serializers.deserializeWith(
+        GtoiletteCreateCommentReq.serializer,
         json,
       );
 }

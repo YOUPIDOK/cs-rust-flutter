@@ -58,6 +58,31 @@ abstract class GToilettesVars
       );
 }
 
+abstract class GgetCommentsByToiletVars
+    implements
+        Built<GgetCommentsByToiletVars, GgetCommentsByToiletVarsBuilder> {
+  GgetCommentsByToiletVars._();
+
+  factory GgetCommentsByToiletVars(
+          [void Function(GgetCommentsByToiletVarsBuilder b) updates]) =
+      _$GgetCommentsByToiletVars;
+
+  _i2.GUuid get toiletIdFilter;
+  static Serializer<GgetCommentsByToiletVars> get serializer =>
+      _$ggetCommentsByToiletVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetCommentsByToiletVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetCommentsByToiletVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetCommentsByToiletVars.serializer,
+        json,
+      );
+}
+
 abstract class GupdateDoorStateVars
     implements Built<GupdateDoorStateVars, GupdateDoorStateVarsBuilder> {
   GupdateDoorStateVars._();
@@ -102,6 +127,31 @@ abstract class GtoggleLockStateVars
   static GtoggleLockStateVars? fromJson(Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GtoggleLockStateVars.serializer,
+        json,
+      );
+}
+
+abstract class GtoiletteCreateCommentVars
+    implements
+        Built<GtoiletteCreateCommentVars, GtoiletteCreateCommentVarsBuilder> {
+  GtoiletteCreateCommentVars._();
+
+  factory GtoiletteCreateCommentVars(
+          [void Function(GtoiletteCreateCommentVarsBuilder b) updates]) =
+      _$GtoiletteCreateCommentVars;
+
+  _i2.GCreateComment get input;
+  static Serializer<GtoiletteCreateCommentVars> get serializer =>
+      _$gtoiletteCreateCommentVarsSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GtoiletteCreateCommentVars.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GtoiletteCreateCommentVars? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GtoiletteCreateCommentVars.serializer,
         json,
       );
 }

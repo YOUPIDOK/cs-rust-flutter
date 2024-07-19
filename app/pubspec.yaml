@@ -55,6 +55,7 @@ dependencies:
   built_collection: ^5.1.1
   gql_websocket_link: ^2.0.1
   web_socket_channel: ^2.4.5
+  flutter_emoji_feedback: ^0.3.0
 
 dev_dependencies:
   flutter_test:

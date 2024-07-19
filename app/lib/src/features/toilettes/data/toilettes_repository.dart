@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:app/src/api/graphql/__generated__/schema.schema.gql.dart';
 import 'package:app/src/api/graphql/graphql_client.dart';
 import 'package:app/src/constants/api.dart';
+import 'package:app/src/features/authentication/data/auth_repository.dart';
+import 'package:app/src/features/shared_preferences/data/shared_preferences_repository.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.data.gql.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.req.gql.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.var.gql.dart';
@@ -30,15 +32,25 @@ class ToilettesRepository {
   Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> fetchNearToilettes(GNearToilettesVarsBuilder vars) {
     final client = ref.read(graphqlClientProvider);
     final req = GNearToilettesReq((b) => b..vars = vars);
+    return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
+  }
 
+  Future<OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>> fetchComments(GgetCommentsByToiletVarsBuilder vars) {
+    final client = ref.read(graphqlClientProvider);
+    final req = GgetCommentsByToiletReq((b) => b..vars = vars);
     return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
   }
 
   Stream<OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> watchToilette(GToiletteSubscriptionVarsBuilder vars) {
-    log('toiletteSubscription');
+    final token = ref.read(sharedPreferencesRepositoryProvider).getToken;
     final link = WebSocketLink(
       null,
       autoReconnect: true,
+      initialPayload: () => {
+        'headers': {
+          'Authorization': 'Bearer $token',
+        },
+      },
       reconnectInterval: const Duration(seconds: 1),
       channelGenerator: () => WebSocketChannel.connect(Uri.parse(graphqlWsApiUri), protocols: ['graphql-ws']),
     );
@@ -58,6 +70,12 @@ class ToilettesRepository {
     final req = GtoggleLockStateReq((b) => b..vars = vars);
     return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
   }
+
+  Future<OperationResponse<GtoiletteCreateCommentData, GtoiletteCreateCommentVars>> createComment(GtoiletteCreateCommentVarsBuilder vars) async {
+    final client = ref.read(graphqlClientProvider);
+    final req = GtoiletteCreateCommentReq((b) => b..vars = vars);
+    return client.request(req).firstWhere((element) => !element.loading || element.graphqlErrors != null);
+  }
 }
 
 @riverpod
@@ -73,9 +91,18 @@ Future<OperationResponse<GToilettesData, GToilettesVars>> toilettesFuture(Toilet
 }
 
 @riverpod
-Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> nearToilettesFuture(NearToilettesFutureRef ref, GNearToilettesVarsBuilder vars) {
+Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> nearToilettesFuture(NearToilettesFutureRef ref, double lat, double long, double radiusKm) {
   final toilettesRepository = ref.watch(toilettesRepositoryProvider);
-  return toilettesRepository.fetchNearToilettes(vars);
+  return toilettesRepository.fetchNearToilettes(GNearToilettesVars((b) => b
+    ..lat = lat
+    ..long = long
+    ..radiusKm = radiusKm).toBuilder());
+}
+
+@riverpod
+Future<OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>> toiletteCommentsFuture(ToiletteCommentsFutureRef ref, String id) {
+  final toilettesRepository = ref.watch(toilettesRepositoryProvider);
+  return toilettesRepository.fetchComments(GgetCommentsByToiletVars((b) => b.toiletIdFilter = GUuid(id).toBuilder()).toBuilder());
 }
 
 @riverpod

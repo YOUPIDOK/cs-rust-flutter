@@ -10,10 +10,14 @@ Serializer<GNearToilettesVars> _$gNearToilettesVarsSerializer =
     new _$GNearToilettesVarsSerializer();
 Serializer<GToilettesVars> _$gToilettesVarsSerializer =
     new _$GToilettesVarsSerializer();
+Serializer<GgetCommentsByToiletVars> _$ggetCommentsByToiletVarsSerializer =
+    new _$GgetCommentsByToiletVarsSerializer();
 Serializer<GupdateDoorStateVars> _$gupdateDoorStateVarsSerializer =
     new _$GupdateDoorStateVarsSerializer();
 Serializer<GtoggleLockStateVars> _$gtoggleLockStateVarsSerializer =
     new _$GtoggleLockStateVarsSerializer();
+Serializer<GtoiletteCreateCommentVars> _$gtoiletteCreateCommentVarsSerializer =
+    new _$GtoiletteCreateCommentVarsSerializer();
 Serializer<GToiletteSubscriptionVars> _$gToiletteSubscriptionVarsSerializer =
     new _$GToiletteSubscriptionVarsSerializer();
 
@@ -90,6 +94,52 @@ class _$GToilettesVarsSerializer
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     return new GToilettesVarsBuilder().build();
+  }
+}
+
+class _$GgetCommentsByToiletVarsSerializer
+    implements StructuredSerializer<GgetCommentsByToiletVars> {
+  @override
+  final Iterable<Type> types = const [
+    GgetCommentsByToiletVars,
+    _$GgetCommentsByToiletVars
+  ];
+  @override
+  final String wireName = 'GgetCommentsByToiletVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetCommentsByToiletVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'toiletIdFilter',
+      serializers.serialize(object.toiletIdFilter,
+          specifiedType: const FullType(_i2.GUuid)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GgetCommentsByToiletVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetCommentsByToiletVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'toiletIdFilter':
+          result.toiletIdFilter.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+      }
+    }
+
+    return result.build();
   }
 }
 
@@ -177,6 +227,53 @@ class _$GtoggleLockStateVarsSerializer
         case 'id':
           result.id.replace(serializers.deserialize(value,
               specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GtoiletteCreateCommentVarsSerializer
+    implements StructuredSerializer<GtoiletteCreateCommentVars> {
+  @override
+  final Iterable<Type> types = const [
+    GtoiletteCreateCommentVars,
+    _$GtoiletteCreateCommentVars
+  ];
+  @override
+  final String wireName = 'GtoiletteCreateCommentVars';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GtoiletteCreateCommentVars object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'input',
+      serializers.serialize(object.input,
+          specifiedType: const FullType(_i2.GCreateComment)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GtoiletteCreateCommentVars deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GtoiletteCreateCommentVarsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'input':
+          result.input.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i2.GCreateComment))!
+              as _i2.GCreateComment);
           break;
       }
     }
@@ -405,6 +502,109 @@ class GToilettesVarsBuilder
   }
 }
 
+class _$GgetCommentsByToiletVars extends GgetCommentsByToiletVars {
+  @override
+  final _i2.GUuid toiletIdFilter;
+
+  factory _$GgetCommentsByToiletVars(
+          [void Function(GgetCommentsByToiletVarsBuilder)? updates]) =>
+      (new GgetCommentsByToiletVarsBuilder()..update(updates))._build();
+
+  _$GgetCommentsByToiletVars._({required this.toiletIdFilter}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        toiletIdFilter, r'GgetCommentsByToiletVars', 'toiletIdFilter');
+  }
+
+  @override
+  GgetCommentsByToiletVars rebuild(
+          void Function(GgetCommentsByToiletVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetCommentsByToiletVarsBuilder toBuilder() =>
+      new GgetCommentsByToiletVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetCommentsByToiletVars &&
+        toiletIdFilter == other.toiletIdFilter;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, toiletIdFilter.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetCommentsByToiletVars')
+          ..add('toiletIdFilter', toiletIdFilter))
+        .toString();
+  }
+}
+
+class GgetCommentsByToiletVarsBuilder
+    implements
+        Builder<GgetCommentsByToiletVars, GgetCommentsByToiletVarsBuilder> {
+  _$GgetCommentsByToiletVars? _$v;
+
+  _i2.GUuidBuilder? _toiletIdFilter;
+  _i2.GUuidBuilder get toiletIdFilter =>
+      _$this._toiletIdFilter ??= new _i2.GUuidBuilder();
+  set toiletIdFilter(_i2.GUuidBuilder? toiletIdFilter) =>
+      _$this._toiletIdFilter = toiletIdFilter;
+
+  GgetCommentsByToiletVarsBuilder();
+
+  GgetCommentsByToiletVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _toiletIdFilter = $v.toiletIdFilter.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetCommentsByToiletVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetCommentsByToiletVars;
+  }
+
+  @override
+  void update(void Function(GgetCommentsByToiletVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetCommentsByToiletVars build() => _build();
+
+  _$GgetCommentsByToiletVars _build() {
+    _$GgetCommentsByToiletVars _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetCommentsByToiletVars._(
+              toiletIdFilter: toiletIdFilter.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'toiletIdFilter';
+        toiletIdFilter.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetCommentsByToiletVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$GupdateDoorStateVars extends GupdateDoorStateVars {
   @override
   final _i2.GUuid id;
@@ -587,6 +787,106 @@ class GtoggleLockStateVarsBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GtoggleLockStateVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GtoiletteCreateCommentVars extends GtoiletteCreateCommentVars {
+  @override
+  final _i2.GCreateComment input;
+
+  factory _$GtoiletteCreateCommentVars(
+          [void Function(GtoiletteCreateCommentVarsBuilder)? updates]) =>
+      (new GtoiletteCreateCommentVarsBuilder()..update(updates))._build();
+
+  _$GtoiletteCreateCommentVars._({required this.input}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        input, r'GtoiletteCreateCommentVars', 'input');
+  }
+
+  @override
+  GtoiletteCreateCommentVars rebuild(
+          void Function(GtoiletteCreateCommentVarsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GtoiletteCreateCommentVarsBuilder toBuilder() =>
+      new GtoiletteCreateCommentVarsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GtoiletteCreateCommentVars && input == other.input;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, input.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GtoiletteCreateCommentVars')
+          ..add('input', input))
+        .toString();
+  }
+}
+
+class GtoiletteCreateCommentVarsBuilder
+    implements
+        Builder<GtoiletteCreateCommentVars, GtoiletteCreateCommentVarsBuilder> {
+  _$GtoiletteCreateCommentVars? _$v;
+
+  _i2.GCreateCommentBuilder? _input;
+  _i2.GCreateCommentBuilder get input =>
+      _$this._input ??= new _i2.GCreateCommentBuilder();
+  set input(_i2.GCreateCommentBuilder? input) => _$this._input = input;
+
+  GtoiletteCreateCommentVarsBuilder();
+
+  GtoiletteCreateCommentVarsBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _input = $v.input.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GtoiletteCreateCommentVars other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GtoiletteCreateCommentVars;
+  }
+
+  @override
+  void update(void Function(GtoiletteCreateCommentVarsBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GtoiletteCreateCommentVars build() => _build();
+
+  _$GtoiletteCreateCommentVars _build() {
+    _$GtoiletteCreateCommentVars _$result;
+    try {
+      _$result =
+          _$v ?? new _$GtoiletteCreateCommentVars._(input: input.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'input';
+        input.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GtoiletteCreateCommentVars', _$failedField, e.toString());
       }
       rethrow;
     }

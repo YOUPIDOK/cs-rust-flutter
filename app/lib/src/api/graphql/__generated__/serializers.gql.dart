@@ -17,8 +17,12 @@ import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.
         GToiletteSubscriptionData_doorStateUpdated,
         GToilettesData,
         GToilettesData_getToilets,
+        GgetCommentsByToiletData,
+        GgetCommentsByToiletData_getCommentsByToilet,
         GtoggleLockStateData,
         GtoggleLockStateData_toggleLockState,
+        GtoiletteCreateCommentData,
+        GtoiletteCreateCommentData_createComment,
         GupdateDoorStateData,
         GupdateDoorStateData_updateDoorState;
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.req.gql.dart'
@@ -26,14 +30,18 @@ import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.
         GNearToilettesReq,
         GToiletteSubscriptionReq,
         GToilettesReq,
+        GgetCommentsByToiletReq,
         GtoggleLockStateReq,
+        GtoiletteCreateCommentReq,
         GupdateDoorStateReq;
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.var.gql.dart'
     show
         GNearToilettesVars,
         GToiletteSubscriptionVars,
         GToilettesVars,
+        GgetCommentsByToiletVars,
         GtoggleLockStateVars,
+        GtoiletteCreateCommentVars,
         GupdateDoorStateVars;
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
@@ -66,10 +74,18 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GToilettesVars,
   GUserGender,
   GUuid,
+  GgetCommentsByToiletData,
+  GgetCommentsByToiletData_getCommentsByToilet,
+  GgetCommentsByToiletReq,
+  GgetCommentsByToiletVars,
   GtoggleLockStateData,
   GtoggleLockStateData_toggleLockState,
   GtoggleLockStateReq,
   GtoggleLockStateVars,
+  GtoiletteCreateCommentData,
+  GtoiletteCreateCommentData_createComment,
+  GtoiletteCreateCommentReq,
+  GtoiletteCreateCommentVars,
   GupdateDoorStateData,
   GupdateDoorStateData_updateDoorState,
   GupdateDoorStateReq,

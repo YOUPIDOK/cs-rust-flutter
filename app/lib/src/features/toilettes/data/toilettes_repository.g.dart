@@ -41,7 +41,7 @@ final toilettesFutureProvider = AutoDisposeFutureProvider<
 typedef ToilettesFutureRef = AutoDisposeFutureProviderRef<
     OperationResponse<GToilettesData, GToilettesVars>>;
 String _$nearToilettesFutureHash() =>
-    r'12a26eb5d09b5fa5866c736122dcd25ee308658f';
+    r'995853ede7c80f8d5cacf764dfa823dd7fa985ca';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -76,10 +76,14 @@ class NearToilettesFutureFamily extends Family<
 
   /// See also [nearToilettesFuture].
   NearToilettesFutureProvider call(
-    GNearToilettesVarsBuilder vars,
+    double lat,
+    double long,
+    double radiusKm,
   ) {
     return NearToilettesFutureProvider(
-      vars,
+      lat,
+      long,
+      radiusKm,
     );
   }
 
@@ -88,7 +92,9 @@ class NearToilettesFutureFamily extends Family<
     covariant NearToilettesFutureProvider provider,
   ) {
     return call(
-      provider.vars,
+      provider.lat,
+      provider.long,
+      provider.radiusKm,
     );
   }
 
@@ -112,11 +118,15 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
     OperationResponse<GNearToilettesData, GNearToilettesVars>> {
   /// See also [nearToilettesFuture].
   NearToilettesFutureProvider(
-    GNearToilettesVarsBuilder vars,
+    double lat,
+    double long,
+    double radiusKm,
   ) : this._internal(
           (ref) => nearToilettesFuture(
             ref as NearToilettesFutureRef,
-            vars,
+            lat,
+            long,
+            radiusKm,
           ),
           from: nearToilettesFutureProvider,
           name: r'nearToilettesFutureProvider',
@@ -127,7 +137,9 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
           dependencies: NearToilettesFutureFamily._dependencies,
           allTransitiveDependencies:
               NearToilettesFutureFamily._allTransitiveDependencies,
-          vars: vars,
+          lat: lat,
+          long: long,
+          radiusKm: radiusKm,
         );
 
   NearToilettesFutureProvider._internal(
@@ -137,10 +149,14 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.vars,
+    required this.lat,
+    required this.long,
+    required this.radiusKm,
   }) : super.internal();
 
-  final GNearToilettesVarsBuilder vars;
+  final double lat;
+  final double long;
+  final double radiusKm;
 
   @override
   Override overrideWith(
@@ -157,7 +173,9 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        vars: vars,
+        lat: lat,
+        long: long,
+        radiusKm: radiusKm,
       ),
     );
   }
@@ -171,13 +189,18 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
 
   @override
   bool operator ==(Object other) {
-    return other is NearToilettesFutureProvider && other.vars == vars;
+    return other is NearToilettesFutureProvider &&
+        other.lat == lat &&
+        other.long == long &&
+        other.radiusKm == radiusKm;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, vars.hashCode);
+    hash = _SystemHash.combine(hash, lat.hashCode);
+    hash = _SystemHash.combine(hash, long.hashCode);
+    hash = _SystemHash.combine(hash, radiusKm.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -185,8 +208,14 @@ class NearToilettesFutureProvider extends AutoDisposeFutureProvider<
 
 mixin NearToilettesFutureRef on AutoDisposeFutureProviderRef<
     OperationResponse<GNearToilettesData, GNearToilettesVars>> {
-  /// The parameter `vars` of this provider.
-  GNearToilettesVarsBuilder get vars;
+  /// The parameter `lat` of this provider.
+  double get lat;
+
+  /// The parameter `long` of this provider.
+  double get long;
+
+  /// The parameter `radiusKm` of this provider.
+  double get radiusKm;
 }
 
 class _NearToilettesFutureProviderElement
@@ -196,7 +225,153 @@ class _NearToilettesFutureProviderElement
   _NearToilettesFutureProviderElement(super.provider);
 
   @override
-  GNearToilettesVarsBuilder get vars => (origin as NearToilettesFutureProvider).vars;
+  double get lat => (origin as NearToilettesFutureProvider).lat;
+  @override
+  double get long => (origin as NearToilettesFutureProvider).long;
+  @override
+  double get radiusKm => (origin as NearToilettesFutureProvider).radiusKm;
+}
+
+String _$toiletteCommentsFutureHash() =>
+    r'09a61a5e7c88a910949574360de81c1521e652bf';
+
+/// See also [toiletteCommentsFuture].
+@ProviderFor(toiletteCommentsFuture)
+const toiletteCommentsFutureProvider = ToiletteCommentsFutureFamily();
+
+/// See also [toiletteCommentsFuture].
+class ToiletteCommentsFutureFamily extends Family<
+    AsyncValue<
+        OperationResponse<GgetCommentsByToiletData,
+            GgetCommentsByToiletVars>>> {
+  /// See also [toiletteCommentsFuture].
+  const ToiletteCommentsFutureFamily();
+
+  /// See also [toiletteCommentsFuture].
+  ToiletteCommentsFutureProvider call(
+    String id,
+  ) {
+    return ToiletteCommentsFutureProvider(
+      id,
+    );
+  }
+
+  @override
+  ToiletteCommentsFutureProvider getProviderOverride(
+    covariant ToiletteCommentsFutureProvider provider,
+  ) {
+    return call(
+      provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'toiletteCommentsFutureProvider';
+}
+
+/// See also [toiletteCommentsFuture].
+class ToiletteCommentsFutureProvider extends AutoDisposeFutureProvider<
+    OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>> {
+  /// See also [toiletteCommentsFuture].
+  ToiletteCommentsFutureProvider(
+    String id,
+  ) : this._internal(
+          (ref) => toiletteCommentsFuture(
+            ref as ToiletteCommentsFutureRef,
+            id,
+          ),
+          from: toiletteCommentsFutureProvider,
+          name: r'toiletteCommentsFutureProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$toiletteCommentsFutureHash,
+          dependencies: ToiletteCommentsFutureFamily._dependencies,
+          allTransitiveDependencies:
+              ToiletteCommentsFutureFamily._allTransitiveDependencies,
+          id: id,
+        );
+
+  ToiletteCommentsFutureProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<
+                OperationResponse<GgetCommentsByToiletData,
+                    GgetCommentsByToiletVars>>
+            Function(ToiletteCommentsFutureRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ToiletteCommentsFutureProvider._internal(
+        (ref) => create(ref as ToiletteCommentsFutureRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<
+          OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>>
+      createElement() {
+    return _ToiletteCommentsFutureProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ToiletteCommentsFutureProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin ToiletteCommentsFutureRef on AutoDisposeFutureProviderRef<
+    OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _ToiletteCommentsFutureProviderElement
+    extends AutoDisposeFutureProviderElement<
+        OperationResponse<GgetCommentsByToiletData, GgetCommentsByToiletVars>>
+    with ToiletteCommentsFutureRef {
+  _ToiletteCommentsFutureProviderElement(super.provider);
+
+  @override
+  String get id => (origin as ToiletteCommentsFutureProvider).id;
 }
 
 String _$toiletteSubscriptionStreamHash() =>

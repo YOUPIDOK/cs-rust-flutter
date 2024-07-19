@@ -15,6 +15,11 @@ Serializer<GToilettesData> _$gToilettesDataSerializer =
     new _$GToilettesDataSerializer();
 Serializer<GToilettesData_getToilets> _$gToilettesDataGetToiletsSerializer =
     new _$GToilettesData_getToiletsSerializer();
+Serializer<GgetCommentsByToiletData> _$ggetCommentsByToiletDataSerializer =
+    new _$GgetCommentsByToiletDataSerializer();
+Serializer<GgetCommentsByToiletData_getCommentsByToilet>
+    _$ggetCommentsByToiletDataGetCommentsByToiletSerializer =
+    new _$GgetCommentsByToiletData_getCommentsByToiletSerializer();
 Serializer<GupdateDoorStateData> _$gupdateDoorStateDataSerializer =
     new _$GupdateDoorStateDataSerializer();
 Serializer<GupdateDoorStateData_updateDoorState>
@@ -25,6 +30,11 @@ Serializer<GtoggleLockStateData> _$gtoggleLockStateDataSerializer =
 Serializer<GtoggleLockStateData_toggleLockState>
     _$gtoggleLockStateDataToggleLockStateSerializer =
     new _$GtoggleLockStateData_toggleLockStateSerializer();
+Serializer<GtoiletteCreateCommentData> _$gtoiletteCreateCommentDataSerializer =
+    new _$GtoiletteCreateCommentDataSerializer();
+Serializer<GtoiletteCreateCommentData_createComment>
+    _$gtoiletteCreateCommentDataCreateCommentSerializer =
+    new _$GtoiletteCreateCommentData_createCommentSerializer();
 Serializer<GToiletteSubscriptionData> _$gToiletteSubscriptionDataSerializer =
     new _$GToiletteSubscriptionDataSerializer();
 Serializer<GToiletteSubscriptionData_doorStateUpdated>
@@ -306,6 +316,156 @@ class _$GToilettesData_getToiletsSerializer
   }
 }
 
+class _$GgetCommentsByToiletDataSerializer
+    implements StructuredSerializer<GgetCommentsByToiletData> {
+  @override
+  final Iterable<Type> types = const [
+    GgetCommentsByToiletData,
+    _$GgetCommentsByToiletData
+  ];
+  @override
+  final String wireName = 'GgetCommentsByToiletData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GgetCommentsByToiletData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'getCommentsByToilet',
+      serializers.serialize(object.getCommentsByToilet,
+          specifiedType: const FullType(BuiltList, const [
+            const FullType(GgetCommentsByToiletData_getCommentsByToilet)
+          ])),
+    ];
+
+    return result;
+  }
+
+  @override
+  GgetCommentsByToiletData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetCommentsByToiletDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'getCommentsByToilet':
+          result.getCommentsByToilet.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GgetCommentsByToiletData_getCommentsByToilet)
+              ]))! as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GgetCommentsByToiletData_getCommentsByToiletSerializer
+    implements
+        StructuredSerializer<GgetCommentsByToiletData_getCommentsByToilet> {
+  @override
+  final Iterable<Type> types = const [
+    GgetCommentsByToiletData_getCommentsByToilet,
+    _$GgetCommentsByToiletData_getCommentsByToilet
+  ];
+  @override
+  final String wireName = 'GgetCommentsByToiletData_getCommentsByToilet';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GgetCommentsByToiletData_getCommentsByToilet object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id,
+          specifiedType: const FullType(_i2.GUuid)),
+      'toiletId',
+      serializers.serialize(object.toiletId,
+          specifiedType: const FullType(_i2.GUuid)),
+      'userId',
+      serializers.serialize(object.userId,
+          specifiedType: const FullType(_i2.GUuid)),
+      'note',
+      serializers.serialize(object.note, specifiedType: const FullType(double)),
+      'createdAt',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(_i2.GLocalDateTime)),
+    ];
+    Object? value;
+    value = object.comment;
+    if (value != null) {
+      result
+        ..add('comment')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GgetCommentsByToiletData_getCommentsByToilet deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GgetCommentsByToiletData_getCommentsByToiletBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'toiletId':
+          result.toiletId.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'userId':
+          result.userId.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'note':
+          result.note = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
+        case 'comment':
+          result.comment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'createdAt':
+          result.createdAt.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i2.GLocalDateTime))!
+              as _i2.GLocalDateTime);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$GupdateDoorStateDataSerializer
     implements StructuredSerializer<GupdateDoorStateData> {
   @override
@@ -556,6 +716,154 @@ class _$GtoggleLockStateData_toggleLockStateSerializer
         case 'isLocked':
           result.isLocked = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GtoiletteCreateCommentDataSerializer
+    implements StructuredSerializer<GtoiletteCreateCommentData> {
+  @override
+  final Iterable<Type> types = const [
+    GtoiletteCreateCommentData,
+    _$GtoiletteCreateCommentData
+  ];
+  @override
+  final String wireName = 'GtoiletteCreateCommentData';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GtoiletteCreateCommentData object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'createComment',
+      serializers.serialize(object.createComment,
+          specifiedType:
+              const FullType(GtoiletteCreateCommentData_createComment)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GtoiletteCreateCommentData deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GtoiletteCreateCommentDataBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'createComment':
+          result.createComment.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(GtoiletteCreateCommentData_createComment))!
+              as GtoiletteCreateCommentData_createComment);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GtoiletteCreateCommentData_createCommentSerializer
+    implements StructuredSerializer<GtoiletteCreateCommentData_createComment> {
+  @override
+  final Iterable<Type> types = const [
+    GtoiletteCreateCommentData_createComment,
+    _$GtoiletteCreateCommentData_createComment
+  ];
+  @override
+  final String wireName = 'GtoiletteCreateCommentData_createComment';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, GtoiletteCreateCommentData_createComment object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id,
+          specifiedType: const FullType(_i2.GUuid)),
+      'toiletId',
+      serializers.serialize(object.toiletId,
+          specifiedType: const FullType(_i2.GUuid)),
+      'userId',
+      serializers.serialize(object.userId,
+          specifiedType: const FullType(_i2.GUuid)),
+      'note',
+      serializers.serialize(object.note, specifiedType: const FullType(double)),
+      'createdAt',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(_i2.GLocalDateTime)),
+    ];
+    Object? value;
+    value = object.comment;
+    if (value != null) {
+      result
+        ..add('comment')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GtoiletteCreateCommentData_createComment deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GtoiletteCreateCommentData_createCommentBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'id':
+          result.id.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'toiletId':
+          result.toiletId.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'userId':
+          result.userId.replace(serializers.deserialize(value,
+              specifiedType: const FullType(_i2.GUuid))! as _i2.GUuid);
+          break;
+        case 'note':
+          result.note = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
+        case 'comment':
+          result.comment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'createdAt':
+          result.createdAt.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i2.GLocalDateTime))!
+              as _i2.GLocalDateTime);
           break;
       }
     }
@@ -1349,6 +1657,343 @@ class GToilettesData_getToiletsBuilder
   }
 }
 
+class _$GgetCommentsByToiletData extends GgetCommentsByToiletData {
+  @override
+  final String G__typename;
+  @override
+  final BuiltList<GgetCommentsByToiletData_getCommentsByToilet>
+      getCommentsByToilet;
+
+  factory _$GgetCommentsByToiletData(
+          [void Function(GgetCommentsByToiletDataBuilder)? updates]) =>
+      (new GgetCommentsByToiletDataBuilder()..update(updates))._build();
+
+  _$GgetCommentsByToiletData._(
+      {required this.G__typename, required this.getCommentsByToilet})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GgetCommentsByToiletData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(getCommentsByToilet,
+        r'GgetCommentsByToiletData', 'getCommentsByToilet');
+  }
+
+  @override
+  GgetCommentsByToiletData rebuild(
+          void Function(GgetCommentsByToiletDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetCommentsByToiletDataBuilder toBuilder() =>
+      new GgetCommentsByToiletDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetCommentsByToiletData &&
+        G__typename == other.G__typename &&
+        getCommentsByToilet == other.getCommentsByToilet;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, getCommentsByToilet.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GgetCommentsByToiletData')
+          ..add('G__typename', G__typename)
+          ..add('getCommentsByToilet', getCommentsByToilet))
+        .toString();
+  }
+}
+
+class GgetCommentsByToiletDataBuilder
+    implements
+        Builder<GgetCommentsByToiletData, GgetCommentsByToiletDataBuilder> {
+  _$GgetCommentsByToiletData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  ListBuilder<GgetCommentsByToiletData_getCommentsByToilet>?
+      _getCommentsByToilet;
+  ListBuilder<GgetCommentsByToiletData_getCommentsByToilet>
+      get getCommentsByToilet => _$this._getCommentsByToilet ??=
+          new ListBuilder<GgetCommentsByToiletData_getCommentsByToilet>();
+  set getCommentsByToilet(
+          ListBuilder<GgetCommentsByToiletData_getCommentsByToilet>?
+              getCommentsByToilet) =>
+      _$this._getCommentsByToilet = getCommentsByToilet;
+
+  GgetCommentsByToiletDataBuilder() {
+    GgetCommentsByToiletData._initializeBuilder(this);
+  }
+
+  GgetCommentsByToiletDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _getCommentsByToilet = $v.getCommentsByToilet.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetCommentsByToiletData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetCommentsByToiletData;
+  }
+
+  @override
+  void update(void Function(GgetCommentsByToiletDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetCommentsByToiletData build() => _build();
+
+  _$GgetCommentsByToiletData _build() {
+    _$GgetCommentsByToiletData _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetCommentsByToiletData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GgetCommentsByToiletData', 'G__typename'),
+              getCommentsByToilet: getCommentsByToilet.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'getCommentsByToilet';
+        getCommentsByToilet.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetCommentsByToiletData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GgetCommentsByToiletData_getCommentsByToilet
+    extends GgetCommentsByToiletData_getCommentsByToilet {
+  @override
+  final String G__typename;
+  @override
+  final _i2.GUuid id;
+  @override
+  final _i2.GUuid toiletId;
+  @override
+  final _i2.GUuid userId;
+  @override
+  final double note;
+  @override
+  final String? comment;
+  @override
+  final _i2.GLocalDateTime createdAt;
+
+  factory _$GgetCommentsByToiletData_getCommentsByToilet(
+          [void Function(GgetCommentsByToiletData_getCommentsByToiletBuilder)?
+              updates]) =>
+      (new GgetCommentsByToiletData_getCommentsByToiletBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GgetCommentsByToiletData_getCommentsByToilet._(
+      {required this.G__typename,
+      required this.id,
+      required this.toiletId,
+      required this.userId,
+      required this.note,
+      this.comment,
+      required this.createdAt})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GgetCommentsByToiletData_getCommentsByToilet', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GgetCommentsByToiletData_getCommentsByToilet', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        toiletId, r'GgetCommentsByToiletData_getCommentsByToilet', 'toiletId');
+    BuiltValueNullFieldError.checkNotNull(
+        userId, r'GgetCommentsByToiletData_getCommentsByToilet', 'userId');
+    BuiltValueNullFieldError.checkNotNull(
+        note, r'GgetCommentsByToiletData_getCommentsByToilet', 'note');
+    BuiltValueNullFieldError.checkNotNull(createdAt,
+        r'GgetCommentsByToiletData_getCommentsByToilet', 'createdAt');
+  }
+
+  @override
+  GgetCommentsByToiletData_getCommentsByToilet rebuild(
+          void Function(GgetCommentsByToiletData_getCommentsByToiletBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GgetCommentsByToiletData_getCommentsByToiletBuilder toBuilder() =>
+      new GgetCommentsByToiletData_getCommentsByToiletBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GgetCommentsByToiletData_getCommentsByToilet &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        toiletId == other.toiletId &&
+        userId == other.userId &&
+        note == other.note &&
+        comment == other.comment &&
+        createdAt == other.createdAt;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, toiletId.hashCode);
+    _$hash = $jc(_$hash, userId.hashCode);
+    _$hash = $jc(_$hash, note.hashCode);
+    _$hash = $jc(_$hash, comment.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GgetCommentsByToiletData_getCommentsByToilet')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('toiletId', toiletId)
+          ..add('userId', userId)
+          ..add('note', note)
+          ..add('comment', comment)
+          ..add('createdAt', createdAt))
+        .toString();
+  }
+}
+
+class GgetCommentsByToiletData_getCommentsByToiletBuilder
+    implements
+        Builder<GgetCommentsByToiletData_getCommentsByToilet,
+            GgetCommentsByToiletData_getCommentsByToiletBuilder> {
+  _$GgetCommentsByToiletData_getCommentsByToilet? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  _i2.GUuidBuilder? _id;
+  _i2.GUuidBuilder get id => _$this._id ??= new _i2.GUuidBuilder();
+  set id(_i2.GUuidBuilder? id) => _$this._id = id;
+
+  _i2.GUuidBuilder? _toiletId;
+  _i2.GUuidBuilder get toiletId => _$this._toiletId ??= new _i2.GUuidBuilder();
+  set toiletId(_i2.GUuidBuilder? toiletId) => _$this._toiletId = toiletId;
+
+  _i2.GUuidBuilder? _userId;
+  _i2.GUuidBuilder get userId => _$this._userId ??= new _i2.GUuidBuilder();
+  set userId(_i2.GUuidBuilder? userId) => _$this._userId = userId;
+
+  double? _note;
+  double? get note => _$this._note;
+  set note(double? note) => _$this._note = note;
+
+  String? _comment;
+  String? get comment => _$this._comment;
+  set comment(String? comment) => _$this._comment = comment;
+
+  _i2.GLocalDateTimeBuilder? _createdAt;
+  _i2.GLocalDateTimeBuilder get createdAt =>
+      _$this._createdAt ??= new _i2.GLocalDateTimeBuilder();
+  set createdAt(_i2.GLocalDateTimeBuilder? createdAt) =>
+      _$this._createdAt = createdAt;
+
+  GgetCommentsByToiletData_getCommentsByToiletBuilder() {
+    GgetCommentsByToiletData_getCommentsByToilet._initializeBuilder(this);
+  }
+
+  GgetCommentsByToiletData_getCommentsByToiletBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id.toBuilder();
+      _toiletId = $v.toiletId.toBuilder();
+      _userId = $v.userId.toBuilder();
+      _note = $v.note;
+      _comment = $v.comment;
+      _createdAt = $v.createdAt.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GgetCommentsByToiletData_getCommentsByToilet other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GgetCommentsByToiletData_getCommentsByToilet;
+  }
+
+  @override
+  void update(
+      void Function(GgetCommentsByToiletData_getCommentsByToiletBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GgetCommentsByToiletData_getCommentsByToilet build() => _build();
+
+  _$GgetCommentsByToiletData_getCommentsByToilet _build() {
+    _$GgetCommentsByToiletData_getCommentsByToilet _$result;
+    try {
+      _$result = _$v ??
+          new _$GgetCommentsByToiletData_getCommentsByToilet._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename,
+                  r'GgetCommentsByToiletData_getCommentsByToilet',
+                  'G__typename'),
+              id: id.build(),
+              toiletId: toiletId.build(),
+              userId: userId.build(),
+              note: BuiltValueNullFieldError.checkNotNull(note,
+                  r'GgetCommentsByToiletData_getCommentsByToilet', 'note'),
+              comment: comment,
+              createdAt: createdAt.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'id';
+        id.build();
+        _$failedField = 'toiletId';
+        toiletId.build();
+        _$failedField = 'userId';
+        userId.build();
+
+        _$failedField = 'createdAt';
+        createdAt.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GgetCommentsByToiletData_getCommentsByToilet',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
 class _$GupdateDoorStateData extends GupdateDoorStateData {
   @override
   final String G__typename;
@@ -1933,6 +2578,336 @@ class GtoggleLockStateData_toggleLockStateBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'GtoggleLockStateData_toggleLockState',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GtoiletteCreateCommentData extends GtoiletteCreateCommentData {
+  @override
+  final String G__typename;
+  @override
+  final GtoiletteCreateCommentData_createComment createComment;
+
+  factory _$GtoiletteCreateCommentData(
+          [void Function(GtoiletteCreateCommentDataBuilder)? updates]) =>
+      (new GtoiletteCreateCommentDataBuilder()..update(updates))._build();
+
+  _$GtoiletteCreateCommentData._(
+      {required this.G__typename, required this.createComment})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        G__typename, r'GtoiletteCreateCommentData', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        createComment, r'GtoiletteCreateCommentData', 'createComment');
+  }
+
+  @override
+  GtoiletteCreateCommentData rebuild(
+          void Function(GtoiletteCreateCommentDataBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GtoiletteCreateCommentDataBuilder toBuilder() =>
+      new GtoiletteCreateCommentDataBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GtoiletteCreateCommentData &&
+        G__typename == other.G__typename &&
+        createComment == other.createComment;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, createComment.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'GtoiletteCreateCommentData')
+          ..add('G__typename', G__typename)
+          ..add('createComment', createComment))
+        .toString();
+  }
+}
+
+class GtoiletteCreateCommentDataBuilder
+    implements
+        Builder<GtoiletteCreateCommentData, GtoiletteCreateCommentDataBuilder> {
+  _$GtoiletteCreateCommentData? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  GtoiletteCreateCommentData_createCommentBuilder? _createComment;
+  GtoiletteCreateCommentData_createCommentBuilder get createComment =>
+      _$this._createComment ??=
+          new GtoiletteCreateCommentData_createCommentBuilder();
+  set createComment(
+          GtoiletteCreateCommentData_createCommentBuilder? createComment) =>
+      _$this._createComment = createComment;
+
+  GtoiletteCreateCommentDataBuilder() {
+    GtoiletteCreateCommentData._initializeBuilder(this);
+  }
+
+  GtoiletteCreateCommentDataBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _createComment = $v.createComment.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GtoiletteCreateCommentData other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GtoiletteCreateCommentData;
+  }
+
+  @override
+  void update(void Function(GtoiletteCreateCommentDataBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GtoiletteCreateCommentData build() => _build();
+
+  _$GtoiletteCreateCommentData _build() {
+    _$GtoiletteCreateCommentData _$result;
+    try {
+      _$result = _$v ??
+          new _$GtoiletteCreateCommentData._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(
+                  G__typename, r'GtoiletteCreateCommentData', 'G__typename'),
+              createComment: createComment.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'createComment';
+        createComment.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GtoiletteCreateCommentData', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GtoiletteCreateCommentData_createComment
+    extends GtoiletteCreateCommentData_createComment {
+  @override
+  final String G__typename;
+  @override
+  final _i2.GUuid id;
+  @override
+  final _i2.GUuid toiletId;
+  @override
+  final _i2.GUuid userId;
+  @override
+  final double note;
+  @override
+  final String? comment;
+  @override
+  final _i2.GLocalDateTime createdAt;
+
+  factory _$GtoiletteCreateCommentData_createComment(
+          [void Function(GtoiletteCreateCommentData_createCommentBuilder)?
+              updates]) =>
+      (new GtoiletteCreateCommentData_createCommentBuilder()..update(updates))
+          ._build();
+
+  _$GtoiletteCreateCommentData_createComment._(
+      {required this.G__typename,
+      required this.id,
+      required this.toiletId,
+      required this.userId,
+      required this.note,
+      this.comment,
+      required this.createdAt})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(G__typename,
+        r'GtoiletteCreateCommentData_createComment', 'G__typename');
+    BuiltValueNullFieldError.checkNotNull(
+        id, r'GtoiletteCreateCommentData_createComment', 'id');
+    BuiltValueNullFieldError.checkNotNull(
+        toiletId, r'GtoiletteCreateCommentData_createComment', 'toiletId');
+    BuiltValueNullFieldError.checkNotNull(
+        userId, r'GtoiletteCreateCommentData_createComment', 'userId');
+    BuiltValueNullFieldError.checkNotNull(
+        note, r'GtoiletteCreateCommentData_createComment', 'note');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'GtoiletteCreateCommentData_createComment', 'createdAt');
+  }
+
+  @override
+  GtoiletteCreateCommentData_createComment rebuild(
+          void Function(GtoiletteCreateCommentData_createCommentBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GtoiletteCreateCommentData_createCommentBuilder toBuilder() =>
+      new GtoiletteCreateCommentData_createCommentBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GtoiletteCreateCommentData_createComment &&
+        G__typename == other.G__typename &&
+        id == other.id &&
+        toiletId == other.toiletId &&
+        userId == other.userId &&
+        note == other.note &&
+        comment == other.comment &&
+        createdAt == other.createdAt;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, toiletId.hashCode);
+    _$hash = $jc(_$hash, userId.hashCode);
+    _$hash = $jc(_$hash, note.hashCode);
+    _$hash = $jc(_$hash, comment.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GtoiletteCreateCommentData_createComment')
+          ..add('G__typename', G__typename)
+          ..add('id', id)
+          ..add('toiletId', toiletId)
+          ..add('userId', userId)
+          ..add('note', note)
+          ..add('comment', comment)
+          ..add('createdAt', createdAt))
+        .toString();
+  }
+}
+
+class GtoiletteCreateCommentData_createCommentBuilder
+    implements
+        Builder<GtoiletteCreateCommentData_createComment,
+            GtoiletteCreateCommentData_createCommentBuilder> {
+  _$GtoiletteCreateCommentData_createComment? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  _i2.GUuidBuilder? _id;
+  _i2.GUuidBuilder get id => _$this._id ??= new _i2.GUuidBuilder();
+  set id(_i2.GUuidBuilder? id) => _$this._id = id;
+
+  _i2.GUuidBuilder? _toiletId;
+  _i2.GUuidBuilder get toiletId => _$this._toiletId ??= new _i2.GUuidBuilder();
+  set toiletId(_i2.GUuidBuilder? toiletId) => _$this._toiletId = toiletId;
+
+  _i2.GUuidBuilder? _userId;
+  _i2.GUuidBuilder get userId => _$this._userId ??= new _i2.GUuidBuilder();
+  set userId(_i2.GUuidBuilder? userId) => _$this._userId = userId;
+
+  double? _note;
+  double? get note => _$this._note;
+  set note(double? note) => _$this._note = note;
+
+  String? _comment;
+  String? get comment => _$this._comment;
+  set comment(String? comment) => _$this._comment = comment;
+
+  _i2.GLocalDateTimeBuilder? _createdAt;
+  _i2.GLocalDateTimeBuilder get createdAt =>
+      _$this._createdAt ??= new _i2.GLocalDateTimeBuilder();
+  set createdAt(_i2.GLocalDateTimeBuilder? createdAt) =>
+      _$this._createdAt = createdAt;
+
+  GtoiletteCreateCommentData_createCommentBuilder() {
+    GtoiletteCreateCommentData_createComment._initializeBuilder(this);
+  }
+
+  GtoiletteCreateCommentData_createCommentBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _id = $v.id.toBuilder();
+      _toiletId = $v.toiletId.toBuilder();
+      _userId = $v.userId.toBuilder();
+      _note = $v.note;
+      _comment = $v.comment;
+      _createdAt = $v.createdAt.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GtoiletteCreateCommentData_createComment other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$GtoiletteCreateCommentData_createComment;
+  }
+
+  @override
+  void update(
+      void Function(GtoiletteCreateCommentData_createCommentBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GtoiletteCreateCommentData_createComment build() => _build();
+
+  _$GtoiletteCreateCommentData_createComment _build() {
+    _$GtoiletteCreateCommentData_createComment _$result;
+    try {
+      _$result = _$v ??
+          new _$GtoiletteCreateCommentData_createComment._(
+              G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
+                  r'GtoiletteCreateCommentData_createComment', 'G__typename'),
+              id: id.build(),
+              toiletId: toiletId.build(),
+              userId: userId.build(),
+              note: BuiltValueNullFieldError.checkNotNull(
+                  note, r'GtoiletteCreateCommentData_createComment', 'note'),
+              comment: comment,
+              createdAt: createdAt.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'id';
+        id.build();
+        _$failedField = 'toiletId';
+        toiletId.build();
+        _$failedField = 'userId';
+        userId.build();
+
+        _$failedField = 'createdAt';
+        createdAt.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'GtoiletteCreateCommentData_createComment',
             _$failedField,
             e.toString());
       }

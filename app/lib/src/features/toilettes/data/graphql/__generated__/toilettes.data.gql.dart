@@ -140,6 +140,75 @@ abstract class GToilettesData_getToilets
       );
 }
 
+abstract class GgetCommentsByToiletData
+    implements
+        Built<GgetCommentsByToiletData, GgetCommentsByToiletDataBuilder> {
+  GgetCommentsByToiletData._();
+
+  factory GgetCommentsByToiletData(
+          [void Function(GgetCommentsByToiletDataBuilder b) updates]) =
+      _$GgetCommentsByToiletData;
+
+  static void _initializeBuilder(GgetCommentsByToiletDataBuilder b) =>
+      b..G__typename = 'Query';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  BuiltList<GgetCommentsByToiletData_getCommentsByToilet>
+      get getCommentsByToilet;
+  static Serializer<GgetCommentsByToiletData> get serializer =>
+      _$ggetCommentsByToiletDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetCommentsByToiletData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetCommentsByToiletData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetCommentsByToiletData.serializer,
+        json,
+      );
+}
+
+abstract class GgetCommentsByToiletData_getCommentsByToilet
+    implements
+        Built<GgetCommentsByToiletData_getCommentsByToilet,
+            GgetCommentsByToiletData_getCommentsByToiletBuilder> {
+  GgetCommentsByToiletData_getCommentsByToilet._();
+
+  factory GgetCommentsByToiletData_getCommentsByToilet(
+      [void Function(GgetCommentsByToiletData_getCommentsByToiletBuilder b)
+          updates]) = _$GgetCommentsByToiletData_getCommentsByToilet;
+
+  static void _initializeBuilder(
+          GgetCommentsByToiletData_getCommentsByToiletBuilder b) =>
+      b..G__typename = 'Comment';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  _i2.GUuid get id;
+  _i2.GUuid get toiletId;
+  _i2.GUuid get userId;
+  double get note;
+  String? get comment;
+  _i2.GLocalDateTime get createdAt;
+  static Serializer<GgetCommentsByToiletData_getCommentsByToilet>
+      get serializer => _$ggetCommentsByToiletDataGetCommentsByToiletSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GgetCommentsByToiletData_getCommentsByToilet.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GgetCommentsByToiletData_getCommentsByToilet? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GgetCommentsByToiletData_getCommentsByToilet.serializer,
+        json,
+      );
+}
+
 abstract class GupdateDoorStateData
     implements Built<GupdateDoorStateData, GupdateDoorStateDataBuilder> {
   GupdateDoorStateData._();
@@ -266,6 +335,74 @@ abstract class GtoggleLockStateData_toggleLockState
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GtoggleLockStateData_toggleLockState.serializer,
+        json,
+      );
+}
+
+abstract class GtoiletteCreateCommentData
+    implements
+        Built<GtoiletteCreateCommentData, GtoiletteCreateCommentDataBuilder> {
+  GtoiletteCreateCommentData._();
+
+  factory GtoiletteCreateCommentData(
+          [void Function(GtoiletteCreateCommentDataBuilder b) updates]) =
+      _$GtoiletteCreateCommentData;
+
+  static void _initializeBuilder(GtoiletteCreateCommentDataBuilder b) =>
+      b..G__typename = 'Mutation';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  GtoiletteCreateCommentData_createComment get createComment;
+  static Serializer<GtoiletteCreateCommentData> get serializer =>
+      _$gtoiletteCreateCommentDataSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GtoiletteCreateCommentData.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GtoiletteCreateCommentData? fromJson(Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GtoiletteCreateCommentData.serializer,
+        json,
+      );
+}
+
+abstract class GtoiletteCreateCommentData_createComment
+    implements
+        Built<GtoiletteCreateCommentData_createComment,
+            GtoiletteCreateCommentData_createCommentBuilder> {
+  GtoiletteCreateCommentData_createComment._();
+
+  factory GtoiletteCreateCommentData_createComment(
+      [void Function(GtoiletteCreateCommentData_createCommentBuilder b)
+          updates]) = _$GtoiletteCreateCommentData_createComment;
+
+  static void _initializeBuilder(
+          GtoiletteCreateCommentData_createCommentBuilder b) =>
+      b..G__typename = 'Comment';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  _i2.GUuid get id;
+  _i2.GUuid get toiletId;
+  _i2.GUuid get userId;
+  double get note;
+  String? get comment;
+  _i2.GLocalDateTime get createdAt;
+  static Serializer<GtoiletteCreateCommentData_createComment> get serializer =>
+      _$gtoiletteCreateCommentDataCreateCommentSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GtoiletteCreateCommentData_createComment.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GtoiletteCreateCommentData_createComment? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GtoiletteCreateCommentData_createComment.serializer,
         json,
       );
 }

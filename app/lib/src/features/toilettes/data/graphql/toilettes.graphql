@@ -20,6 +20,17 @@ query Toilettes {
   }
 }
 
+query getCommentsByToilet($toiletIdFilter: Uuid!) {
+  getCommentsByToilet(toiletIdFilter: $toiletIdFilter) {
+    id
+    toiletId
+    userId
+    note
+    comment
+    createdAt
+  }
+}
+
 mutation updateDoorState($id: Uuid!) {
   updateDoorState(id: $id) {
     id
@@ -38,6 +49,16 @@ mutation toggleLockState($id: Uuid!) {
   }
 }
 
+mutation toiletteCreateComment($input: CreateComment!) {
+  createComment(input: $input) {
+    id
+    toiletId
+    userId
+    note
+    comment
+    createdAt
+  }
+}
 
 subscription ToiletteSubscription($id: Uuid!) {
   doorStateUpdated(id: $id) {
