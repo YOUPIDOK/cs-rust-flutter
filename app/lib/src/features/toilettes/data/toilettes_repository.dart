@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app/src/api/graphql/__generated__/schema.schema.gql.dart';
 import 'package:app/src/api/graphql/graphql_client.dart';
 import 'package:app/src/constants/api.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.data.gql.dart';
@@ -34,20 +35,15 @@ class ToilettesRepository {
   }
 
   Stream<OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> watchToilette(GToiletteSubscriptionVarsBuilder vars) {
+    log('toiletteSubscription');
     final link = WebSocketLink(
-      null, //Global.graphqlWsServerUrl,
+      null,
       autoReconnect: true,
       reconnectInterval: const Duration(seconds: 1),
       channelGenerator: () => WebSocketChannel.connect(Uri.parse(graphqlWsApiUri), protocols: ['graphql-ws']),
     );
-    var client = Client(link: link);
+    final client = Client(link: link);
     final req = GToiletteSubscriptionReq((b) => b..vars = vars);
-      log('id: ${vars.id.value}');
-    client.request(req).listen((event) {
-      log('linkException: ${event.linkException}');
-      log('graphqlErrors: ${event.graphqlErrors}');
-      log('data: ${event.data}');
-    });
     return client.request(req);
   }
 
@@ -66,6 +62,7 @@ class ToilettesRepository {
 
 @riverpod
 ToilettesRepository toilettesRepository(ToilettesRepositoryRef ref) {
+  log('toilettesRepository');
   return ToilettesRepository(ref);
 }
 
@@ -82,8 +79,7 @@ Future<OperationResponse<GNearToilettesData, GNearToilettesVars>> nearToilettesF
 }
 
 @riverpod
-Stream<OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> toiletteSubscriptionStream(
-    ToiletteSubscriptionStreamRef ref, GToiletteSubscriptionVarsBuilder vars) {
+Stream<OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> toiletteSubscriptionStream(ToiletteSubscriptionStreamRef ref, String id) {
   final toilettesRepository = ref.watch(toilettesRepositoryProvider);
-  return toilettesRepository.watchToilette(vars);
+  return toilettesRepository.watchToilette(GToiletteSubscriptionVars((b) => b.id = GUuid(id).toBuilder()).toBuilder());
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:app/src/common_widgets/utils/async/async_value_widget.dart';
 import 'package:app/src/constants/app_sizes.dart';
 import 'package:app/src/constants/paddings.dart';
@@ -133,21 +135,26 @@ class ToilettesDraggableScrollSheet extends ConsumerWidget {
   }
 }
 
-class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
+class ToilettesDraggableScrollSheetToilette extends ConsumerStatefulWidget {
   const ToilettesDraggableScrollSheetToilette({super.key, required this.toilette});
 
   final GToilettesData_getToilets toilette;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    /* ref.listen(toiletteSubscriptionStreamProvider(GToiletteSubscriptionVars((b) => b.id = toilette.id.toBuilder()).toBuilder()), (_, state) {
+  ConsumerState<ToilettesDraggableScrollSheetToilette> createState() => _ToilettesDraggableScrollSheetToiletteState();
+}
+
+class _ToilettesDraggableScrollSheetToiletteState extends ConsumerState<ToilettesDraggableScrollSheetToilette> {
+  bool actionRunning = false;
+
+  @override
+  Widget build(BuildContext context) {
+    ref.listen(toiletteSubscriptionStreamProvider(widget.toilette.id.value), (_, state) {
       setState(() {
         actionRunning = false;
       });
-    }); */
-
-    final toiletteSubscription = ref.watch(toiletteSubscriptionStreamProvider(GToiletteSubscriptionVars((b) => b.id = toilette.id.toBuilder()).toBuilder()));
-    debugPrint('ToilettesDraggableScrollSheetToilette');
+    });
+    final toiletteSubscription = ref.watch(toiletteSubscriptionStreamProvider(widget.toilette.id.value));
 
     return Container(
         width: double.infinity,
@@ -162,49 +169,78 @@ class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: toilette.isMaintenance
                       ? [
-                          const Text('Maintenance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                          gapH12,
+                          const Row(
+                            children: [
+                              Icon(Icons.warning, size: Sizes.p24),
+                              gapW12,
+                              Text('Maintenance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                            ],
+                          ),
+                          gapH8,
                           const Text('Cette toilette est en maintenance, veuillez en choisir une autre'),
                           gapH24,
                           FilledButton(onPressed: context.pop, child: const Text('En choisir une autre')),
                         ]
                       : toilette.doorIsOpen
                           ? [
-                              const Text('Toilette ouverte', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                              gapH12,
+                              const Row(
+                                children: [
+                                  Icon(Icons.lock_open_sharp, size: Sizes.p24),
+                                  gapW12,
+                                  Text('Toilette ouverte', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                                ],
+                              ),
+                              gapH8,
                               const Text('Cette toilette est actuellement ouverte, tu peux y accéder, referme la porte en scannant le lecteur NFC intérieur'),
                               gapH24,
                               GestureDetector(
                                 onTap: () async {
-                                  /*  setState(() {
+                                  setState(() {
                                     actionRunning = true;
-                                  }); */
+                                  });
                                   await ref
                                       .read(toilettesRepositoryProvider)
                                       .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                   // Wait 3 seconds
                                   await Future.delayed(const Duration(seconds: 3));
-                                  ref
+                                  await ref
                                       .read(toilettesRepositoryProvider)
                                       .toggleLockState(GtoggleLockStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                 },
-                                child: const Icon(/* actionRunning ? Icons.check :  */Icons.lock, size: 100),
+                                child: Icon(actionRunning ? Icons.check : Icons.nfc, size: 100),
                               ),
                               gapH24,
-                              FilledButton(onPressed: context.pop, child: const Text('Retour')),
+                              FilledButton(
+                                  onPressed: () {
+                                    ref
+                                        .read(toilettesRepositoryProvider)
+                                        .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
+
+                                    context.pop();
+                                  },
+                                  child: const Text('Retour')),
                             ]
                           : toilette.isLocked
                               ? [
-                                  const Text('Toilette verrouillée', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                                  gapH12,
+                                  const Row(
+                                    children: [
+                                      Icon(Icons.lock_clock, size: Sizes.p24),
+                                      gapW12,
+                                      Text('Toilette verrouillée', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                                    ],
+                                  ),
+                                  gapH8,
                                   const Text(
                                       'Cette toilette est actuellement verrouillée, approche ton téléphone du lecteur NFC intérieur pour la déverrouiller'),
                                   gapH24,
                                   GestureDetector(
                                     onTap: () async {
-                                      /* setState(() {
+                                      setState(() {
                                         actionRunning = true;
-                                      }); */
+                                      });
+                                      Future.delayed(const Duration(seconds: 5)).then((onValue) async {
+                                        // Show avis form
+                                      });
                                       await ref
                                           .read(toilettesRepositoryProvider)
                                           .toggleLockState(GtoggleLockStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
@@ -214,26 +250,35 @@ class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
                                           .read(toilettesRepositoryProvider)
                                           .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                     },
-                                    child: const Icon(/* actionRunning ? Icons.check : */ Icons.lock, size: 100),
+                                    child: Icon(actionRunning ? Icons.check : Icons.nfc, size: 100),
                                   ),
                                   gapH24,
                                   FilledButton(onPressed: context.pop, child: const Text('Retour')),
                                 ]
                               : [
-                                  Text("Tu veux acceder au toilette n°${toilette.name} ?", style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
-                                  gapH24,
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.door_back_door_outlined, size: Sizes.p24),
+                                      gapW12,
+                                      Expanded(
+                                        child: Text("Tu veux acceder au toilette n°${toilette.name} ?",
+                                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+                                      ),
+                                    ],
+                                  ),
+                                  gapH8,
                                   const Text("Place ton telephone sur le lecteur NFC juste devant le toilette", style: TextStyle(fontSize: 16)),
                                   gapH24,
                                   GestureDetector(
                                     onTap: () {
-                                      /* setState(() {
+                                      setState(() {
                                         actionRunning = true;
-                                      }); */
+                                      });
                                       ref
                                           .read(toilettesRepositoryProvider)
                                           .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                     },
-                                    child: const Icon(/* actionRunning ? Icons.check :  */Icons.lock, size: 100),
+                                    child: Icon(actionRunning ? Icons.check : Icons.nfc, size: 100),
                                   ),
                                   gapH24,
                                   FilledButton(onPressed: context.pop, child: const Text('Retour')),

@@ -7,7 +7,7 @@ part of 'toilettes_repository.dart';
 // **************************************************************************
 
 String _$toilettesRepositoryHash() =>
-    r'84e848539a9e8ac855cd73e9fa9156179a91f929';
+    r'8becc718ea37af6c1e9b35646c20979612ad007b';
 
 /// See also [toilettesRepository].
 @ProviderFor(toilettesRepository)
@@ -200,7 +200,7 @@ class _NearToilettesFutureProviderElement
 }
 
 String _$toiletteSubscriptionStreamHash() =>
-    r'bd9e1cdfcfbb011103fca5d9e375e84c6848eb5d';
+    r'f39fb0e9348e33a46d0c81da9fa1ff0ef95d1656';
 
 /// See also [toiletteSubscriptionStream].
 @ProviderFor(toiletteSubscriptionStream)
@@ -216,10 +216,10 @@ class ToiletteSubscriptionStreamFamily extends Family<
 
   /// See also [toiletteSubscriptionStream].
   ToiletteSubscriptionStreamProvider call(
-    GToiletteSubscriptionVarsBuilder vars,
+    String id,
   ) {
     return ToiletteSubscriptionStreamProvider(
-      vars,
+      id,
     );
   }
 
@@ -228,7 +228,7 @@ class ToiletteSubscriptionStreamFamily extends Family<
     covariant ToiletteSubscriptionStreamProvider provider,
   ) {
     return call(
-      provider.vars,
+      provider.id,
     );
   }
 
@@ -252,11 +252,11 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
     OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> {
   /// See also [toiletteSubscriptionStream].
   ToiletteSubscriptionStreamProvider(
-    GToiletteSubscriptionVarsBuilder vars,
+    String id,
   ) : this._internal(
           (ref) => toiletteSubscriptionStream(
             ref as ToiletteSubscriptionStreamRef,
-            vars,
+            id,
           ),
           from: toiletteSubscriptionStreamProvider,
           name: r'toiletteSubscriptionStreamProvider',
@@ -267,7 +267,7 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
           dependencies: ToiletteSubscriptionStreamFamily._dependencies,
           allTransitiveDependencies:
               ToiletteSubscriptionStreamFamily._allTransitiveDependencies,
-          vars: vars,
+          id: id,
         );
 
   ToiletteSubscriptionStreamProvider._internal(
@@ -277,10 +277,10 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.vars,
+    required this.id,
   }) : super.internal();
 
-  final GToiletteSubscriptionVarsBuilder vars;
+  final String id;
 
   @override
   Override overrideWith(
@@ -299,7 +299,7 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        vars: vars,
+        id: id,
       ),
     );
   }
@@ -313,13 +313,13 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
 
   @override
   bool operator ==(Object other) {
-    return other is ToiletteSubscriptionStreamProvider && other.vars == vars;
+    return other is ToiletteSubscriptionStreamProvider && other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, vars.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -327,8 +327,8 @@ class ToiletteSubscriptionStreamProvider extends AutoDisposeStreamProvider<
 
 mixin ToiletteSubscriptionStreamRef on AutoDisposeStreamProviderRef<
     OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> {
-  /// The parameter `vars` of this provider.
-  GToiletteSubscriptionVarsBuilder get vars;
+  /// The parameter `id` of this provider.
+  String get id;
 }
 
 class _ToiletteSubscriptionStreamProviderElement
@@ -338,7 +338,7 @@ class _ToiletteSubscriptionStreamProviderElement
   _ToiletteSubscriptionStreamProviderElement(super.provider);
 
   @override
-  GToiletteSubscriptionVarsBuilder get vars => (origin as ToiletteSubscriptionStreamProvider).vars;
+  String get id => (origin as ToiletteSubscriptionStreamProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

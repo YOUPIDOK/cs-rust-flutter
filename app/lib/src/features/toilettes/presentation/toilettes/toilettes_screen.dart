@@ -26,7 +26,7 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Load Markers when properties change
+    // Load Markers when toilettes change
     ref.listen(toilettesFutureProvider, (_, state) async {
       final toilettes = state.value?.data?.getToilets;
 
@@ -36,7 +36,6 @@ class _ToilettesScreenState extends ConsumerState<ToilettesScreen> {
       final Uint8List list = bytes.buffer.asUint8List();
       var options = <PointAnnotationOptions>[];
       for (var toilette in toilettes) {
-        debugPrint('Toilette: ${toilette.name}');
         options.add(PointAnnotationOptions(
           geometry: Point(coordinates: Position(toilette.long, toilette.lat)),
           image: list,
