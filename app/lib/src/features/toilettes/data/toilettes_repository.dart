@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:app/src/api/graphql/graphql_client.dart';
+import 'package:app/src/constants/api.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.data.gql.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.req.gql.dart';
 import 'package:app/src/features/toilettes/data/graphql/__generated__/toilettes.var.gql.dart';
 import 'package:ferry/ferry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gql_websocket_link/gql_websocket_link.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 part 'toilettes_repository.g.dart';
 
@@ -29,7 +34,14 @@ class ToilettesRepository {
   }
 
   Stream<OperationResponse<GToiletteSubscriptionData, GToiletteSubscriptionVars>> watchToilette(GToiletteSubscriptionVarsBuilder vars) {
-    final client = ref.read(graphqlClientProvider);
+    final link = WebSocketLink(
+      null, //Global.graphqlWsServerUrl,
+      autoReconnect: true,
+      reconnectInterval: const Duration(seconds: 1),
+      initialPayload: {"subscriptionParam": {}},
+      channelGenerator: () => WebSocketChannel.connect(Uri.parse(graphqlWsApiUri), protocols: ['graphql-ws']),
+    );
+    var client = Client(link: link);
     final req = GToiletteSubscriptionReq((b) => b..vars = vars);
     return client.request(req);
   }
