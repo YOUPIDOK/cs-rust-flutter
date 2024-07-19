@@ -38,11 +38,16 @@ class ToilettesRepository {
       null, //Global.graphqlWsServerUrl,
       autoReconnect: true,
       reconnectInterval: const Duration(seconds: 1),
-      initialPayload: {"subscriptionParam": {}},
       channelGenerator: () => WebSocketChannel.connect(Uri.parse(graphqlWsApiUri), protocols: ['graphql-ws']),
     );
     var client = Client(link: link);
     final req = GToiletteSubscriptionReq((b) => b..vars = vars);
+      log('id: ${vars.id.value}');
+    client.request(req).listen((event) {
+      log('linkException: ${event.linkException}');
+      log('graphqlErrors: ${event.graphqlErrors}');
+      log('data: ${event.data}');
+    });
     return client.request(req);
   }
 

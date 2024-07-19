@@ -179,14 +179,14 @@ class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
                                   /*  setState(() {
                                     actionRunning = true;
                                   }); */
-                                  await ref
+                                  /* await ref
                                       .read(toilettesRepositoryProvider)
                                       .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                   // Wait 3 seconds
                                   await Future.delayed(const Duration(seconds: 3));
                                   ref
                                       .read(toilettesRepositoryProvider)
-                                      .toggleLockState(GtoggleLockStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
+                                      .toggleLockState(GtoggleLockStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder()); */
                                 },
                                 child: const Icon(/* actionRunning ? Icons.check :  */Icons.lock, size: 100),
                               ),
@@ -205,14 +205,14 @@ class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
                                       /* setState(() {
                                         actionRunning = true;
                                       }); */
-                                      await ref
+                                      /* await ref
                                           .read(toilettesRepositoryProvider)
                                           .toggleLockState(GtoggleLockStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
                                       // Wait 3 seconds
                                       await Future.delayed(const Duration(seconds: 3));
                                       ref
                                           .read(toilettesRepositoryProvider)
-                                          .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
+                                          .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder()); */
                                     },
                                     child: const Icon(/* actionRunning ? Icons.check : */ Icons.lock, size: 100),
                                   ),
@@ -229,9 +229,9 @@ class ToilettesDraggableScrollSheetToilette extends ConsumerWidget {
                                       /* setState(() {
                                         actionRunning = true;
                                       }); */
-                                      ref
+                                      /* ref
                                           .read(toilettesRepositoryProvider)
-                                          .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder());
+                                          .updateDoorState(GupdateDoorStateVars((b) => b..id = toilette.id.toBuilder()).toBuilder()); */
                                     },
                                     child: const Icon(/* actionRunning ? Icons.check :  */Icons.lock, size: 100),
                                   ),
